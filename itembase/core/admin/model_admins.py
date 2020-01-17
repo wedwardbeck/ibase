@@ -3,7 +3,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from itembase.core.models import AddressType, Client, EngagementType, ItemData, Location,  \
+from itembase.core.models import AddressType, Client, EngagementType, VendorItem, Location,  \
     LocationAddress, UnitOfMeasure, Vendor, VendorAddress
 
 from .resources import AddressTypeResource, ClientResource, EngagementTypeResource, ItemDataResource, \
@@ -34,7 +34,7 @@ class EngagementTypeAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 
 
 class ItemDataAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    model = ItemData
+    model = VendorItem
     resource_class = ItemDataResource
 
 
@@ -84,7 +84,7 @@ class VendorAddressAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 admin.site.register(AddressType, AddressTypeAdmin)
 admin.site.register(Client, ClientAdmin)
 admin.site.register(EngagementType, EngagementTypeAdmin)
-admin.site.register(ItemData, ItemDataAdmin)
+admin.site.register(VendorItem, ItemDataAdmin)
 admin.site.register(Location, LocationAdmin)
 admin.site.register(LocationAddress, LocationAddressAdmin)
 admin.site.register(UnitOfMeasure, UnitOfMeasureAdmin)

@@ -19,6 +19,7 @@ urlpatterns = [
                   path("client/", include('core.urls.client_urls')),
                   path("loc/", include('core.urls.location_urls')),
                   path("vendors/", include('core.urls.vendor_urls')),
+                  path("items/", include('core.urls.item_urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

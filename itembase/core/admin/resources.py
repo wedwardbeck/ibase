@@ -1,7 +1,7 @@
 from import_export import resources
 # from import_export.widgets import ForeignKeyWidget
 
-from itembase.core.models import EngagementType, Client, Vendor, UnitOfMeasure, ItemData, Location, AddressType, \
+from itembase.core.models import EngagementType, Client, Vendor, UnitOfMeasure, VendorItem, Location, AddressType, \
     LocationAddress, VendorAddress
 
 
@@ -22,7 +22,7 @@ class ClientResource(resources.ModelResource):
 
 class ItemDataResource(resources.ModelResource):
     class Meta:
-        model = ItemData
+        model = VendorItem
         fields = ('id', 'item_number', 'description', 'vendor', 'uom',
                   'pack_count', 'status', 'created_by', 'created_on')
         skip_unchanged = True

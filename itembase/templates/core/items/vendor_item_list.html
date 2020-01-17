@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static i18n security_tags %}
+{#{% load thumbnail %}#}
+{% load tz %}
+{% block css %}
+    {{ block.super }}
+    {% include 'includes/datatables_css.html' %}
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Vendor Items</h2>
+            <table class="table is-hoverable" id="data_table" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Vendor Name</th>
+                    <th>Item Number</th>
+                    <th>Description</th>
+                    <th>UOM</th>
+                    <th>Unit Description</th>
+                    <th>Pack Count</th>
+                    <th>Status</th>
+                    <th>Created By</th>
+                    <th>Created On</th>
+                    <th>Modified On</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for vendoritem in vendor_items %}
+                    <tr>
+                        <td data-sort="{{ vendoritem.vendor }}">
+                            {{ vendoritem.vendor }}
+                        </td>
+                        <td class="">
+                            <div class="media">
+                                <a href="{{ vendoritem.get_absolute_url }}">
+                                    {{ vendoritem.item_number }}
+                                </a>
+                            </div>
+                        </td>
+                        <td class="">{{ vendoritem.description }}</td>
+                        <td class="">{{ vendoritem.uom.abreviation }}</td>
+                        <td class="">{{ vendoritem.uom }}</td>
+                        <td class="">{{ vendoritem.pack_count }}</td>
+                        <td class="">{{ vendoritem.status |title }}</td>
+                        <td class="">{{ vendoritem.created_by.name }}</td>
+                        <td class="">{{ vendoritem.created_on }}</td>
+                        <td class="">{{ vendoritem.updated_on }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+{#            {% if user|is_group:"Team Admin" %}#}
+                <div class="control">
+                    <a class="button is-primary" href="{% url 'vendor-items:new' %}">{% trans "Add New" %}</a>
+                </div>
+{#            {% endif %}#}
+        </div>
+    </section>
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#data_table').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: true,
+                    targets: -1
+                }],
+                order: [],
+            });
+        });
+    </script>
+{% endblock javascript %}

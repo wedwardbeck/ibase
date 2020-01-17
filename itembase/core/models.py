@@ -117,7 +117,7 @@ class Vendor(models.Model):
     status = models.SmallIntegerField(_('Status'), choices=VendorStatus.choices,
                                       default=VendorStatus.new)
     parent = models.ForeignKey('self', verbose_name=_('Parent Vendor'), null=True, blank=True,
-                               on_delete=models.PROTECT)
+                               related_name='parent_vendor', on_delete=models.PROTECT)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Created By'),
                                    related_name='vendor_created', on_delete=models.PROTECT)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -134,12 +134,13 @@ class Vendor(models.Model):
         return self.name1
 
     def get_absolute_url(self):
-        return reverse('vendors:view', kwargs={'pk': self.pk})
+        return reverse('vendors:vendor-view', kwargs={'pk': self.pk})
 
 
 class UnitOfMeasure(models.Model):
     name = models.CharField(_('Unit'), max_length=50, unique=True)
     abbreviation = models.CharField(_('Abbreviation'), max_length=15)
+    description = models.CharField(_('Description'), max_length=150)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Created By'),
                                    related_name='uom_created', on_delete=models.PROTECT)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -153,18 +154,21 @@ class UnitOfMeasure(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('vendor-items:uom-view', kwargs={'pk': self.pk})
 
-class VendorItemData(models.Model):
+
+class VendorItem(models.Model):
     id = models.BigAutoField(primary_key=True)
     item_number = models.CharField(_('Vendor Item Number'), max_length=100)
     description = models.CharField(_('Description'), max_length=255)
-    vendor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vendor',
+    vendor = models.ForeignKey(Vendor, related_name='vendor',
                                verbose_name=_('Vendor'), on_delete=models.PROTECT, null=False)
-    uom = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='unitofmeasure',
+    uom = models.ForeignKey(UnitOfMeasure, related_name='unitofmeasure',
                             verbose_name=_('UOM'), on_delete=models.PROTECT, null=False)
     pack_count = models.CharField(_('Package Count'), max_length=50)
-    status = models.CharField(_('Status'), choices=ItemStatus.choices,
-                              default=ItemStatus.new, max_length=1)
+    status = models.IntegerField(_('Status'), choices=ItemStatus.choices,
+                                 default=ItemStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='item_created',
                                    verbose_name=_('created by'), on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField(_("created on"), auto_now_add=True, editable=False)
@@ -177,6 +181,9 @@ class VendorItemData(models.Model):
 
     def __str__(self):
         return '%s - %s - %s' % (self.vendor, self.item_number, self.description)
+
+    def get_absolute_url(self):
+        return reverse('vendor-items:view', kwargs={'pk': self.pk})
 
 
 class Location(models.Model):
@@ -196,8 +203,8 @@ class AddressType(models.Model):
     address_type = models.CharField(_('Address Type'), max_length=20)
     usage = models.CharField(_('Gender'), max_length=1, choices=AddressUsage.choices)
     fa_string = models.CharField(_('FA String'), max_length=50, blank=True, null=True)
-    status = models.CharField(_('Status'), choices=BaseStatus.choices,
-                              default=BaseStatus.new, max_length=1)
+    status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
+                                 default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='address_type_created',
                                    verbose_name=_('created by'), on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField(_("created on"), auto_now_add=True, editable=False)
@@ -221,8 +228,8 @@ class LocationAddress(models.Model):
     phone_number = PhoneNumberField(_('Phone Number'), blank=True)
     email = models.EmailField(_('Email'), null=True, blank=True)
     primary = models.BooleanField(default=False)
-    status = models.CharField(_('Status'), choices=BaseStatus.choices,
-                              default=BaseStatus.new, max_length=1)
+    status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
+                                 default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='location_address_created',
                                    verbose_name=_('created by'), on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField(_("created on"), auto_now_add=True, editable=False)
@@ -257,8 +264,8 @@ class VendorAddress(models.Model):
     phone_number = PhoneNumberField(_('Phone Number'), blank=True)
     email = models.EmailField(_('Email'), null=True, blank=True)
     primary = models.BooleanField(default=False)
-    status = models.CharField(_('Status'), choices=BaseStatus.choices,
-                              default=BaseStatus.new, max_length=1)
+    status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
+                                 default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vendor_address_created',
                                    verbose_name=_('created by'), on_delete=models.SET_NULL, null=True)
     created_on = models.DateTimeField(_("created on"), auto_now_add=True, editable=False)

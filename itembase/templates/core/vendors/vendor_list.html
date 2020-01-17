@@ -24,7 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for vendor in vendor_list %}
+                {% for vendor in vendors %}
                     <tr>
                         <td data-sort="{{ vendor.name1 }}">
                             <div class="media">
@@ -45,11 +45,11 @@
                 </tbody>
             </table>
 
-            {% if user|is_group:"Team Admin" %}
+{#            {% if user|is_group:"Team Admin" %}#}
                 <div class="control">
                     <a class="button is-primary" href="{% url 'vendors:vendor-new' %}">{% trans "Add New" %}</a>
                 </div>
-            {% endif %}
+{#            {% endif %}#}
         </div>
     </section>
 {% endblock content %}

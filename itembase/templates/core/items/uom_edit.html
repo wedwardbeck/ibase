@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}UOM: {{ uom.abbreviation }}{% endblock %}
+
+{% block content %}
+  <h1>Unit of Measure: {{ uom.abbreviation }} - {{ uom.name }}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'vendor-items:uom-edit' pk=uom.pk %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Update</button>
+          <a class="btn btn-primary" href="{% url 'vendor-items:uom-view' pk=uom.pk %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}
