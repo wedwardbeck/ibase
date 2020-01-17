@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ vendor.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ vendor.name }}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'vendors:vendor-edit' pk=vendor.pk %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Update</button>
+          <a class="btn btn-primary" href="{% url 'vendors:vendor-view' pk=vendor.pk %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% load staticfiles i18n %}
+{% if request.user.is_authenticated %}
+    <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">{{ user.get_full_name | title }}</a>
+        <div class="navbar-dropdown">
+            <a class="navbar-item"
+               href="{% url 'users:detail' request.user.pk %}">
+                {% trans "My Personal Info" %}</a>
+            <div class="dropdown-divider"></div>
+            <a class="navbar-item" href="{% url 'home' %}">My Updates</a>
+            <a class="navbar-item" href="{% url 'home' %}">Submit New Request</a>
+            <div class="dropdown-divider"></div>
+            <a class="navbar-item" href="#">New link</a>
+            <hr class="navbar-divider">
+        </div>
+    </div>
+{% endif %}

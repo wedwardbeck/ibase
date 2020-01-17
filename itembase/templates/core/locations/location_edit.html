@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ location.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ location.name }}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'locations:edit' pk=location.pk %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Update</button>
+          <a class="btn btn-primary" href="{% url 'locations:view' pk=location.pk %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

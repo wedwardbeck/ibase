@@ -1,0 +1,17 @@
+{% load staticfiles i18n %}
+<div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link">Admin</a>
+    <div class="navbar-dropdown">
+        <a class="navbar-item"
+           href="{% url 'users:detail' request.user.pk %}">
+            {% trans "My Personal Info" %}</a>
+        <hr class="navbar-divider">
+        {#    <a class="navbar-item" href="{% url 'config' %}">Core Config</a>#}
+        <a class="navbar-item" href="{% url 'users:update' %}">My Incidents</a>
+        <a class="navbar-item" href="{% url 'users:update' %}">Submit New Incident</a>
+        {% if user.is_superuser %}
+            <hr class="navbar-divider">
+            <a class="navbar-item" href="{% url 'admin:index' %}">Site Admin</a>
+        {% endif %}
+    </div>
+</div>

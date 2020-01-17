@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static core_tags %}{% load i18n %}
+{% load thumbnail %}
+
+{% block title %}Client: {{ object.client_name }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <section class="section">
+            <div class="column">
+                {% if client.client_code %}
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="card-header-title">{{ client.client_code | upper }} |
+                                Status: {{ client.get_client_status_display }} |
+                                Fees: {{ client.get_imp_fee_status_display }}</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-75x75">
+                                        <img src="{% thumbnail client.logo 75x75 %}"/>
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">{{ client.client_name | default_if_none:"" }}</p>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <p>{{ client.engagement }}</p>
+                                <p class="card-text">Service Start {{ client.service_start | date:"m/d/y" }}</p>
+                                <p class="card-text">{% if client.service_end %}
+                                    Service End {{ client.service_end | date:"m/d/y" }}
+                                {% endif %}
+                                </p>
+                            </div>
+                            <a href="{% url 'clients:list' %}" class="button is-primary is-light">Back to List</a>
+                            <a href="{% url 'clients:edit' slug=client.slug %}"
+                               class="button is-info  is-light">Update</a>
+                            {#              <a href="{% url 'contacts:address-new' client.id %}" class="btn btn-secondary">Add Address</a>#}
+
+                            <a href="{% url 'clients:client-contact-new' client.slug %}"
+                               class="button is-info is-light">Create Contact</a>
+                            <a href="{% url 'staff:client-team-new' client.slug %}"
+                               class="button is-info is-light">Add Team Member</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </section>
+        {#    <br>#}
+        <div class="row">
+            <h6>Team Members Assigned</h6>
+            <div class="table-responsive table-hover">
+                <table class="table table-sm" id="team_table" cellspacing="0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Staff Name</th>
+                        <th>Role</th>
+                        <th>Start</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for staff in team_list %}
+                        <tr>
+                            <td data-sort="{{ staff.staff }}">
+                                <div class="">
+                                    <a href="{{ staff.get_absolute_url }}">{{ staff.staff.first_name }} {{ staff.staff.last_name }}</a>
+                                </div>
+                            </td>
+                            <td class="">{{ staff.role.role }}</td>
+                            <td class="">{{ staff.valid_from | date:"SHORT_DATE_FORMAT" }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <h6>Contacts</h6>
+            <div class="table-responsive table-hover">
+                <table class="table table-sm" id="contact_table" cellspacing="0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Last</th>
+                        <th>First</th>
+                        <th>Title</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>Created</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for contact in contact_list %}
+                        <tr>
+                            <td data-sort="{{ contact.last_name }}">
+                                <div class="">
+                                    <a href="{{ contact.get_absolute_url }}">
+                                        {{ contact.last_name | capfirst }}</a>
+                                </div>
+                            </td>
+                            <td class="">{% if contact.first_name is None %}
+                                -
+                            {% else %}
+                                {{ contact.first_name | capfirst }}
+                            {% endif %}
+                                (<a href="{% url "contacts:edit" pk=contact.id %}">edit</a>)
+                            </td>
+                            <td class="">{{ contact.title | capfirst }}</td>
+                            <td class="">{% if contact.email is None %}
+                                -
+                            {% else %}
+                                {{ contact.email | lower }}
+                            {% endif %}
+                            </td>
+                            <td class="">
+                                {% if contact.contact_type == 1 %}
+                                    <i class="fa fa-user text-center" aria-hidden="true"></i>
+                                {% elif contact.contact_type == 2 %}
+                                    <i class="fa fa-building-o text-center" aria-hidden="true"></i>
+                                {% endif %}
+                            </td>
+                            <td class="">{{ contact.created_on | date:"m/d/y" }} {{ contact.created_on |time:"H:i T" }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

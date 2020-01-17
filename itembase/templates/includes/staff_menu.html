@@ -1,0 +1,42 @@
+{% load staticfiles i18n %}
+<div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link">Entities</a>
+    <div class="navbar-dropdown">
+        <a class="navbar-item" href="{% url 'clients:list' %}">{% trans 'Clients' %}</a>
+        <a class="navbar-item" href="{% url 'clients:new' %}">{% trans 'New Client' %}</a> {# TODO Move to IQ Admin #}
+        <hr class="navbar-divider">
+        <a class="navbar-item" href="{% url 'vendors:vendor-list' %}">{% trans 'Vendors' %}</a>
+        <a class="navbar-item" href="{% url 'vendors:vendor-new' %}">{% trans 'New Vendor' %}</a>
+        <hr class="navbar-divider">
+        <hr class="navbar-divider">
+        <a class="navbar-item">Report an issue</a>
+    </div>
+</div>
+{#<div class="navbar-item has-dropdown is-hoverable">#}
+{#    <a class="navbar-link">Workflow</a>#}
+{#    <div class="navbar-dropdown">#}
+{#        <h6 class="navbar-header">Projects</h6>#}
+{#        <a class="navbar-item" href="{% url 'projects:list' %}">{% trans 'Projects' %}</a>#}
+{#        <a class="navbar-item" href="{% url 'projects:new' %}">{% trans 'New Project' %}</a>#}
+{#        <hr class="navbar-divider">#}
+{#        <h6 class="navbar-header">Checklists</h6>#}
+{#        <a class="navbar-item" href="{% url 'checklists:list' %}">{% trans 'Checklists' %}</a>#}
+{#        <a class="navbar-item" href="{% url 'checklists:new' %}">{% trans 'New Checklist' %}</a>#}
+{#        <hr class="navbar-divider">#}
+{#        <a class="navbar-item">Report an issue</a>#}
+{#    </div>#}
+{#</div>#}
+{#<div class="navbar-item has-dropdown is-hoverable">#}
+{#    <a class="navbar-link">Staff</a>#}
+{#    <div class="navbar-dropdown">#}
+{#        <a class="navbar-item" href="{% url 'staff:team-list' %}">{% trans 'Team Assignments' %}</a>#}
+{#        <a class="navbar-item" href="{% url 'staff:teamlead-list' %}">{% trans 'Team Leads' %}</a>#}
+{#        <a class="navbar-item" href="{% url 'staff:pm-list' %}">{% trans 'Project Managers' %}</a>#}
+{#        <a class="navbar-item" href="{% url 'staff:team-new' %}">{% trans 'Add Team Member' %}</a>#}
+{#        <a class="navbar-item" href="{% url 'home' %}">{% trans 'Holidays' %}</a>#}
+{#        {% if user.is_superuser %}#}
+{#            <div class="dropdown-divider"></div>#}
+{#            <a class="navbar-item" href="{% url 'admin:index' %}">Site Admin</a>#}
+{#        {% endif %}#}
+{#    </div>#}
+{#</div>#}

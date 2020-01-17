@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="container">
+
+
+            <h5>Add Address - {{ partner.name1 }}</h5>
+
+        <form class="form-horizontal" method="post"
+                action="">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="control-group">
+              <div class="controls">
+                <button class="btn btn-primary">Add</button>
+                  <a class="btn btn-secondary"
+                     href="{{ cancel_url }}">Cancel</a>
+              </div>
+            </div>
+          </form>
+
+{#        <a href="{% url "contacts:address-list" %}">back to list</a>#}
+    </div>
+{% endblock content %}

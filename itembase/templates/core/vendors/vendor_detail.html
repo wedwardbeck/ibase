@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load static i18n security_tags %}
+{% block css %}
+    {{ block.super }}
+    {% include 'includes/datatables_css.html' %}
+{% endblock %}
+
+{% block title %}Vendor: {{ vendor.name1 }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {#        <section class="section">#}
+        <div class="column">
+            {% if vendor.name1 %}
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-header-title">{{ vendor.name1 | upper }} |
+                            Status: {{ vendor.status }}
+                        </p>
+                    </div>
+                    <div class="card-content">
+                        <p class="title is-4">{{ vendor.name1 | default_if_none:"" }}</p>
+                        <div class="content">
+                            <p class="card-text">Added On: {{ vendor.created_on | date:"m/d/y" }}</p>
+                            {% if vendor.parent %}
+                                <p class="card-text">Parent Vendor: {{ vendor.parent.name1 }}
+                                </p>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'vendors:vendor-list' %}" class="button is-primary is-light">Back to List</a>
+                        <a href="{% url 'vendors:vendor-edit' pk=vendor.id %}"
+                           class="button is-info  is-light">Update</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {#        </section>#}
+        <div class="column">
+            <div class="card">
+                <div class="card-header">
+                    <p class="card-header-title">Address Information
+                    </p>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <table class="table is-hoverable" id="data_table" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Address 1</th>
+                                <th>Address 2</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Postal Code</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <td></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for address in address_list %}
+                                <tr>
+                                    <td data-sort="{{ address.address_type }}">
+                                        <div class="">
+                                            <a href="{% url "vendors:vendor-address-edit" pk=address.id %}">{{ address.address_type }}</a>
+                                        </div>
+                                    </td>
+                                    <td class="">
+                                        {{ address.address1 }}
+                                    </td>
+                                    <td class="">{{ address.2 }}</td>
+                                    <td class="">{{ address.city }}</td>
+                                    <td class="">{{ address.state }}</td>
+                                    <td class="">{{ address.postal_code }}</td>
+                                    <td class="">{{ address.status }}</td>
+                                    <td class="">{{ address.created_on | date:"m/d/y" }}:
+                                        {{ address.created_on |time:"H:i T" }}</td>
+                                    <td class="">{{ address.updated_on | date:"m/d/y" }}:
+                                        {{ address.updated_on |time:"H:i T" }}</td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <a href="{% url 'vendors:vendor-address-new' vendor.id %}" class="button is-info is-light">Add
+                        Address</a>
+                </div>
+            </div>
+        </div>
+        {#    </div>#}
+        <div class="column">
+            {% if vendor.name1 %}
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-header-title">Contact Info
+                        </p>
+                    </div>
+                    <div class="card-content">
+                        <table class="table is-hoverable" id="data_table" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>Last</th>
+                                <th>First</th>
+                                <th>Title</th>
+                                <th>Email</th>
+                                <th>Type</th>
+                                <th>Client</th>
+                                <th>Valid</th>
+                                <th>Created</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for contact in contact_list %}
+                                <tr>
+                                    <td data-sort="{{ contact.last_name }}">
+                                        <div class="">{{ contact.last_name }}
+                                            {#                                            <a href="{{ contact.get_absolute_url }}">#}
+                                            {#                                                {{ contact.last_name | capfirst }}</a>#}
+                                        </div>
+                                    </td>
+                                    <td class="">{% if contact.first_name is None %}
+                                        <a href="{% url "contacts:edit" pk=contact.id %}">(edit)</a>
+                                    {% else %}
+                                        <a href="{% url "contacts:edit" pk=contact.id %}">{{ contact.first_name | capfirst }}</a>
+                                    {% endif %}
+                                    </td>
+                                    <td class="">{{ contact.title | capfirst }}</td>
+                                    <td class="">{% if contact.email is None %}
+                                        -
+                                    {% else %}
+                                        {{ contact.email | lower }}
+                                    {% endif %}
+                                    </td>
+                                    <td class="">
+                                        {% if contact.contact_type == 1 %}
+                                            <i class="fas fa-user text-center" aria-hidden="true"></i>
+                                        {% elif contact.contact_type == 2 %}
+                                            <i class="far fa-building text-center" aria-hidden="true"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td class="">
+                                        {{ contact.client.client_code | upper }}
+                                        </a>
+                                    </td>
+                                    <td class="">{{ contact.status }}</td>
+                                    <td class="">{{ contact.created_on | date:"m/d/y" }}:{{ contact.created_on |time:"H:i T" }}</td>
+                                    <td></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="content">
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+    {#    TODO move to base.html until sweetalerts integrated #}
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#data_table').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: true,
+                    targets: -1
+                }],
+                order: [],
+            });
+        });
+
+    </script>
+
+{% endblock javascript %}
+

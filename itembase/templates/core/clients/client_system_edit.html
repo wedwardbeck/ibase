@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ object.client.client_code }} - {{ object.system.name }}{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <div class="title is-size-4">{{ object.client.client_code }} - {{ object.system.name }}</div>
+        <form class="form" method="post"
+              action="{% url 'client_systems:client-system-edit' pk=clientsystem.id %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="control-group">
+                <div class="controls">
+                    <button class="button is-primary">Update</button>
+                    <a class="button is-info is-light"
+                       href="{% url 'client_systems:client-system-list' %}">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

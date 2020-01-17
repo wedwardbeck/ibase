@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="container">
+
+        {% if address.id %}
+            <h1>Edit Address</h1>
+        {% else %}
+            <h1>Add Address</h1>
+        {% endif %}
+        <form class="form-horizontal" method="post"
+                action="{% url 'vendors:vendor-address-edit' pk=address.id  %}">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="control-group">
+              <div class="controls">
+                <button class="btn">Update</button>
+                  <a class="btn btn-primary"
+                     href="{{ cancel_url }}">Cancel</a>
+              </div>
+            </div>
+          </form>
+{#        <a href="{% url "partnesr:address-list" %}">back to list</a>#}
+    </div>
+{% endblock content %}

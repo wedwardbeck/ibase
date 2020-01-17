@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block css %}
+  {{ block.super }}
+  {% include 'includes/datatables_css.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h5>Addresses</h5>
+    <div class="table-responsive table-hover">
+      <table class="table" id="address_table" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th>Contact</th>
+          <th>Type</th>
+          <th>Address 1</th>
+          <th>Address 2</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Postal Code</th>
+          <th>Valid</th>
+          <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for address in address_list %}
+          <tr>
+            <td data-sort="{{ address.contact }}">
+              <div class="col-md-6 col-sm-4 col-xs-4 ">
+                <a href="{{ address.get_absolute_url }}">
+                  {{ address.last_name | capfirst }}</a>
+              </div>
+            </td>
+            <td class="">{% if address.first_name is None %}
+              -
+              {% else %}
+              {{ address.first_name | capfirst }}
+              {% endif %}
+            </td>
+            <td class="">{{ address.title | capfirst }}</td>
+            <td class="">{% if address.email is None %}
+              -
+              {% else %}
+              {{ address.email | capfirst }}
+              {% endif %}
+            </td>
+            <td class="">{{ address.get_address_type_display }}</td>
+            <td class="">{{ address.is_valid }}</td>
+            <td class="">{{ address.created_on| date:"m/d/y" }}:{{ address.created_on |time:"H:i T" }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <a class="btn btn-primary"
+         href="{% url 'contacts:address-new' %}">Add New</a>
+    </div>
+  </div>
+{% endblock content %}
+{% block javascript %}
+  {{ block.super }}
+  {% include 'includes/datatables_js.html' %}
+  <script type="application/javascript">
+
+    $(document).ready(function () {
+      $('#address_table').DataTable({
+        responsive: true,
+        order: false,
+        fixedHeader: true,
+        dom:
+        "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-4'i><'col-sm-4 text-center'><'col-sm-4'p>>",
+        buttons: [
+          'copyHtml5', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+        ]
+      });
+    });
+  </script>
+{% endblock javascript %}

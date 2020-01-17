@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% blocktrans %}Create Client{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    <div class="title is-size-4"> {% trans "Create Client" %}</div>
+    <form class="form" method="post" action="{% url 'clients:new' %}"
+          enctype="multipart/form-data" id="new-client">
+        {% csrf_token %}
+        <div class="field">
+            <label class="label">{% trans "Client Code" %}</label>
+            <div class="control has-icons-right">
+                <input id="id_client_code" class="input" type="text" required
+                       placeholder="{% trans "Client Code" %}" name="client_code" maxlength="10">
+                <div id="invalid-feedback" style="display:none" class="help is-danger">
+                    *Client Code Already Exists*
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Name" %}</label>
+            <div class="control">
+                <input id="id_client_name" class="input" type="text" required
+                       placeholder="{% trans "Name" %}" name="client_name" maxlength="150">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Engagement Type" %}</label>
+            <div class="control">
+                <div class="select">
+                    <select id="id_engagement" name="engagement">
+                        {#                        <option>---SELECT---</option>#}
+                        {% for value, text in form.fields.engagement.choices %}
+                            <option value="{{ value }}">{{ text }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Parent Client" %}</label>
+            <div class="control">
+                <div class="select">
+                    <select id="id_parent" name="parent">
+                        {% for value, text in form.fields.parent.choices %}
+                            <option value="{{ value }}">{{ text }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Client Status" %}</label>
+            <div class="control">
+                <div class="select">
+                    <select id="id_client_status" name="client_status">
+                        {% for value, text in form.fields.client_status.choices %}
+                            <option value="{{ value }}">{{ text }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Implementation Fee Status" %}</label>
+            <div class="control">
+                <div class="select">
+                    <select id="id_imp_fee_status" name="imp_fee_status">
+                        {% for value, text in form.fields.imp_fee_status.choices %}
+                            <option value="{{ value }}">{{ text }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Service Start Date" %}</label>
+            <div class="control">
+                <input id="id_service_start" class="input" type="date" required
+                       placeholder="{% trans "Service Start Date" %}" name="service_start">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Service End Date" %}</label>
+            <div class="control">
+                <input id="id_service_end" class="input" type="date"
+                       placeholder="{% trans "Service End Date" %}" name="service_end">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "IQ Support Address" %}</label>
+            <div class="control">
+                <input id="id_iq_support_address" class="input" type="email"
+                       placeholder="{% trans "IQ Support Address" %}" name="iq_support_address">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Upload Address" %}</label>
+            <div class="control">
+                <input id="id_upload_address" class="input" type="email"
+                       placeholder="{% trans "Upload Address" %}" name="upload_address">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Production Support Number" %}</label>
+            <div class="control">
+                <input id="id_production_support_number" class="input" type="tel"
+                       placeholder="{% trans "Production Support Number" %}" name="production_support_number"
+                       maxlength="20">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">{% trans "Company Logo" %}</label>
+            <div class="control">
+                <input id="id_logo" class="input" type="file" name="logo" maxlength="150">
+            </div>
+        </div>
+        <label class="checkbox">
+            <input type="checkbox" name="approved" id="id_approved">{% trans "Approved" %}
+        </label>
+        <div class="field is-grouped">
+            <div class="control">
+                <button class="button is-link">Submit</button>
+            </div>
+            <div class="control">
+                <button class="button is-link is-light">Cancel</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+
+    <script type="application/javascript">
+        $("#id_client_code").change(function () {
+            var $elem = $("#id_client_code")[0];
+            console.log($(this).val());
+            var client_code = $(this).val();
+            var newSpan = document.createElement("span");
+            newSpan.setAttribute('class', 'icon is-small is-right');
+
+            $.ajax({
+                url: '{% url 'clients:validate_client_code' %}',
+                data: {
+                    'client_code': client_code
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.is_taken) {
+                        $("#id_client_code").addClass('is-danger').focus();
+                        $("#invalid-feedback").show();
+                    } else {
+                        $("#invalid-feedback").hide();
+                        $("#id_client_code").removeClass('is-danger');
+                    }
+                }
+            });
+        });
+    </script>
+{% endblock %}

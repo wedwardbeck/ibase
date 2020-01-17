@@ -1,0 +1,124 @@
+{% load staticfiles i18n %}
+{% load account socialaccount %}
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">{% trans "Sign In" %}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="modal-dialog login animated">
+              <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                  <div class="box">
+                    <div class="content py-0">
+                      <div class="social">
+                        <a class="circle github" href="/">
+                          <i class="fa fa-github fa-fw"></i>
+                        </a>
+                        <a id="google_login" class="circle google"
+                           href="/accounts/google/login/?process=login">
+                          <i class="fa fa-google fa-fw"></i>
+                        </a>
+                        {#                                                <a id="facebook_login" class="circle facebook"#}
+                        {#                                                   href="/">#}
+                        {#                                                    <i class="fa fa-facebook fa-fw"></i>#}
+                        {#                                                </a>#}
+                      </div>
+                      <div class="division">
+                        <div class="line l"></div>
+                        <span>or</span>
+                        <div class="line r"></div>
+                      </div>
+                      <div class="error"></div>
+                      <div class="form loginBox">
+                        {% block inner %}
+                          {% get_providers as socialaccount_providers %}
+
+                          {% if socialaccount_providers %}
+                            <p>{% blocktrans with site.name as site_name %}Please sign in
+                              with one
+                              of your existing third party accounts. Or,
+                              <a href="{{ signup_url }}">sign up</a>
+                              for a {{ site_name }} account and sign in
+                              below:{% endblocktrans %}</p>
+                            <div class="socialaccount_ballot">
+                              <ul class="socialaccount_providers">
+                                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                              </ul>
+                              <div class="login-or">{% trans 'or' %}</div>
+                            </div>
+                            {% include "socialaccount/snippets/login_extra.html" %}
+                          {% else %}
+                            <p>If you have not created an account yet, then
+                              please <a href="#registerModal" data-toggle="modal"
+                                        data-target="#registerModal"> sign up</a>first.
+                            </p>
+                          {% endif %}
+                          <form class="login" method="POST"
+                                action="{% url 'account_login' %}">
+                            {% csrf_token %}
+                            <div id="div_id_login" class="form-group">
+                              <label for="id_login" class="form-control-label
+                                                             requiredField">
+                                Username<span class="asteriskField">*</span>
+                              </label>
+                              <input type="text" name="login"
+                                     placeholder="Username"
+                                     autofocus="autofocus" maxlength="150"
+                                     class="form-control"
+                                     required id="id_login"/>
+                            </div>
+                            <div id="div_id_password" class="form-group">
+                              <label for="id_password"
+                                     class="form-control-label requiredField">
+                                Password<span class="asteriskField">*</span> </label>
+                              <input type="password" name="password"
+                                     placeholder="Password"
+                                     class="form-control"
+                                     required id="id_password"/>
+                            </div>
+                            <div class="form-group">
+                              <div id="div_id_remember" class="checkbox"><label
+                                for="id_remember" class="">
+                                <input type="checkbox" name="remember"
+                                       class="checkboxinput" id="id_remember"/>Remember
+                                Me</label></div>
+                            </div>
+                            {% if redirect_field_value %}
+                              <input type="hidden" name="{{ redirect_field_name }}"
+                                     value="{{ redirect_field_value }}"/>
+                            {% endif %}
+                            <a class="button secondaryAction"
+                               href="{% url 'account_reset_password' %}">
+                              {% trans "Forgot Password?" %}
+                            </a>
+                            <button class="primaryAction btn btn-primary"
+                                    type="submit">{% trans "Sign In" %}</button>
+                          </form>
+                        {% endblock %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div class="forgot login-footer">
+                    {#                            <span>Looking to#}
+                    {#                                 <a href="javascript: showRegisterForm();">create an account</a>#}
+                    {#                            ?</span>#}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

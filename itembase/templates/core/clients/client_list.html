@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static i18n security_tags %}
+{#{% load thumbnail %}#}
+{% block css %}
+    {{ block.super }}
+    {% include 'includes/datatables_css.html' %}
+
+{% endblock %}
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Clients</h1>
+            <table class="table is-hoverable" id="mytable" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Client Name</th>
+                    <th>Code</th>
+                    <th>Service</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for client in client_list %}
+                    <tr>
+                        <td data-sort="{{ client.client_name }}">
+                            <div class="media">
+                                <a href="{{ client.get_absolute_url }}">
+                                    {{ client.client_name }}
+                                </a>
+                            </div>
+                        </td>
+                        <td>{{ client.client_code | upper }}</td>
+                        <td class="">{{ client.engagement.service_abbreviation }}</td>
+                        <td class="">{{ client.service_start | date:"SHORT_DATE_FORMAT" }}</td>
+                        <td class="">{{ client.service_end |default_if_none:"-" }}</td>
+                        <td class="">{{ client.get_client_status_display }}</td>
+                        <td class="">{{ client.created_on| date:"m/d/y" }}:{{ client.created_on |time:"H:i T" }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {#                {% if user.is_superuser %}#}
+            {% if user|is_group:"Team Admin" %}
+                <div class="control">
+                    <a class="button is-primary" href="{% url 'clients:new' %}">{% trans "Add Client" %}</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#mytable').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: true,
+                    targets: -1
+                }],
+                order: [],
+            });
+        });
+    </script>
+{% endblock javascript %}

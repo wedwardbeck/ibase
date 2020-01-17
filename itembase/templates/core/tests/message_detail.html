@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Partner: {{ message.name1 }}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>{{ message.name }}</h2>
+      {% if message.name %}
+        <p>{{ message.name }}</p>
+        <p>{{ message.subject }}</p>
+        <p>{% autoescape off %}{{ message.body | safe}}{% endautoescape %}</p>
+      {% endif %}
+    </div>
+  </div>
+
+{#{% if object == request.user %}#}
+<!-- Action buttons -->
+<div class="row">
+
+  <div class="col-sm-12">
+    <a class="btn btn-primary" href="{% url 'messages:edit' pk=message.pk %}" role="button">Update</a>
+    <a class="btn btn-primary" href="{% url 'messages:list' %}" >Cancel</a>
+  </div>
+
+</div>
+<!-- End Action buttons -->
+{#{% endif %}#}
+
+
+</div>
+{% endblock content %}
+

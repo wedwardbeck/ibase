@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static i18n %}{% load thumbnail %}
+{% block css %}
+  {{ block.super }}
+        <link href="{% static 'css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet">
+
+    {% endblock %}
+{% block content %}
+
+   <div class="container-fluid">
+    <h5>Client Systems</h5>
+    <div class="table-responsive table-hover">
+      <table class="table" id="client-systems-table" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th>System Name</th>
+          <th>Version</th>
+          <th>Client</th>
+          <th>System Type</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for clientsystem in systems %}
+          <tr>
+            <td data-sort="{{ clientsystem.system_name }}">
+              <div class="media">
+                <div class="col-md-6 col-sm-4 col-xs-4 ">
+                  <a href="{{ clientsystem.get_absolute_url }}">
+                    {{ clientsystem.system_name}}</a>
+                </div></div>
+            </td>
+            <td>{{ clientsystem.system_version}}</td>
+            <td class="">{{ clientsystem.client_id.client_code | upper }}</td>
+            <td class="">{{ clientsystem.system_type}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <h5>Clients</h5>
+    <div class="table-responsive table-hover">
+      <table class="table" id="mytable" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th>Client Name</th>
+          <th>Code</th>
+          <th>Service</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Status</th>
+          <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for client in home_list %}
+          <tr>
+            <td data-sort="{{ client.client_name }}">
+              <div class="media">
+                <div class="col-md-6 col-sm-4 col-xs-4 ">
+                  <a href="{{ client.get_absolute_url }}">
+                    {{ client.client_name}}
+                  </a>
+                  {#                                    <img src="{% thumbnail client.photo 130x160 %}"#}
+                  {#                                    <img src="{{ client.photo.url }}"#}
+                  {#                                         class="d-flex align-self-center mr-3 img-fluid card-img-left"#}
+                  {#                                         style="float:left;"/></a>#}
+                </div></div>
+            </td>
+            {#                        <td class="col-md-6 col-sm-8 col-xs-12 hidden-xs-down">#}
+            {#                            <a href="#">{{ client.law_firm | title }}</a></td>#}
+            <td>{{ client.client_code | upper }}</td>
+            <td class="">{{ client.engagement.service_abbreviation }}</td>
+            <td class="">{{ client.service_start | date:"SHORT_DATE_FORMAT" }}</td>
+            <td class="">{{ client.service_end |default_if_none:"-"}}</td>
+            <td class="">{{ client.get_client_status_display }}</td>
+            <td class="">{{ client.created_on| date:"m/d/y" }}:{{ client.created_on |time:"H:i T" }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% for user in users %}
+        {{ user.email }}
+  {% endfor %}
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+
+    <script type="application/javascript">
+
+        $(document).ready(function() {
+    $('#mytable').DataTable({
+      responsive: true,
+                columnDefs: [ {
+            targets: [ 0 ],
+            orderData: [ 0, 1 ]
+        }, {
+            targets: [ 1 ],
+            orderData: [ 1, 0 ]
+        }, {
+            targets: [ 4 ],
+            orderData: [ 4, 0 ]
+        } ]
+                {#columnDefs: [#}
+                {#    {"width": "50rem", "targets": 0},#}
+                {#    {"width": "12rem", "targets": 1},#}
+                {#    {"width": "2rem", "targets": 2}#}
+                {#]#}
+    });
+} );
+    </script>
+{% endblock javascript %}

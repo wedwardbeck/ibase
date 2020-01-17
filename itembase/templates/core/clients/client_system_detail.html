@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static core_tags %}{% load i18n %}
+{% load thumbnail %}
+
+{% block title %}{% blocktrans %}Client System: {{ clientsystem.system.name }}{% endblocktrans %}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <section class="section">
+            <div class="column">
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-header-title">
+                            {{ clientsystem.client.client_code | upper }} -
+                            {{ clientsystem.client.client_name }} - {{ clientsystem.system.name }}
+                        </p>
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            {% if clientsystem.system.name %}
+                                <p>{{ clientsystem.system.name }} - {{ clientsystem.system.version }} -
+                                    Access: {{ clientsystem.have_access }}</p>
+                                {#                                Access: {{ clientsystem.have_access | fa_valid | safe }}</p>#}
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'client_systems:client-system-list' %}" class="button is-primary is-light">Back
+                            to List</a>
+                        <a href="{% url 'client_systems:client-system-edit' pk=clientsystem.id %}"
+                           class="button is-info  is-light">{% trans "Update" %}</a>
+                        <!-- End Action buttons -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}

@@ -1,0 +1,22 @@
+{% load staticfiles i18n %}
+{% if request.user.is_authenticated %}
+    <div class="navbar-end">
+        <div class="navbar-item">
+            <div class="buttons">
+                <a class="button is-secondary" href="{% url 'account_logout' %}">
+                    <strong>{% trans "Sign Out" %}</strong></a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="navbar-end">
+        <div class="navbar-item">
+            <div class="buttons">
+                <a class="button is-primary" href="{% url 'account_signup' %}">
+                    <strong>{% trans "Sign Up" %}</strong></a>
+                <a class="button is-light" href="{% url 'account_login' %}">
+                    {% trans "Sign In" %}</a>
+            </div>
+        </div>
+    </div>
+{% endif %}

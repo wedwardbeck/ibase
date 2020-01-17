@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static i18n security_tags%}
+{#{% load thumbnail %}#}
+{% load tz %}
+{% block css %}
+    {{ block.super }}
+    {% include 'includes/datatables_css.html' %}
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Vendors</h2>
+            <table class="table is-hoverable" id="vendor_table" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Vendor Name</th>
+                    <th>Client</th>
+                    <th>Used By</th>
+                    <th>Status</th>
+                    <th>Parent</th>
+                    <th>Created</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for vendor in vendor_list %}
+                    <tr>
+                        <td data-sort="{{ vendor.name1 }}">
+                            <div class="media">
+                                <a href="{{ vendor.get_absolute_url }}">
+                                    {{ vendor.name1|title }}
+                                </a>
+                            </div>
+                        </td>
+                        <td>{{ vendor.is_client }}</td>
+                        <td class="">{{ vendor.client }}</td>
+                        <td class="">{{ vendor.status |title }}</td>
+                        <td class="">{{ vendor.parent }}</td>
+                        <td class="">{{ vendor.created_on }}</td>
+{#                        <td class="">{{ vendor.created_on| date:"m/d/y" }}:{{ vendor.created_on |time:"H:i T" }}</td>#}
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {% if user|is_group:"Team Admin" %}
+                <div class="control">
+                    <a class="button is-primary" href="{% url 'vendors:vendor-new' %}">{% trans "Add New" %}</a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#vendor_table').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: true,
+                    targets: -1
+                }],
+                order: [],
+            });
+        });
+    </script>
+{% endblock javascript %}

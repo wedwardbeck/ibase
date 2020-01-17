@@ -1,0 +1,41 @@
+{% load staticfiles i18n %}
+{% load account socialaccount %}
+<div class="modal fade" id="signoutModal" tabindex="-1" role="dialog"
+     aria-labelledby="signoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header pxy-1 pt-sm-1 pb-sm-1">
+        <h5 class="modal-title" id="signoutModalLabel">{% trans "Sign Out" %}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body  mb-0 mt-0 pb-0 pt-sm-0 pb-sm-0 pt-0">
+        <div class="form-group">
+          <div class="modal-dialog login animated">
+            <div class="modal-content py-0">
+              <div class="modal-body py-0 pt-sm-0">
+                <div class="box">
+                  <div class="content signoutBox" style="">
+                    <p>{% trans 'Are you sure you want to sign out?' %}</p>
+                    <div class="form">
+                      <form method="post" html="{:multipart=>true}" data-remote="true"
+                            action="{% url 'account_logout' %}" accept-charset="UTF-8"
+                            id="signout_form">{% csrf_token %}{% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}"
+                               value="{{ redirect_field_value }}"/>
+                      {% endif %}
+                        <input class="btn btn-danger mb-2 mt-2 pt-1 pb-1" type="submit"
+                               value="{% trans 'Sign Out' %}" name="commit">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

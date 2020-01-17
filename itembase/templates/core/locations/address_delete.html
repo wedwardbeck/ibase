@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Delete Address</h1>
+
+<p>Are you sure you want to delete the address {{ address }}?</p>
+
+<form action="{% url "addresss-delete" pk=address.id %}" method="POST">
+  {% csrf_token %}
+
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url "addresss-list" %}">No, cancel.</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static i18n security_tags %}{% load thumbnail %}
+{% load core_tags %}
+
+{% block css %}
+    {{ block.super }}
+    {% include 'includes/datatables_css.html' %}
+{% endblock %}
+{% block content %}
+    <section class="section">
+    <div class="container">
+        <h1 class="title">Clients Systems</h1>
+        <table class="table is-hoverable" id="client-systems-table" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+                <th>System Name</th>
+                <th>Version</th>
+                <th>Client</th>
+                <th>Access</th>
+                <th>System Type</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for clientsystem in client_system_list %}
+                <tr>
+                    <td data-sort="{{ clientsystem.client_code }}">
+                        {{ clientsystem.client.client_code | upper }}</td>
+                    <td >
+                            <a href="{{ clientsystem.get_absolute_url }}">
+                                {{ clientsystem.system.name }}</a>
+                    </td>
+                    <td>{{ clientsystem.system.version }}</td>
+
+                    <td class="">{{ clientsystem.have_access }}</td>
+                    {#            <td class="">{{ clientsystem.have_access  | fa_valid | safe }}</td>#}
+                    <td class="">{{ clientsystem.system.type.code }}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if user|is_group:"Team Admin" %}
+                <div class="control">
+                    <a class="button is-primary" href="{% url 'client_systems:client-system-new' %}">
+                        {% trans "Add New" %}</a>
+                </div>
+            {% endif %}
+    </section>
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#client-systems-table').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: true,
+                    targets: -1
+                }],
+                order: [],
+            });
+        });
+    </script>
+{% endblock javascript %}

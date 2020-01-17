@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}New Client System{% endblock %}
+
+{% block content %}
+  <h1>New Client System</h1>
+  <form class="form-horizontal" method="post"
+        action="{% url 'client_systems:client-system-new' %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Add</button>
+          <a class="btn btn-primary"
+             href="{% url 'client_systems:client-system-list' %}">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}
