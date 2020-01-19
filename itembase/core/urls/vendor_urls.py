@@ -13,4 +13,5 @@ urlpatterns = [
     path('<int:pk>/address-new/', VendorAddressCreateView.as_view(), name='vendor-address-new'),
     path('address/<int:pk>', VendorAddressDetailView.as_view(), name='vendor-address-view'),
     path('address/edit/<int:pk>', VendorAddressUpdateView.as_view(), name='vendor-address-edit'),
+    path("upload/", VendorCreateView.as_view(), name="vendor-upload"),
 ]

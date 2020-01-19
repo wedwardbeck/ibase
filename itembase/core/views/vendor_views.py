@@ -1,5 +1,6 @@
 from braces import views
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Count
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from itembase.utils.mixins import CancelMixin
@@ -14,7 +15,7 @@ class VendorCreateView(SuccessMessageMixin, views.LoginRequiredMixin, CreateView
     model = Vendor
     template_name = 'core/vendors/vendor_new.html'
     form_class = VendorForm
-    success_url = reverse_lazy('vendors:list')
+    success_url = reverse_lazy('vendors:vendor-list')
     success_message = "%(name1)s was created successfully"
 
     def form_valid(self, form):
@@ -25,7 +26,7 @@ class VendorCreateView(SuccessMessageMixin, views.LoginRequiredMixin, CreateView
 class VendorUpdateView(SuccessMessageMixin, SingleObjectMixin, views.LoginRequiredMixin, UpdateView):
     model = Vendor
     form_class = VendorForm
-    success_url = reverse_lazy('vendors:list')
+    success_url = reverse_lazy('vendors:vendor-list')
     template_name = 'core/vendors/vendor_edit.html'
     success_message = "%(vendor_name)s was updated successfully"
 
@@ -45,13 +46,15 @@ class VendorDetailView(SingleObjectMixin, views.LoginRequiredMixin, DetailView):
 
 class VendorDeleteView(views.LoginRequiredMixin, views.StaffuserRequiredMixin, DeleteView):
     model = Vendor
-    success_url = reverse_lazy('vendors-list')
+    success_url = reverse_lazy('vendors:vendors-list')
 
 
 class VendorListView(views.LoginRequiredMixin, ListView):
-    model = Vendor
+    # model = Vendor
+    queryset = Vendor.objects.select_related('created_by').annotate(item_count=Count('vendoritems')).order_by('name1')
+
     template_name = 'core/vendors/vendor_list.html'
-    context_object_name = 'vendor_list'
+    context_object_name = 'vendors'
 
 
 class VendorAddressCreateView(SuccessMessageMixin, views.LoginRequiredMixin, views.StaffuserRequiredMixin,
@@ -91,4 +94,5 @@ class VendorAddressDetailView(SingleObjectMixin, views.LoginRequiredMixin, Detai
 
 class VendorAddressDeleteView(views.LoginRequiredMixin, views.StaffuserRequiredMixin, DeleteView):
     model = VendorAddress
-    success_url = reverse_lazy('vendors-list')
+    success_url = reverse_lazy('vendors:vendors-list')
+

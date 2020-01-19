@@ -52,6 +52,7 @@
                                 <th>City</th>
                                 <th>State</th>
                                 <th>Postal Code</th>
+                                <th>Country</th>
                                 <th>Status</th>
                                 <th>Created</th>
                                 <th>Updated</th>
@@ -59,25 +60,27 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for address in address_list %}
+                            {% for vendor_address in address_list %}
                                 <tr>
                                     <td data-sort="{{ address.address_type }}">
                                         <div class="">
-                                            <a href="{% url "vendors:vendor-address-edit" pk=address.id %}">{{ address.address_type }}</a>
+                                            <a href="{% url "vendors:vendor-address-edit" pk=vendor_address.id %}">
+                                                {{ vendor_address.address_type }}</a>
                                         </div>
                                     </td>
                                     <td class="">
-                                        {{ address.address1 }}
+                                        {{ vendor_address.address1 }}
                                     </td>
-                                    <td class="">{{ address.2 }}</td>
-                                    <td class="">{{ address.city }}</td>
-                                    <td class="">{{ address.state }}</td>
-                                    <td class="">{{ address.postal_code }}</td>
-                                    <td class="">{{ address.status }}</td>
-                                    <td class="">{{ address.created_on | date:"m/d/y" }}:
-                                        {{ address.created_on |time:"H:i T" }}</td>
-                                    <td class="">{{ address.updated_on | date:"m/d/y" }}:
-                                        {{ address.updated_on |time:"H:i T" }}</td>
+                                    <td class="">{{vendor_address.2 }}</td>
+                                    <td class="">{{vendor_address.city }}</td>
+                                    <td class="">{{vendor_address.state }}</td>
+                                    <td class="">{{vendor_address.postal_code }}</td>
+                                    <td class="">{{vendor_address.country }}</td>
+                                    <td class="">{{vendor_address.status }}</td>
+                                    <td class="">{{vendor_address.created_on | date:"m/d/y" }}:
+                                        {{vendor_address.created_on |time:"H:i T" }}</td>
+                                    <td class="">{{vendor_address.updated_on | date:"m/d/y" }}:
+                                        {{vendor_address.updated_on |time:"H:i T" }}</td>
                                     <td></td>
                                 </tr>
                             {% endfor %}

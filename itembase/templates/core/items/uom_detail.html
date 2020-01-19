@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static i18n security_tags %}
+{% block css %}
+    {{ block.super }}
+    {% include 'includes/datatables_css.html' %}
+{% endblock %}
+
+{% block title %}Unit of Measure: {{ uom.abbreviation }} - {{ uom.name }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {#        <section class="section">#}
+        <div class="column">
+            {% if uom.name %}
+                <div class="card">
+                    <div class="card-header">
+                        <p class="card-header-title">{{ uom.abbreviation }} | {{ uom.name }}
+                        </p>
+                    </div>
+                    <div class="card-content">
+                        <p class="title is-4">{{ uom.description | default_if_none:"" }}</p>
+                        <div class="content">
+                            <p class="card-text">Added On: {{ uom.created_on | date:"m/d/y" }}</p>
+                            <p class="card-text">Updated On: {{ uom.updated_on | date:"m/d/y" }}</p>
+                            <p class="card-text">Added By: {{ uom.created_by }}</p>
+                        </div>
+                        <a href="{% url 'vendor-items:uom-list' %}" class="button is-primary is-light">Back to List</a>
+                        <a href="{% url 'vendor-items:uom-edit' pk=uom.id %}"
+                           class="button is-info  is-light">Update</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {#        </section>#}
+        {#        <div class="column">#}
+        {#            <div class="card">#}
+        {#                <div class="card-header">#}
+        {#                    <p class="card-header-title">Address Information#}
+        {#                    </p>#}
+        {#                </div>#}
+        {#                <div class="card-content">#}
+        {#                    <div class="content">#}
+        {#                        <table class="table is-hoverable" id="data_table" cellspacing="0" width="100%">#}
+        {#                            <thead>#}
+        {#                            <tr>#}
+        {#                                <th>Type</th>#}
+        {#                                <th>Address 1</th>#}
+        {#                                <th>Address 2</th>#}
+        {#                                <th>City</th>#}
+        {#                                <th>State</th>#}
+        {#                                <th>Postal Code</th>#}
+        {#                                <th>Status</th>#}
+        {#                                <th>Created</th>#}
+        {#                                <th>Updated</th>#}
+        {#                                <td></td>#}
+        {#                            </tr>#}
+        {#                            </thead>#}
+        {#                            <tbody>#}
+        {#                            {% for address in address_list %}#}
+        {#                                <tr>#}
+        {#                                    <td data-sort="{{ address.address_type }}">#}
+        {#                                        <div class="">#}
+        {#                                            <a href="{% url "vendor-items:address-edit" pk=address.id %}">{{ address.address_type }}</a>#}
+        {#                                        </div>#}
+        {#                                    </td>#}
+        {#                                    <td class="">#}
+        {#                                        {{ address.address1 }}#}
+        {#                                    </td>#}
+        {#                                    <td class="">{{ address.2 }}</td>#}
+        {#                                    <td class="">{{ address.city }}</td>#}
+        {#                                    <td class="">{{ address.state }}</td>#}
+        {#                                    <td class="">{{ address.postal_code }}</td>#}
+        {#                                    <td class="">{{ address.status }}</td>#}
+        {#                                    <td class="">{{ address.created_on | date:"m/d/y" }}:#}
+        {#                                        {{ address.created_on |time:"H:i T" }}</td>#}
+        {#                                    <td class="">{{ address.updated_on | date:"m/d/y" }}:#}
+        {#                                        {{ address.updated_on |time:"H:i T" }}</td>#}
+        {#                                    <td></td>#}
+        {#                                </tr>#}
+        {#                            {% endfor %}#}
+        {#                            </tbody>#}
+        {#                        </table>#}
+        {##}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
+{% endblock content %}
+
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+    {#    TODO move to base.html until sweetalerts integrated #}
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#data_table').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: true,
+                    targets: -1
+                }],
+                order: [],
+            });
+        });
+
+    </script>
+
+{% endblock javascript %}
+

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static i18n security_tags %}
+{#{% load thumbnail %}#}
+{% load tz %}
+{% block css %}
+    {{ block.super }}
+    {% include 'includes/datatables_css.html' %}
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="title">Units of Measure</h2>
+            <table class="table is-hoverable" id="data_table" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Unit Name</th>
+                    <th>Abbreviation</th>
+                    <th>Description</th>
+                    <th>Created By</th>
+                    <th>Created On</th>
+                    <th>Modified On</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for uom in uom %}
+                    <tr>
+                        <td data-sort="{{ uom.name }}">
+                            <a href="{{ uom.get_absolute_url }}">
+                                {{ uom.name }}
+                            </a>
+                        </td>
+                        <td class="">{{ uom.abbreviation }}</td>
+                        <td class="">{{ uom.description }}</td>
+                        <td class="">{{ uom.created_by }}</td>
+                        <td class="">{{ uom.created_on }}</td>
+                        <td class="">{{ uom.updated_on }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            {#            {% if user|is_group:"Team Admin" %}#}
+            <div class="control">
+                <a class="button is-primary" href="{% url 'vendor-items:uom-new' %}">{% trans "Add New" %}</a>
+            </div>
+            {#            {% endif %}#}
+        </div>
+    </section>
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#data_table').DataTable({
+                responsive: {
+                    details: {
+                        type: 'column',
+                        target: -1
+                    }
+                },
+                columnDefs: [{
+                    className: 'control',
+                    orderable: true,
+                    targets: -1
+                }],
+                order: [],
+            });
+        });
+    </script>
+{% endblock javascript %}

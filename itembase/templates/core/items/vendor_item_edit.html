@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Vendor Item: {{ vendoritem.vendor }} : {{ vendoritem.item_number }} -
+    {{ vendoritem.description }}{% endblock %}
+
+{% block content %}
+  <h1>Vendor Item: {{ vendoritem.vendor }} : {{ vendoritem.item_number }} -
+    {{ vendoritem.description }}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'vendor-items:edit' pk=vendoritem.pk %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Update</button>
+          <a class="btn btn-primary" href="{% url 'vendor-items:view' pk=vendoritem.pk %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}
