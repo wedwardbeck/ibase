@@ -118,6 +118,7 @@ class Vendor(models.Model):
                                       default=VendorStatus.new)
     parent = models.ForeignKey('self', verbose_name=_('Parent Vendor'), null=True, blank=True,
                                related_name='parent_vendor', on_delete=models.PROTECT)
+    num_items = models.IntegerField(_("Number of Items"), null=True, blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Created By'),
                                    related_name='vendor_created', on_delete=models.PROTECT)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -162,7 +163,7 @@ class VendorItem(models.Model):
     id = models.BigAutoField(primary_key=True)
     item_number = models.CharField(_('Vendor Item Number'), max_length=100)
     description = models.CharField(_('Description'), max_length=255)
-    vendor = models.ForeignKey(Vendor, related_name='vendor',
+    vendor = models.ForeignKey(Vendor, related_name='vendoritems',
                                verbose_name=_('Vendor'), on_delete=models.PROTECT, null=False)
     uom = models.ForeignKey(UnitOfMeasure, related_name='unitofmeasure',
                             verbose_name=_('UOM'), on_delete=models.PROTECT, null=False)

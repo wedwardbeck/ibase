@@ -1,5 +1,6 @@
 from braces import views
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Count
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from itembase.utils.mixins import CancelMixin
@@ -49,7 +50,9 @@ class VendorDeleteView(views.LoginRequiredMixin, views.StaffuserRequiredMixin, D
 
 
 class VendorListView(views.LoginRequiredMixin, ListView):
-    model = Vendor
+    # model = Vendor
+    queryset = Vendor.objects.select_related('created_by').annotate(item_count=Count('vendoritems')).order_by('name1')
+
     template_name = 'core/vendors/vendor_list.html'
     context_object_name = 'vendors'
 

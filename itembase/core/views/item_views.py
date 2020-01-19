@@ -97,6 +97,8 @@ class VendorItemDeleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteVie
 
 
 class VendorItemListView(LoginRequiredMixin, ListView):
-    model = VendorItem
+    # model = VendorItem
+    queryset = VendorItem.objects.select_related('created_by', 'vendor', 'uom').\
+        order_by('vendor__name1', 'item_number')
     template_name = 'core/items/vendor_item_list.html'
     context_object_name = 'vendor_items'

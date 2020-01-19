@@ -15,11 +15,12 @@
                 <thead>
                 <tr>
                     <th>Vendor Name</th>
-                    <th>Client</th>
-                    <th>Used By</th>
+                    <th># Items</th>
+                    <th>Locations Used</th>
                     <th>Status</th>
                     <th>Parent</th>
                     <th>Created</th>
+                    <th>Modified</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -29,15 +30,16 @@
                         <td data-sort="{{ vendor.name1 }}">
                             <div class="media">
                                 <a href="{{ vendor.get_absolute_url }}">
-                                    {{ vendor.name1|title }}
+                                    {{ vendor.name1 }}
                                 </a>
                             </div>
                         </td>
-                        <td>{{ vendor.is_client }}</td>
-                        <td class="">{{ vendor.client }}</td>
+                        <td class="">{{ vendor.item_count }}</td>
+                        <td class="">{{ vendor.item_count }}</td>
                         <td class="">{{ vendor.status |title }}</td>
                         <td class="">{{ vendor.parent }}</td>
-                        <td class="">{{ vendor.created_on }}</td>
+                        <td class="">{{ vendor.created_by.name }} - {{ vendor.created_on }}</td>
+                        <td class="">{{ vendor.updated_on }}</td>
 {#                        <td class="">{{ vendor.created_on| date:"m/d/y" }}:{{ vendor.created_on |time:"H:i T" }}</td>#}
                         <td></td>
                     </tr>
