@@ -161,7 +161,7 @@ class UnitOfMeasure(models.Model):
 
 class VendorItem(models.Model):
     id = models.BigAutoField(primary_key=True)
-    item_number = models.CharField(_('Vendor Item Number'), max_length=100)
+    item_number = models.CharField(_('Item Number'), max_length=100)
     description = models.CharField(_('Description'), max_length=255)
     vendor = models.ForeignKey(Vendor, related_name='vendoritems',
                                verbose_name=_('Vendor'), on_delete=models.PROTECT, null=False)
@@ -177,8 +177,8 @@ class VendorItem(models.Model):
     history = HistoricalRecords()
 
     class Meta:
-        verbose_name = 'Vendor Item Data'
-        verbose_name_plural = 'Vendor Item Data'
+        verbose_name = 'Item Data'
+        verbose_name_plural = 'Item Data'
 
     def __str__(self):
         return '%s - %s - %s' % (self.vendor, self.item_number, self.description)
