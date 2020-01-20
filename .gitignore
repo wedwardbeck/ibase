@@ -338,4 +338,4 @@ itembase/media/
 
 .pytest_cache/
 
-
+itembase/core/fixtures/

@@ -67,7 +67,6 @@ class VendorAddressCreateView(SuccessMessageMixin, views.LoginRequiredMixin, vie
 
     def get_initial(self):
         vendor = get_object_or_404(Vendor, id=self.kwargs.get('pk'))
-        print(vendor)
         return {'vendor': vendor}
 
     def get_success_url(self):
