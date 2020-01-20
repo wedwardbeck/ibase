@@ -4,6 +4,7 @@
     <div class="navbar-dropdown">
         <a class="navbar-item" href="{% url 'clients:list' %}">{% trans 'Clients' %}</a>
         <a class="navbar-item" href="{% url 'clients:new' %}">{% trans 'New Client' %}</a> {# TODO Move to IQ Admin #}
+        <a class="navbar-item" href="{% url 'locations:list' %}">{% trans 'Client Locations' %}</a>
         <hr class="navbar-divider">
         <a class="navbar-item" href="{% url 'vendors:vendor-list' %}">{% trans 'Vendors' %}</a>
         <a class="navbar-item" href="{% url 'vendors:vendor-new' %}">{% trans 'New Vendor' %}</a>

@@ -1,13 +1,15 @@
 from braces import views
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.http import JsonResponse
 from django.urls import reverse_lazy
+# from django.views.generic import DetailView as GenDetailView
 from django.views.generic.detail import SingleObjectMixin
 from vanilla import CreateView, DeleteView, DetailView, UpdateView
 from vanilla import ListView as ListView
 
 from itembase.core.forms.client_forms import ClientForm
-from itembase.core.models import Client
+from itembase.core.models import Client, Contact, Location, TeamMember
 
 
 class ClientCreateView(SuccessMessageMixin, views.LoginRequiredMixin,
@@ -41,10 +43,21 @@ class ClientDetailView(views.LoginRequiredMixin,
     template_name = 'core/clients/client_detail.html'
     context_object_name = 'client'
     slug_url_kwarg = 'slug'
+    lookup_field = 'slug'
+
+    def get_context_data(self, **kwargs):
+        context = super(ClientDetailView, self).get_context_data(**kwargs)
+        context['locations'] = Location.objects.select_related(). \
+            filter(client=self.object)
+        context['contact_list'] = Contact.objects.select_related(). \
+            filter(client=self.object).order_by('last_name').filter(Q(status='2') | Q(status='1'))
+        context['team_list'] = TeamMember.objects.select_related(). \
+            filter(client=self.object).filter(status='2')
+        return context
 
 
 class ClientDeleteView(views.LoginRequiredMixin,
-                       views.StaffuserRequiredMixin, DeleteView):
+                       views.SuperuserRequiredMixin, DeleteView):
     model = Client
     success_url = reverse_lazy('list')
 

@@ -4,22 +4,21 @@
 
     <div class="container">
 
-        {% if address.id %}
-            <h1>Edit Address</h1>
-        {% else %}
-            <h1>Add Address</h1>
-        {% endif %}
+
+            <h4>Add Contact</h4>
         <form class="form-horizontal" method="post"
-                action="{% url 'locations:address-edit' pk=locationaddress.id  %}">
+                action="{% url 'contacts:new' %}">
             {% csrf_token %}
             {{ form|crispy }}
             <div class="control-group">
               <div class="controls">
-                <button class="btn">Update</button>
-                  <a class="btn btn-primary"
+                <button class="button is-primary">Update</button>
+                  <a class="btn btn-secondary"
                      href="{{ cancel_url }}">Cancel</a>
               </div>
             </div>
           </form>
+
+        <a href="{% url "contacts:list" %}">back to list</a>
     </div>
 {% endblock content %}

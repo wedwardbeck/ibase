@@ -31,4 +31,6 @@ django-choices==1.7.1
 django-autoslug==1.9.6
 phonenumberslite==8.11.2
 django-phonenumber-field==3.0.1
+django-versatileimagefield==1.10
+easy-thumbnails==2.6
 

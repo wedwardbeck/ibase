@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from iqms.core.serializers.clients_drf import ClientSerializer, ClientCodeSerializer
-from iqms.core.models import Client
+from itembase.core.serializers.clients_drf import ClientSerializer, ClientCodeSerializer
+from itembase.core.models import Client
 
 
 class ClientViewSet(viewsets.ModelViewSet):

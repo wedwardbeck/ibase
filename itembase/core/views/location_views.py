@@ -15,7 +15,7 @@ class LocationCreateView(SuccessMessageMixin, views.LoginRequiredMixin, CreateVi
     template_name = 'core/locations/location_new.html'
     form_class = LocationForm
     success_url = reverse_lazy('locations:list')
-    success_message = "%(name1)s was created successfully"
+    success_message = "%(name)s was created successfully"
 
     def form_valid(self, form):
         form.instance.created_by = self.request.user
@@ -27,7 +27,7 @@ class LocationUpdateView(SuccessMessageMixin, SingleObjectMixin, views.LoginRequ
     form_class = LocationForm
     success_url = reverse_lazy('locations:list')
     template_name = 'core/locations/location_edit.html'
-    success_message = "%(location_name)s was updated successfully"
+    success_message = "%(name)s was updated successfully"
 
 
 class LocationDetailView(SingleObjectMixin, views.LoginRequiredMixin, DetailView):
@@ -51,7 +51,7 @@ class LocationDeleteView(views.LoginRequiredMixin, views.StaffuserRequiredMixin,
 class LocationListView(views.LoginRequiredMixin, ListView):
     model = Location
     template_name = 'core/locations/location_list.html'
-    context_object_name = 'location_list'
+    context_object_name = 'locations'
 
 
 class LocationAddressCreateView(SuccessMessageMixin, views.LoginRequiredMixin, views.StaffuserRequiredMixin,

@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'import_export',
     'simple_history',
+    'easy_thumbnails',
 ]
 
 LOCAL_APPS = [

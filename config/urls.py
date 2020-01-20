@@ -17,6 +17,9 @@ urlpatterns = [
                   path("accounts/", include("allauth.urls")),
                   # Your stuff: custom urls includes go here
                   path("client/", include('core.urls.client_urls')),
+                  # path("clist/", include('core.urls.checklist_urls')),
+                  # path("csys/", include('core.urls.client_system_urls')),
+                  path("contact/", include('core.urls.contact_urls')),
                   path("loc/", include('core.urls.location_urls')),
                   path("vendors/", include('core.urls.vendor_urls')),
                   path("items/", include('core.urls.item_urls')),

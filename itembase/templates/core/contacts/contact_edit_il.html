@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+  <div class="container">
+
+    {% if contact.id %}
+      <h1>Edit Contact</h1>
+    {% else %}
+      <h1>Add Contact</h1>
+    {% endif %}
+    <form class="form-horizontal" method="post"
+          action="{% url 'contacts:edit-addresses' pk=contact.id %}">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <div class="control-group">
+        <div class="controls">
+          <button class="btn">Update</button>
+          <a class="btn btn-primary"
+             href="{% url 'contacts:list' %}">Cancel</a>
+        </div>
+      </div>
+    </form>
+    <a href="{% url "contacts:list" %}">back to list</a>
+  </div>
+{% endblock content %}

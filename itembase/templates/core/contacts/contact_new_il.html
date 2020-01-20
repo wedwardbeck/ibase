@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+  <div class="container">
+
+
+    <h4>Add Contact</h4>
+    <form class="form-horizontal" method="post"
+          action="{% url 'contacts:new' %}">
+      {% csrf_token %}
+      <table>
+        {{ form.as_table }}
+    </table>
+    {% for formset in inlines %}
+        <div id="{{ formset.prefix }}">
+        {% for subform in formset.forms %}
+            <table>
+            {{ subform.as_table }}
+            </table>
+        {% endfor %}
+        {{ formset.management_form }}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Add client" class="submit"/>
+    </form>
+
+    <a href="{% url "contacts:list" %}">back to list</a>
+  </div>
+{% endblock content %}

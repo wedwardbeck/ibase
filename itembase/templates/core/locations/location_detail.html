@@ -5,25 +5,25 @@
     {% include 'includes/datatables_css.html' %}
 {% endblock %}
 
-{% block title %}Partner: {{ location.name1 }}{% endblock %}
+{% block title %}Partner: {{ location.name }}{% endblock %}
 
 {% block content %}
     <div class="container">
         {#        <section class="section">#}
         <div class="column">
-            {% if location.name1 %}
+            {% if location.name %}
                 <div class="card">
                     <div class="card-header">
-                        <p class="card-header-title">{{ location.name1 | upper }} |
+                        <p class="card-header-title">{{ location.name | upper }} |
                             Status: {{ location.status }}
                         </p>
                     </div>
                     <div class="card-content">
-                        <p class="title is-4">{{ location.name1 | default_if_none:"" }}</p>
+                        <p class="title is-4">{{ location.name | default_if_none:"" }}</p>
                         <div class="content">
                             <p class="card-text">Added On: {{ location.created_on | date:"m/d/y" }}</p>
                             {% if location.parent %}
-                                <p class="card-text">Parent Partner: {{ location.parent.name1 }}
+                                <p class="card-text">Parent Partner: {{ location.parent.name }}
                                 </p>
                             {% endif %}
                         </div>
@@ -92,7 +92,7 @@
         </div>
         {#    </div>#}
         <div class="column">
-            {% if location.name1 %}
+            {% if location.name %}
                 <div class="card">
                     <div class="card-header">
                         <p class="card-header-title">Contact Info
@@ -155,8 +155,8 @@
                         </table>
                         <div class="content">
                         </div>
-                        <a href="{% url 'locations:pc-new' location.id %}"
-                           class="button is-info is-light">Create Contact</a>
+{#                        <a href="{% url 'locations:pc-new' location.id %}"#}
+{#                           class="button is-info is-light">Create Contact</a>#}
                     </div>
                 </div>
             {% endif %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static i18n %}{% load thumbnail %}
+{% block css %}
+  {{ block.super }}
+  <link href="{% static 'css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+  {#  <link href="{% static 'css/jquery.dataTables.min.css' %}" rel="stylesheet">#}
+  {#  <link href="{% static 'css/jquery.rowGroup.bootstrap4.css' %}" rel="stylesheet">#}
+  {% include 'includes/datatables_css.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="container-fluid">
+
+    {% for client in client_agg %}
+      {{ client.client_code }} has
+      {{ client.contacts_count }} contacts assigned<br>
+    {% endfor %}
+
+    <h5>Contacts</h5>
+    <div class="table-responsive table-hover">
+      <table class="table" id="contact_table" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+          <th>Last</th>
+          <th>First</th>
+          <th>Title</th>
+          <th>Email</th>
+          <th>Type</th>
+          <th>Client</th>
+          <th>Valid</th>
+          <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contact_list %}
+          <tr>
+            <td data-sort="{{ contact.last_name }}">
+              <div class="col-md-6 col-sm-4 col-xs-4 ">
+                <a href="{{ contact.get_absolute_url }}">
+                  {{ contact.last_name | capfirst }}</a>
+              </div>
+            </td>
+            <td class="">{% if contact.first_name is None %}
+              -
+              {% else %}
+              {{ contact.first_name | capfirst }}
+              {% endif %}
+             (<a href="{% url "contacts:edit" pk=contact.id %}">edit</a>)
+            </td>
+            <td class="">{{ contact.title | capfirst }}</td>
+            <td class="">{% if contact.email is None %}
+              -
+              {% else %}
+              {{ contact.email | lower }}
+              {% endif %}
+            </td>
+            <td class="">
+            {% if contact.contact_type == 1 %}
+                  <i class="fa fa-user text-center" aria-hidden="true"></i>
+                {% elif contact.contact_type == 2 %}
+                  <i class="fa fa-building-o text-center" aria-hidden="true"></i>
+                {% endif %}
+            </td>
+            <td class="">{{ contact.client.client_code | upper }}</td>
+            <td class="">{{ contact.is_valid }}</td>
+            <td class="">{{ contact.created_on | date:"m/d/y" }}:{{ contact.created_on |time:"H:i T" }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <a class="btn btn-primary"
+         href="{% url 'contacts:new' %}">Add New</a>
+    </div>
+  </div>
+{% endblock content %}
+{% block javascript %}
+  {{ block.super }}
+  {% include 'includes/datatables_js.html' %}
+  <script type="application/javascript">
+
+    $(document).ready(function () {
+      $('#contact_table').DataTable({
+        responsive: true,
+        order: false,
+        fixedHeader: true,
+        dom:
+        "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-4'i><'col-sm-4 text-center'><'col-sm-4'p>>",
+        buttons: [
+          'copyHtml5', 'excelHtml5', 'pdfHtml5', 'csvHtml5'
+        ]
+      });
+    });
+  </script>
+{% endblock javascript %}

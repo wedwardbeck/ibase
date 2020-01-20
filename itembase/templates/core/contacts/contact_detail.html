@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% load core_tags %}
+{% load i18n %}
+
+{% block title %}Contact: {{ contact.first_name }} {{ contact.last_name }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="column">
+            {% if contact.last_name %}
+                <div class="card">
+                    <header class="card-header">
+                        <p class="card-header-title">
+                            {{ contact.client | default_if_none:'<i class="far fa-exclamation-circle" aria-hidden="true"> No Client Attached</i>' }}
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <h5 class="title is-4">
+                            {% if contact.contact_type == 1 %}
+                                <i class="far fa-user" aria-hidden="true"></i>
+                            {% elif contact.contact_type == 2 %}
+                                <i class="far fa-building" aria-hidden="true"></i>
+                            {% endif %}
+                            {{ contact.first_name | default_if_none:"" }}
+                            {{ contact.last_name }} {{ contact.status | fa_valid |safe }}</h5>
+                        <h6 class="title is-4">{{ contact.title | default_if_none:"" }}</h6>
+                        <p class="subtitle is-6">{{ contact.email | default_if_none:"" }}</p>
+                        <p class="content">
+                            {% for address in add_list %}
+                                <address><i class="far {{ address.address_type.fa_string }}" aria-hidden="true"></i>
+                                    {{ address.address1 }} {{ address.address2 | default_if_none:"" }}<br>
+                                    {{ address.city | default_if_none:"" }},
+                                    {{ address.state | default_if_none:"" }} {{ address.postal_code | default_if_none:"" }}
+                                    {{ address.status | fa_valid |safe }}
+                                </address>
+                            {% endfor %}
+                        {#                {% if contact.is_valid is True %}#}
+                        {#                  <img src="{% static 'images/icon-yes.svg' %}">#}
+                        {#                {% else %}#}
+                        {#                  <img src="{% static 'images/icon-no.svg' %}">#}
+                        {#                {% endif %}#}
+                        {#              </p>#}
+                        <a href="{% url 'contacts:edit' pk=contact.id %}" class="button is-secondary">Update</a>
+{#                        <a href="{% url 'contacts:address-new' contact.id %}" class="button is-info is-light">Add#}
+{#                            Address</a>#}
+                        <a href="{% url 'contacts:list' %}" class="button button-secondary">Back</a>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="#" class="card-footer-item">Save</a>
+                        <a href="#" class="card-footer-item">Edit</a>
+                        <a href="#" class="card-footer-item">Delete</a>
+                    </footer>
+                    <footer class="card-footer is-small">Created on: {{ contact.created_on }}</footer>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}
+
