@@ -17,6 +17,7 @@ class VendorForm(ModelForm):
 
 class VendorAddressForm(ModelForm):
     address_type = ModelChoiceField(queryset=AddressType.objects.order_by('id'))
+
     # TODO Remove FK Vendor from form - display only in content
 
     class Meta:
