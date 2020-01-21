@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ task.task_name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ task.task_name }}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'tasks:edit' pk=task.pk %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Update</button>
+          <a class="btn btn-primary" href="{% url 'tasks:view' pk=task.pk %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

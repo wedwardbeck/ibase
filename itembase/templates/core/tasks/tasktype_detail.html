@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Task Type: {{ tasktype.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>{{ tasktype.name }}</h2>
+      {% if tasktype.name %}
+        <p>{{ tasktype.name }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+{#{% if tasktype == request.user %}#}
+<!-- Action buttons -->
+<div class="row">
+
+  <div class="col-sm-12">
+    <a class="btn btn-primary" href="{% url 'tasktypes:edit' pk=tasktype.pk %}" role="button">Update</a>
+    <a class="btn btn-primary" href="{% url 'tasktypes:list' %}" >Cancel</a>
+  </div>
+
+</div>
+<!-- End Action buttons -->
+{#{% endif %}#}
+
+
+</div>
+{% endblock content %}
+

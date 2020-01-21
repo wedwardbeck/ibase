@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Client: {{ object.client_name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>{{ object.client_name }}</h2>
+      {% if object.client_name %}
+        <p>{{ object.client_name }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+{#{% if object == request.user %}#}
+<!-- Action buttons -->
+<div class="row">
+
+  <div class="col-sm-12">
+    <a class="btn btn-primary" href="{% url 'clients:edit' slug=client.slug %}" role="button">Update</a>
+    <a class="btn btn-primary" href="{% url 'clients:list' %}" >Cancel</a>
+  </div>
+
+</div>
+<!-- End Action buttons -->
+{#{% endif %}#}
+
+
+</div>
+{% endblock content %}
+

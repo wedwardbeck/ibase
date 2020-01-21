@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ tasktype.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ tasktype.task_name }}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'tasktypes:edit' pk=tasktype.pk %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Update</button>
+          <a class="btn btn-primary" href="{% url 'tasktypes:view' pk=tasktype.pk %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

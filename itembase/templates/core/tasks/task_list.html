@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static i18n %}{% load thumbnail %}{% load tz %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <h2>Tasks</h2>
+        <div class="table-responsive table-hover">
+            <table class="table " id="mytable" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Project</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Due On</th>
+                    <th class="hidden-xs-down">Assigned To</th>
+                    <th class="hidden-xs-down">Created</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for task in task_list %}
+                    <tr>
+                        <td data-sort="{{ task.title }}">
+                            <div class="media">
+                                <div class="col-md-6 col-sm-4 col-xs-4 ">
+                                    <a href="{{ task.get_absolute_url }}">
+                                        {{ task.title|title }}
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ task.project }}</td>
+                        <td class="">{{ task.priority }}</td>
+                        <td class="">{{ task.state |title }}</td>
+                        <td class="">{{ task.deadline }}</td>
+                        <td class="">{{ task.assigned_to }}</td>
+                        <td class="">{{ task.created_on| date:"m/d/y" }}:{{ task.created_on |time:"H:i T" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a class="btn btn-primary"
+           href="{% url 'tasks:new' %}">Add New</a>
+    </div>
+
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#mytable').DataTable({
+                responsive: true,
+                order: [],
+            });
+        });
+    </script>
+{% endblock javascript %}

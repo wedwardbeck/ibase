@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Team Member{% endblock %}
+
+{% block content %}
+  <h6>Add Team Member</h6>
+  <form class="form-horizontal" method="post" action="">
+{#  <form class="form-horizontal" method="post" action="{% url 'staff:team-new' %}">#}
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn btn-primary">Update</button>
+          <a class="btn btn-secondary" href="{{ cancel_url }}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

@@ -1,6 +1,6 @@
 from braces import views
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from itembase.utils.mixins import CancelMixin
@@ -8,7 +8,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import CreateView as gen_CreateView
 from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
 from itembase.core.forms.vendor_forms import VendorForm, VendorAddressForm
-from itembase.core.models import Vendor, VendorAddress
+from itembase.core.models import Contact, Vendor, VendorAddress
 
 
 class VendorCreateView(SuccessMessageMixin, views.LoginRequiredMixin, CreateView):
@@ -41,6 +41,8 @@ class VendorDetailView(SingleObjectMixin, views.LoginRequiredMixin, DetailView):
         context = super(VendorDetailView, self).get_context_data(**kwargs)
         context['address_list'] = VendorAddress.objects.select_related(). \
             filter(vendor=self.object)
+        context['contact_list'] = Contact.objects.select_related(). \
+            filter(vendor=self.object).order_by('last_name').filter(Q(status='2') | Q(status='1'))
         return context
 
 

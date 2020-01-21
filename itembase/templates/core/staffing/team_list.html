@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{#{% load thumbnail %}#}
+{% block css %}
+    {{ block.super }}
+    {% include 'includes/datatables_css.html' %}
+{% endblock %}
+{% block content %}
+
+    <div class="container-fluid">
+        <h5>Team Assignments</h5>
+        <div class="table-responsive table-hover">
+            <table class="table" id="mytable" cellspacing="0" width="100%">
+                {% include 'includes/tables_hdr_staff.html' %}
+                <tbody>
+                {% for staff in team_list %}
+                    <tr>
+                        <td data-sort="{{ staff.staff }}">
+                            <div class="">
+                                <a href="{{ staff.get_absolute_url }}">{{ staff.staff.first_name }} {{ staff.staff.last_name }}</a>
+                            </div>
+                        </td>
+                        <td>{{ staff.client.client_name | upper }}</td>
+                        <td class="">{{ staff.client.client_code }}</td>
+                        <td class="">{{ staff.role.role }}</td>
+                        <td class="">{{ staff.valid_from | date:"SHORT_DATE_FORMAT" }}</td>
+                        <td class="text-center">{% if staff.status == 2 %}
+                            <span style="color: forestgreen"><i class="fas fa-check-circle fa-xs"></i></span>
+                        {% elif staff.status == 'N' %}
+                            <span style="color: #ffb73d"><i class="fas fa-check-circle fa-xs"></i></span>
+                        {% else %}
+                            <span style="color: #cc0000"><i class="fas fa-times-circle fa-xs"></i></span>
+                        {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a class="btn btn-primary"
+           href="{% url 'staff:team-new' %}">Add Team Assignment</a>
+    </div>
+
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#mytable').DataTable({
+                responsive: true,
+                fixedHeader: true,
+                rowGroup: {
+                    dataSrc: 'client_code'
+                },
+                {#  columnDefs: [{#}
+                {#    targets: [0],#}
+                {#    orderData: [0, 1]#}
+                {#  }, {#}
+                {#    targets: [1],#}
+                {#    orderData: [1, 0]#}
+                {#  }, {#}
+                {#    targets: [4],#}
+                {#    orderData: [4, 0]#}
+                {#  }]#}
+            });
+        });
+    </script>
+{% endblock javascript %}

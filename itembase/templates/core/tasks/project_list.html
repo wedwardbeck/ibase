@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static i18n %}{% load thumbnail %}{% load tz %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <h2>Projects</h2>
+        <div class="table-responsive table-hover">
+            <table class="table " id="mytable" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th>Project Name</th>
+                    <th>Deadline</th>
+                    <th>Used By</th>
+                    <th>Status</th>
+                    <th class="hidden-xs-down">Created</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for project in project_list %}
+                    <tr>
+                        <td data-sort="{{ project.name }}">
+                            <div class="media">
+                                <div class="col-lg-6">
+                                    <a href="{{ project.get_absolute_url }}">
+                                        {{ project.name|title }}
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ project.deadline }}</td>
+                        <td class="">{{ project.client }}</td>
+                        <td class="">{{ project.get_status_display |title }}</td>
+                        <td class="">{{ project.created_on| date:"m/d/y" }}:{{ project.created_on |time:"H:i T" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div>
+        <a class="btn btn-primary"
+           href="{% url 'projects:new' %}">Add New</a>
+    </div>
+
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {% include 'includes/datatables_js.html' %}
+
+    <script type="application/javascript">
+
+        $(document).ready(function () {
+            $('#mytable').DataTable({
+                responsive: true,
+                order: [],
+            });
+        });
+    </script>
+{% endblock javascript %}

@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load staticfiles i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% blocktrans %}Create Holiday{% endblocktrans %}{% endblock %}
+
+{% block content %}
+  <h1>{% trans "Create Holiday" %}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'staffing:holiday-new' %}"
+        enctype="multipart/form-data" id="new-holiday">
+    {% csrf_token %}
+    <label class="form-group has-float-label"><span>{% trans "Holiday Name" %}</span>
+      <input id="id_holiday_name" class="form-control" type="text" required
+             placeholder="{% trans "Holiday Name" %}" name="holiday_name" maxlength="150">
+      <span>{% trans "Holiday Name" %}</span>
+    </label>
+    <label class="form-group has-float-label">
+      <select id="id_holiday_status" class="form-control"
+              placeholder="Holiday Status" name="holiday_status">
+        {% for value, text in form.fields.holiday_status.choices %}
+          <option value="{{ value }}">{{ text }}</option>
+        {% endfor %}
+      </select>
+      <span>{% trans "Holiday Status" %}</span>
+    </label>
+    <label class="form-group has-float-label"><span>{% blocktrans %}Service Start{% endblocktrans %}</span>
+      <input id="id_service_start" class="form-control datepicker" type="text"
+             placeholder="{% trans "Service Start Date" %}" name="service_start" required>
+      <span>{% blocktrans %}Service Start{% endblocktrans %}</span>
+    </label>
+    <label class="form-group has-float-label"><span>{% blocktrans %}Service End{% endblocktrans %}</span>
+      <input id="id_service_end" class="form-control datepicker" type="text"
+             placeholder="{% trans "Service End Date" %}" name="service_end">
+      <span>{% blocktrans %}Service End{% endblocktrans %}</span>
+    </label>
+    <label class="form-group has-float-label custom-file">
+      <input type="file" id="id_logo" class="form-control-file" name="logo">
+      <span class="form-control-file">{% blocktrans %}Company Logo{% endblocktrans %}</span>
+    </label>
+    <br><br/>
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn btn-primary">Update</button>
+        <a class="btn btn-secondary" href="{% url 'staffing:holidays-list' %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}
+
+{% block javascript %}
+  {{ block.super }}
+
+  <script type="application/javascript">
+    $("#id_holiday_code").change(function () {
+      var $elem = $("#id_holiday_code")[0];
+      console.log($(this).val());
+      var holiday_code = $(this).val();
+
+      $.ajax({
+        url: '{% url 'staffing:validate_holiday_code' %}',
+        data: {
+          'holiday_code': holiday_code
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            $("#id_holiday_code").addClass('border-danger').focus();
+            $("#invalid-feedback").show();
+          } else {
+            $("#invalid-feedback").hide();
+            $("#id_holiday_code").removeClass('border-danger');
+          }
+        }
+      });
+    });
+  </script>
+{% endblock %}

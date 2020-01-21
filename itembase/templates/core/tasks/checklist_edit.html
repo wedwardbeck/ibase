@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ checklist.checklist_name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ checklist.checklist_name }}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'checklists:edit' pk=checklist.pk %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Update</button>
+          <a class="btn btn-primary" href="{% url 'checklists:view'  %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

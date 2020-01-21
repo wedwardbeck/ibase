@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Team Member: {{ object.staff }}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h6>{{ object.staff }}</h6>
+      {% if object.staff %}
+        <p>{{ object.staff }} - {{ object.client }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+{#{% if object == request.user %}#}
+<!-- Action buttons -->
+<div class="row">
+
+{#  <div class="col-sm-12">#}
+{#    <a class="btn btn-primary" href="{% url 'clients:edit' slug=client.slug %}" role="button">Update</a>#}
+{#    <a class="btn btn-primary" href="{% url 'clients:list' %}" >Cancel</a>#}
+{#  </div>#}
+
+</div>
+<!-- End Action buttons -->
+{#{% endif %}#}
+
+
+</div>
+{% endblock content %}
+

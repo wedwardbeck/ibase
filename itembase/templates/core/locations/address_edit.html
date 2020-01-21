@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
+{% block title %}Loc: {{ locationaddress.location.name }} {{ locationaddress.loc_id }} {% endblock %}
+
 {% block content %}
 
     <div class="container">
 
-        {% if address.id %}
             <h1>Edit Address</h1>
-        {% else %}
-            <h1>Add Address</h1>
-        {% endif %}
         <form class="form-horizontal" method="post"
                 action="{% url 'locations:address-edit' pk=locationaddress.id  %}">
             {% csrf_token %}
@@ -17,7 +15,7 @@
               <div class="controls">
                 <button class="btn">Update</button>
                   <a class="btn btn-primary"
-                     href="{{ cancel_url }}">Cancel</a>
+                     href="{% url 'locations:view' pk=locationaddress.location.pk %}" >Cancel</a>
               </div>
             </div>
           </form>

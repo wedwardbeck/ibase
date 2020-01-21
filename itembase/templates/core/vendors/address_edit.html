@@ -10,7 +10,7 @@
             <h1>Add Address</h1>
         {% endif %}
         <form class="form-horizontal" method="post"
-                action="{% url 'vendors:vendor-address-edit' pk=address.id  %}">
+                action="{% url 'vendors:vendor-address-edit' pk=vendoraddress.id  %}">
             {% csrf_token %}
             {{ form|crispy }}
             <div class="control-group">
@@ -21,6 +21,5 @@
               </div>
             </div>
           </form>
-{#        <a href="{% url "partnesr:address-list" %}">back to list</a>#}
     </div>
 {% endblock content %}

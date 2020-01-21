@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Client: {{ project.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+
+      <h2>{{ project.name }}</h2>
+      {% if project.name %}
+        <p>{{ project.name }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+{#{% if project == request.user %}#}
+<!-- Action buttons -->
+<div class="row">
+
+  <div class="col-sm-12">
+    <a class="btn btn-primary" href="{% url 'projects:edit' project.pk %}" role="button">Update</a>
+    <a class="btn btn-primary" href="{% url 'projects:list' %}" >Cancel</a>
+  </div>
+
+</div>
+<!-- End Action buttons -->
+{#{% endif %}#}
+
+
+</div>
+{% endblock content %}
+

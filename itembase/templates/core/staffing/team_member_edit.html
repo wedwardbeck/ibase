@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ client.client_name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ client.client_name }}</h1>
+  <form class="form-horizontal" method="post" action="{% url 'clients:edit' slug=client.slug %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <div class="control-group">
+      <div class="controls">
+        <button class="btn">Update</button>
+          <a class="btn btn-primary" href="{% url 'clients:view' slug=client.slug %}" role="button">Cancel</a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

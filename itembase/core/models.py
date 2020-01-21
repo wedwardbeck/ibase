@@ -351,8 +351,8 @@ class Contact(models.Model):
             self.last_name,
         ])
 
-    # def get_absolute_url(self):
-    #     return reverse('contacts:view', args=[str(self.id)])
+    def get_absolute_url(self):
+        return reverse('contacts:view', args=[str(self.id)])
 
 
 # region Address Models

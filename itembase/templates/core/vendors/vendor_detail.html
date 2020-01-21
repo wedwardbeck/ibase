@@ -30,6 +30,8 @@
                         <a href="{% url 'vendors:vendor-list' %}" class="button is-primary is-light">Back to List</a>
                         <a href="{% url 'vendors:vendor-edit' pk=vendor.id %}"
                            class="button is-info  is-light">Update</a>
+                        <a href="{% url 'vendors:vendor-contact-new' vendor.id %}"
+                           class="button is-info is-light">Create Contact</a>
                     </div>
                 </div>
             {% endif %}
@@ -71,16 +73,16 @@
                                     <td class="">
                                         {{ vendor_address.address1 }}
                                     </td>
-                                    <td class="">{{vendor_address.2 }}</td>
-                                    <td class="">{{vendor_address.city }}</td>
-                                    <td class="">{{vendor_address.state }}</td>
-                                    <td class="">{{vendor_address.postal_code }}</td>
-                                    <td class="">{{vendor_address.country }}</td>
-                                    <td class="">{{vendor_address.status }}</td>
-                                    <td class="">{{vendor_address.created_on | date:"m/d/y" }}:
-                                        {{vendor_address.created_on |time:"H:i T" }}</td>
-                                    <td class="">{{vendor_address.updated_on | date:"m/d/y" }}:
-                                        {{vendor_address.updated_on |time:"H:i T" }}</td>
+                                    <td class="">{{ vendor_address2 }}</td>
+                                    <td class="">{{ vendor_address.city }}</td>
+                                    <td class="">{{ vendor_address.state }}</td>
+                                    <td class="">{{ vendor_address.postal_code }}</td>
+                                    <td class="">{{ vendor_address.country }}</td>
+                                    <td class="">{{ vendor_address.status }}</td>
+                                    <td class="">{{ vendor_address.created_on | date:"m/d/y" }}:
+                                        {{ vendor_address.created_on |time:"H:i T" }}</td>
+                                    <td class="">{{ vendor_address.updated_on | date:"m/d/y" }}:
+                                        {{ vendor_address.updated_on |time:"H:i T" }}</td>
                                     <td></td>
                                 </tr>
                             {% endfor %}

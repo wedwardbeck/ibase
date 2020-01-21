@@ -23,6 +23,9 @@ urlpatterns = [
                   path("loc/", include('core.urls.location_urls')),
                   path("vendors/", include('core.urls.vendor_urls')),
                   path("items/", include('core.urls.item_urls')),
+                  # path("proj/", include('core.urls.project_urls')),
+                  path("staff/", include('core.urls.staffing_urls')),
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

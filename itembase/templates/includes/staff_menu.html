@@ -29,17 +29,17 @@
 {#        <a class="navbar-item">Report an issue</a>#}
 {#    </div>#}
 {#</div>#}
-{#<div class="navbar-item has-dropdown is-hoverable">#}
-{#    <a class="navbar-link">Staff</a>#}
-{#    <div class="navbar-dropdown">#}
-{#        <a class="navbar-item" href="{% url 'staff:team-list' %}">{% trans 'Team Assignments' %}</a>#}
-{#        <a class="navbar-item" href="{% url 'staff:teamlead-list' %}">{% trans 'Team Leads' %}</a>#}
-{#        <a class="navbar-item" href="{% url 'staff:pm-list' %}">{% trans 'Project Managers' %}</a>#}
-{#        <a class="navbar-item" href="{% url 'staff:team-new' %}">{% trans 'Add Team Member' %}</a>#}
-{#        <a class="navbar-item" href="{% url 'home' %}">{% trans 'Holidays' %}</a>#}
-{#        {% if user.is_superuser %}#}
-{#            <div class="dropdown-divider"></div>#}
-{#            <a class="navbar-item" href="{% url 'admin:index' %}">Site Admin</a>#}
-{#        {% endif %}#}
-{#    </div>#}
-{#</div>#}
+<div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link">Staff</a>
+    <div class="navbar-dropdown">
+        <a class="navbar-item" href="{% url 'staff:team-list' %}">{% trans 'Team Assignments' %}</a>
+        <a class="navbar-item" href="{% url 'staff:teamlead-list' %}">{% trans 'Team Leads' %}</a>
+        <a class="navbar-item" href="{% url 'staff:pm-list' %}">{% trans 'Project Managers' %}</a>
+        <a class="navbar-item" href="{% url 'staff:team-new' %}">{% trans 'Add Team Member' %}</a>
+        <a class="navbar-item" href="{% url 'home' %}">{% trans 'Holidays' %}</a>
+        {% if user.is_superuser %}
+            <div class="dropdown-divider"></div>
+            <a class="navbar-item" href="{% url 'admin:index' %}">Site Admin</a>
+        {% endif %}
+    </div>
+</div>

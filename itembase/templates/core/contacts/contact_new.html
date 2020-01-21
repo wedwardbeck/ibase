@@ -6,8 +6,8 @@
 
 
             <h4>Add Contact</h4>
-        <form class="form-horizontal" method="post"
-                action="{% url 'contacts:new' %}">
+        <form class="form-horizontal" method="post">
+{#                action="{% url 'contacts:new' %}">#}
             {% csrf_token %}
             {{ form|crispy }}
             <div class="control-group">

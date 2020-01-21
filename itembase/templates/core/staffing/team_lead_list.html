@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block css %}
+  {{ block.super }}
+  {% include 'includes/datatables_css.html' %}
+{% endblock %}
+{% block content %}
+
+  <div class="container-fluid">
+    <h5>Team Leads</h5>
+    <div class="table-responsive table-hover">
+      <table class="table" id="mytable" cellspacing="0" width="100%">
+        {% include 'includes/tables_hdr_staff.html' %}
+        <tbody>
+        {% for staff in lead_list %}
+          <tr>
+            <td data-sort="{{ staff.staff }}">
+                <div class="">
+                  <a href="{{ staff.get_absolute_url }}">{{ staff.staff.first_name }} {{ staff.staff.last_name }}</a>
+                </div>
+            </td>
+            <td>{{ staff.client.client_name | upper }}</td>
+            <td class="">{{ staff.client.client_code }}</td>
+            <td class="">{{ staff.role.role }}</td>
+            <td class="">{{ staff.valid_from | date:"SHORT_DATE_FORMAT" }}</td>
+            <td class="text-center">
+{#                {% if staff.status = s True %}#}
+              <img src="{% static 'images/icon-yes.svg' %}">
+{#            {% else %}#}
+{#              <img src="{% static 'images/icon-no.svg' %}">#}
+{#            {% endif %}#}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {#  <div>#}
+  {#    <a class="btn btn-primary"#}
+  {#       href="{% url 'staff:team-member-new' %}">Add Team Assignment</a>#}
+  {#  </div>#}
+
+{% endblock content %}
+{% block javascript %}
+  {{ block.super }}
+  {% include 'includes/datatables_js.html' %}
+
+  <script type="application/javascript">
+
+    $(document).ready(function () {
+      $('#mytable').DataTable({
+        responsive: true,
+        fixedHeader: true,
+        columnDefs: [{
+          targets: [0],
+          orderData: [0, 1]
+        }, {
+          targets: [1],
+          orderData: [1, 0]
+        }, {
+          targets: [4],
+          orderData: [4, 0]
+        }]
+      });
+    });
+  </script>
+{% endblock javascript %}
