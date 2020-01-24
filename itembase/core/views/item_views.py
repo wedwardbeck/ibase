@@ -82,14 +82,6 @@ class VendorItemDetailView(SingleObjectMixin, LoginRequiredMixin, DetailView):
     template_name = 'core/items/vendor_item_detail.html'
     context_object_name = 'vendor_item'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(VendorItemDetailView, self).get_context_data(**kwargs)
-    #     context['address_list'] = Location.objects.select_related(). \
-    #         filter(item=self.object)
-    #     return context
-    # TODO: Using where used table, add in related vendor records to show in item detail which locations
-    #  use item if where used on location is feasible - pseudo code above - need interim relation on vendor to loc
-
 
 class VendorItemDeleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteView):
     model = VendorItem

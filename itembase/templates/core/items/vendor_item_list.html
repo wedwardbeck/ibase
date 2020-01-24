@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n security_tags %}
+{% load static i18n security_tags core_tags %}
 {#{% load thumbnail %}#}
 {% load tz %}
 {% block css %}
@@ -18,7 +18,7 @@
                     <th>Item Number</th>
                     <th>Description</th>
                     <th>UOM</th>
-                    <th>Unit Description</th>
+                    <th>Unit Name</th>
                     <th>Pack Count</th>
                     <th>Status</th>
                     <th>Created</th>
@@ -30,7 +30,8 @@
                 {% for vendoritem in vendor_items %}
                     <tr>
                         <td data-sort="{{ vendoritem.vendor }}">
-                            {{ vendoritem.vendor }}
+                            <a href="{% url 'vendors:vendor-view' vendoritem.vendor.id %}">
+                                {{ vendoritem.vendor }}
                         </td>
                         <td class="">
                             <div class="media">
@@ -40,11 +41,12 @@
                             </div>
                         </td>
                         <td class="">{{ vendoritem.description }}</td>
-                        <td class="">{{ vendoritem.uom.abreviation }}</td>
+                        <td class="">{{ vendoritem.uom.abbreviation }}</td>
                         <td class="">{{ vendoritem.uom }}</td>
                         <td class="">{{ vendoritem.pack_count }}</td>
-                        <td class="">{{ vendoritem.status |title }}</td>
-                        <td class="">{{ vendoritem.created_by.name }} - {{ vendoritem.created_on }}</td>
+                        <td class="">{{ vendoritem.status | fa_valid |safe }}</td>
+                        <td class="">{{ vendoritem.created_on| date:"m/d/y" }}:
+                            {{ vendoritem.created_on |time:"H:i T" }}</td>
                         <td class="">{{ vendoritem.updated_on }}</td>
                         <td></td>
                     </tr>
@@ -52,11 +54,11 @@
                 </tbody>
             </table>
 
-{#            {% if user|is_group:"Team Admin" %}#}
-                <div class="control">
-                    <a class="button is-primary" href="{% url 'vendor-items:new' %}">{% trans "Add New" %}</a>
-                </div>
-{#            {% endif %}#}
+            {#            {% if user|is_group:"Team Admin" %}#}
+            <div class="control">
+                <a class="button is-primary" href="{% url 'vendor-items:new' %}">{% trans "Add New" %}</a>
+            </div>
+            {#            {% endif %}#}
         </div>
     </section>
 {% endblock content %}

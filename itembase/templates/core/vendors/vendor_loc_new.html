@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create Vendor Location Record{% endblock %}
+
+{% block content %}
+    <h1>Create Vendor Location Entry</h1>
+    <form class="form-horizontal" method="post"
+{#          action="{% url 'vendors:vendor-loc-new' pk=vendor.pk %}"#}
+    >
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-primary">Update</button>
+                <a a class="btn btn-secondary"
+                     href="{{ cancel_url }}">Cancel</a>
+            </div>
+        </div>
+    </form>
+{% endblock %}

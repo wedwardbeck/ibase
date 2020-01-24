@@ -1,8 +1,9 @@
 from django.urls import path
 
 from itembase.core.views.vendor_views import VendorAddressCreateView, VendorAddressDetailView, \
-    VendorAddressUpdateView, VendorCreateView, VendorDeleteView, VendorDetailView, VendorListView, VendorUpdateView
-from itembase.core.views.contact_views import VendorContactCreateView
+    VendorAddressUpdateView, VendorCreateView, VendorDeleteView, VendorDetailView, VendorListView, \
+    VendorUpdateView, VendorLocCreateView
+from itembase.core.views.contact_views import VendorContactCreateView, VendorContactUpdateView
 
 app_name = "vendors"
 urlpatterns = [
@@ -16,4 +17,6 @@ urlpatterns = [
     path('address/edit/<int:pk>', VendorAddressUpdateView.as_view(), name='vendor-address-edit'),
     path("upload/", VendorCreateView.as_view(), name="vendor-upload"),
     path('<int:pk>/contact-new/', VendorContactCreateView.as_view(), name='vendor-contact-new'),
+    path('contact/edit/<int:pk>', VendorContactUpdateView.as_view(), name='vendor-contact-edit'),
+    path('<int:pk>/loc-new/', VendorLocCreateView.as_view(), name='vendor-loc-new'),
 ]

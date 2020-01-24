@@ -1,19 +1,21 @@
-from braces import views
+from braces.views import LoginRequiredMixin, SuperuserRequiredMixin, StaffuserRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect  # ,  HttpResponseRedirect
 from django.urls import reverse_lazy
-# from django.views.generic import DetailView as GenDetailView
+from django.views.generic import CreateView as gen_CreateView
 from django.views.generic.detail import SingleObjectMixin
 from vanilla import CreateView, DeleteView, DetailView, UpdateView
 from vanilla import ListView as ListView
 
 from itembase.core.forms.client_forms import ClientForm
+from itembase.core.forms.location_forms import LocationForm
 from itembase.core.models import Client, Contact, Location, TeamMember
 
 
-class ClientCreateView(SuccessMessageMixin, views.LoginRequiredMixin,
-                       views.StaffuserRequiredMixin, CreateView):
+class ClientCreateView(SuccessMessageMixin, LoginRequiredMixin,
+                       StaffuserRequiredMixin, CreateView):
     model = Client
     template_name = 'core/clients/client_new.html'
 
@@ -26,8 +28,8 @@ class ClientCreateView(SuccessMessageMixin, views.LoginRequiredMixin,
         return super().form_valid(form)
 
 
-class ClientUpdateView(SuccessMessageMixin, SingleObjectMixin, views.LoginRequiredMixin,
-                       views.StaffuserRequiredMixin, UpdateView):
+class ClientUpdateView(SuccessMessageMixin, SingleObjectMixin, LoginRequiredMixin,
+                       StaffuserRequiredMixin, UpdateView):
     model = Client
     form_class = ClientForm
     template_name = 'core/clients/client_edit.html'
@@ -37,8 +39,8 @@ class ClientUpdateView(SuccessMessageMixin, SingleObjectMixin, views.LoginRequir
         return reverse_lazy('clients:view', args=(self.object.slug,))
 
 
-class ClientDetailView(views.LoginRequiredMixin,
-                       views.StaffuserRequiredMixin, DetailView):
+class ClientDetailView(LoginRequiredMixin,
+                       StaffuserRequiredMixin, DetailView):
     model = Client
     template_name = 'core/clients/client_detail.html'
     context_object_name = 'client'
@@ -51,19 +53,19 @@ class ClientDetailView(views.LoginRequiredMixin,
             filter(client=self.object)
         context['contact_list'] = Contact.objects.select_related(). \
             filter(client=self.object).order_by('last_name').filter(Q(status='2') | Q(status='1'))
-        context['team_list'] = TeamMember.objects.select_related(). \
+        context['team_list'] = TeamMember.objects.prefetch_related(). \
             filter(client=self.object).filter(status='2')
         return context
 
 
-class ClientDeleteView(views.LoginRequiredMixin,
-                       views.SuperuserRequiredMixin, DeleteView):
+class ClientDeleteView(LoginRequiredMixin,
+                       SuperuserRequiredMixin, DeleteView):
     model = Client
     success_url = reverse_lazy('list')
 
 
-class ClientListView(views.LoginRequiredMixin,
-                     views.StaffuserRequiredMixin, ListView):
+class ClientListView(LoginRequiredMixin,
+                     StaffuserRequiredMixin, ListView):
     # model = Client
     queryset = Client.objects.select_related('engagement').order_by('client_name')
     template_name = 'core/clients/client_list.html'
@@ -80,3 +82,25 @@ def validate_client_code(request):
     # return HttpResponse(is_available)
     # return JsonResponse(is_available, safe=False)
     return JsonResponse(data)
+
+
+class ClientLocationCreateView(SuccessMessageMixin, LoginRequiredMixin, gen_CreateView):
+    model = Location
+    template_name = 'core/locations/location_new.html'
+    form_class = LocationForm
+    # success_url = reverse_lazy('clients:view')
+    success_message = "%(name)s was created successfully"
+
+    def get_success_url(self):
+        return reverse_lazy('clients:view', args=(self.object.slug,))
+
+    def get_initial(self):
+        client = get_object_or_404(Client, slug=self.kwargs.get('slug'))
+        return {'client': client}
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return redirect('clients:view', args=(self.object.slug,))
+        # return super().form_valid(form)
+
+

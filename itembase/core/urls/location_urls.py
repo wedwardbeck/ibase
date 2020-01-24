@@ -2,7 +2,7 @@ from django.urls import path
 
 from itembase.core.views.location_views import LocationAddressCreateView, LocationAddressDetailView, \
     LocationAddressUpdateView, LocationCreateView, LocationDeleteView, LocationDetailView, LocationListView, \
-    LocationUpdateView
+    LocationUpdateView, get_locations
 
 app_name = "locations"
 urlpatterns = [

@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from braces.views import LoginRequiredMixin, SuperuserRequiredMixin, StaffuserRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
@@ -45,7 +46,7 @@ class LocationDetailView(SingleObjectMixin, LoginRequiredMixin, DetailView):
         return context
 
 
-class LocationDeleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteView):
+class LocationDeleteView(LoginRequiredMixin, SuperuserRequiredMixin, DeleteView):
     model = Location
     success_url = reverse_lazy('locations-list')
 
@@ -93,3 +94,9 @@ class LocationAddressDetailView(SingleObjectMixin, LoginRequiredMixin, DetailVie
 class LocationAddressDeleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteView):
     model = LocationAddress
     success_url = reverse_lazy('locations-list')
+
+
+def get_locations(request):
+    locations = Location.objects.all().values()
+    locations_json = list(locations)
+    return JsonResponse(locations_json, safe=False)

@@ -8,12 +8,14 @@ register = Library()
 @register.filter(name='fa_valid')
 def fa_valid(value):
 
-    if value == 'A':
-        element = '<i class="far fa-check-circle fa-xs text-success" aria-hidden="true"></i>'
-    elif value == 'N':
-        element = '<i class="far fa-check-circle fa-xs text-warning" aria-hidden="true"></i>'
+    if value == 2:
+        element = '<i class="fas fa-check-circle fa-xs text-success" aria-hidden="true"></i>'
+    elif value == 1:
+        element = '<i class="fas fa-exclamation-triangle fa-xs text-warning" aria-hidden="true"></i>'
+    elif value == 3:
+        element = '<i class="fas fa-times-circle fa-xs text-warning" aria-hidden="true"></i>'
     else:
-        element = '<i class="fas fa-exclamation-circle fa-xs text-danger" aria-hidden="true"></i>'
+        element = ''
 
     return element
 

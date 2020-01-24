@@ -220,7 +220,7 @@ class ClientSystem(models.Model):
         unique_together = ('client', 'system')
 
     def __str__(self):
-        return '%s - %s - %s' % (self.client, self.system, self.system.system_version)
+        return '%s - %s - %s' % (self.client, self.system, self.system.version)
 
     def get_absolute_url(self):
         return reverse('client_systems:client-system-view', kwargs={'pk': self.pk})
@@ -236,6 +236,7 @@ class Vendor(models.Model):
     parent = models.ForeignKey('self', verbose_name=_('Parent Vendor'), null=True, blank=True,
                                related_name='parent_vendor', on_delete=models.PROTECT)
     num_items = models.IntegerField(_("Number of Items"), null=True, blank=True)
+    num_locations = models.IntegerField(_("Number of Locations"), null=True, blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Created By'),
                                    related_name='vendor_created', on_delete=models.PROTECT)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -318,9 +319,9 @@ class Location(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.loc_id, self.name)
-
-    def get_absolute_url(self):
-        return reverse('locations:view', kwargs={'pk': self.pk})
+        #
+        # def get_absolute_url(self):
+        #     return reverse('locations:view', kwargs={'pk': self.pk})
 
 
 class Contact(models.Model):
@@ -443,6 +444,56 @@ class VendorAddress(models.Model):
 
     def get_absolute_url(self):
         return reverse('vendors:address-view', args=[str(self.id)])
+
+
+class VendorLocMatrix(models.Model):
+    location = models.ForeignKey(Location, verbose_name=_('Location'), related_name='loc_2_vn',
+                                 on_delete=models.PROTECT)
+    vendor = models.ForeignKey(Vendor, verbose_name=_('Vendor'), related_name='vn_2_loc',
+                               on_delete=models.PROTECT)
+    status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
+                                 default=BaseStatus.new)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vlm_created',
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+    created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
+    updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
+    history = HistoricalRecords()
+
+    class Meta:
+        verbose_name = 'Vendor Location Record'
+        verbose_name_plural = 'Vendor Location Records'
+
+    def __str__(self):
+        return ' '.join([
+            self.location,
+            ',',
+            self.vendor,
+        ])
+
+
+class VendorClientMatrix(models.Model):
+    client = models.ForeignKey(Client, verbose_name=_('Client'), related_name='client_2_vn',
+                               on_delete=models.PROTECT)
+    vendor = models.ForeignKey(Vendor, verbose_name=_('Vendor'), related_name='vn_2_client',
+                               on_delete=models.PROTECT)
+    status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
+                                 default=BaseStatus.new)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vcm_created',
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+    created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
+    updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
+    history = HistoricalRecords()
+
+    class Meta:
+        verbose_name = 'Vendor Client Record'
+        verbose_name_plural = 'Vendor Client Records'
+
+    def __str__(self):
+        return ' '.join([
+            self.client,
+            ',',
+            self.vendor,
+        ])
 
 
 # endregion

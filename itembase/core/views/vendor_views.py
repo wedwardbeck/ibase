@@ -7,8 +7,8 @@ from itembase.utils.mixins import CancelMixin
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import CreateView as gen_CreateView
 from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
-from itembase.core.forms.vendor_forms import VendorForm, VendorAddressForm
-from itembase.core.models import Contact, Vendor, VendorAddress
+from itembase.core.forms.vendor_forms import VendorForm, VendorAddressForm, VendorClientForm, VendorLocationForm
+from itembase.core.models import Contact, Vendor, VendorAddress, VendorClientMatrix, VendorLocMatrix
 
 
 class VendorCreateView(SuccessMessageMixin, views.LoginRequiredMixin, CreateView):
@@ -28,7 +28,7 @@ class VendorUpdateView(SuccessMessageMixin, SingleObjectMixin, views.LoginRequir
     form_class = VendorForm
     success_url = reverse_lazy('vendors:vendor-list')
     template_name = 'core/vendors/vendor_edit.html'
-    success_message = "%(vendor_name)s was updated successfully"
+    success_message = "%(name1)s was updated successfully"
 
 
 class VendorDetailView(SingleObjectMixin, views.LoginRequiredMixin, DetailView):
@@ -43,6 +43,9 @@ class VendorDetailView(SingleObjectMixin, views.LoginRequiredMixin, DetailView):
             filter(vendor=self.object)
         context['contact_list'] = Contact.objects.select_related(). \
             filter(vendor=self.object).order_by('last_name').filter(Q(status='2') | Q(status='1'))
+        context['locations_used'] = VendorLocMatrix.objects. \
+            filter(vendor=self.object).annotate(location_count=Count('location'))
+
         return context
 
 
@@ -57,6 +60,13 @@ class VendorListView(views.LoginRequiredMixin, ListView):
 
     template_name = 'core/vendors/vendor_list.html'
     context_object_name = 'vendors'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(VendorListView, self).get_context_data(**kwargs)
+    #     context['locations_used'] = VendorLocMatrix.objects.select_related(). \
+    #         filter(vendor=self.object_list).annotate(location_count=Count('location')).filter(location_count__gt=0)
+    #
+    #     return context
 
 
 class VendorAddressCreateView(SuccessMessageMixin, views.LoginRequiredMixin, views.StaffuserRequiredMixin,
@@ -97,3 +107,34 @@ class VendorAddressDeleteView(views.LoginRequiredMixin, views.StaffuserRequiredM
     model = VendorAddress
     success_url = reverse_lazy('vendors:vendors-list')
 
+
+class VendorLocCreateView(SuccessMessageMixin, views.LoginRequiredMixin, views.StaffuserRequiredMixin,
+                          CancelMixin, gen_CreateView):
+    model = VendorLocMatrix
+    template_name = 'core/vendors/vendor_loc_new.html'
+    form_class = VendorLocationForm
+
+    success_message = "%(vendor)s %(location)s record was created successfully"
+
+    def get_initial(self):
+        vendor = get_object_or_404(Vendor, id=self.kwargs.get('pk'))
+        return {'vendor': vendor}
+
+    def get_success_url(self):
+        return reverse_lazy('vendors:vendor-view', args=(self.object.vendor.id,))
+
+
+class VendorClientCreateView(SuccessMessageMixin, views.LoginRequiredMixin, views.StaffuserRequiredMixin,
+                             CancelMixin, gen_CreateView):
+    model = VendorClientMatrix
+    template_name = 'core/vendors/vendor_client_new.html'
+    form_class = VendorClientForm
+
+    success_message = "%(vendor)s %(client)s record was created successfully"
+
+    def get_initial(self):
+        vendor = get_object_or_404(Vendor, id=self.kwargs.get('pk'))
+        return {'vendor': vendor}
+
+    def get_success_url(self):
+        return reverse_lazy('vendors:vendor-view', args=(self.object.vendor.id,))

@@ -10,11 +10,6 @@
             <div class="column">
                 {% if client.client_code %}
                     <div class="card">
-                        <div class="card-header">
-                            <p class="card-header-title">{{ client.client_code | upper }} |
-                                Status: {{ client.get_client_status_display }} |
-                                Fees: {{ client.get_imp_fee_status_display }}</p>
-                        </div>
                         <div class="card-content">
                             <div class="media">
                                 <div class="media-left">
@@ -39,10 +34,17 @@
                                class="button is-info  is-light">Update</a>
                             {#              <a href="{% url 'contacts:address-new' client.id %}" class="btn btn-secondary">Add Address</a>#}
 
+                            <a href="{% url 'clients:location-new' client.slug %}"
+                               class="button is-info is-light">Create Location</a>
                             <a href="{% url 'clients:client-contact-new' client.slug %}"
                                class="button is-info is-light">Create Contact</a>
                             {#                            <a href="{% url 'staff:client-team-new' client.slug %}"#}
                             {#                               class="button is-info is-light">Add Team Member</a>#}
+                        </div>
+                        <div class="card-header">
+                            <p class="card-header-title">{{ client.client_code | upper }} |
+                                Status: {{ client.get_client_status_display }} |
+                                Fees: {{ client.get_imp_fee_status_display }}</p>
                         </div>
                     </div>
                 {% endif %}

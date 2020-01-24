@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n security_tags %}
+{% load static i18n security_tags core_tags %}
 {% block css %}
     {{ block.super }}
     {% include 'includes/datatables_css.html' %}
@@ -14,14 +14,18 @@
             {% if vendor.name1 %}
                 <div class="card">
                     <div class="card-header">
-                        <p class="card-header-title">{{ vendor.name1 | upper }} |
-                            Status: {{ vendor.status }}
+                        <p class="card-header-title">{{ vendor.name1 | upper }} &nbsp {{ vendor.status | fa_valid |safe }}
                         </p>
                     </div>
                     <div class="card-content">
                         <p class="title is-4">{{ vendor.name1 | default_if_none:"" }}</p>
                         <div class="content">
-                            <p class="card-text">Added On: {{ vendor.created_on | date:"m/d/y" }}</p>
+                            <p class="card-text">Added On: {{ vendor.created_on | date:"m/d/y" }}
+                                {% for vendor in locations_used %}
+                                    Used by {{ vendor.location_count }} location{{ vendor.location_count|pluralize }}
+                                    <br>
+                                {% endfor %}
+                            </p>
                             {% if vendor.parent %}
                                 <p class="card-text">Parent Vendor: {{ vendor.parent.name1 }}
                                 </p>
@@ -32,6 +36,10 @@
                            class="button is-info  is-light">Update</a>
                         <a href="{% url 'vendors:vendor-contact-new' vendor.id %}"
                            class="button is-info is-light">Create Contact</a>
+                        <a href="{% url 'vendors:vendor-address-new' vendor.id %}" class="button is-info is-light">Add
+                            Address</a>
+                        <a href="{% url 'vendors:vendor-loc-new' vendor.id %}" class="button is-info is-light">Add
+                            Location Assignment</a>
                     </div>
                 </div>
             {% endif %}
@@ -78,7 +86,7 @@
                                     <td class="">{{ vendor_address.state }}</td>
                                     <td class="">{{ vendor_address.postal_code }}</td>
                                     <td class="">{{ vendor_address.country }}</td>
-                                    <td class="">{{ vendor_address.status }}</td>
+                                    <td class="">{{ vendor_address.status | fa_valid |safe }}</td>
                                     <td class="">{{ vendor_address.created_on | date:"m/d/y" }}:
                                         {{ vendor_address.created_on |time:"H:i T" }}</td>
                                     <td class="">{{ vendor_address.updated_on | date:"m/d/y" }}:
@@ -88,10 +96,7 @@
                             {% endfor %}
                             </tbody>
                         </table>
-
                     </div>
-                    <a href="{% url 'vendors:vendor-address-new' vendor.id %}" class="button is-info is-light">Add
-                        Address</a>
                 </div>
             </div>
         </div>
@@ -112,7 +117,6 @@
                                 <th>Title</th>
                                 <th>Email</th>
                                 <th>Type</th>
-                                <th>Client</th>
                                 <th>Valid</th>
                                 <th>Created</th>
                                 <th></th>
@@ -128,9 +132,11 @@
                                         </div>
                                     </td>
                                     <td class="">{% if contact.first_name is None %}
-                                        <a href="{% url "contacts:edit" pk=contact.id %}">(edit)</a>
+                                        <a href="{% url "vendors:vendor-contact-edit" pk=contact.id %}">(edit)</a>
                                     {% else %}
-                                        <a href="{% url "contacts:edit" pk=contact.id %}">{{ contact.first_name | capfirst }}</a>
+                                        <a href="{% url "vendors:vendor-contact-edit" pk=contact.id %}">
+                                            {{ contact.first_name | capfirst }}
+                                        </a>
                                     {% endif %}
                                     </td>
                                     <td class="">{{ contact.title | capfirst }}</td>
@@ -147,12 +153,10 @@
                                             <i class="far fa-building text-center" aria-hidden="true"></i>
                                         {% endif %}
                                     </td>
+                                    <td class="">{{ contact.status | fa_valid |safe }}</td>
                                     <td class="">
-                                        {{ contact.client.client_code | upper }}
-                                        </a>
+                                        {{ contact.created_on | date:"m/d/y" }}:{{ contact.created_on |time:"H:i T" }}
                                     </td>
-                                    <td class="">{{ contact.status }}</td>
-                                    <td class="">{{ contact.created_on | date:"m/d/y" }}:{{ contact.created_on |time:"H:i T" }}</td>
                                     <td></td>
                                 </tr>
                             {% endfor %}

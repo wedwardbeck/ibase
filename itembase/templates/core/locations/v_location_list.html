@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static i18n security_tags %}
+{#{% load thumbnail %}#}
+{% load tz %}
+{% block css %}
+    {{ block.super }}
+    {#    {% include 'includes/datatables_css.html' %}#}
+    {#    {% include 'includes/datatables_css.html' %}#}
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <div id="app">
+                [[message]]
+
+                <ul>
+                    <li v-for="location in mylocations">
+                        <a v-bind:href="person.url">[[ person.name ]]</a>
+                        <button v-on:click="greet(person.name)">hey</button>
+                    </li>
+                </ul>
+
+                <h2 class="title">Locations</h2>
+                <table class="table is-hoverable" id="location_table" cellspacing="0" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Location ID</th>
+                        <th>Location Name</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Updated</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    {% for location in locations %}
+                        <tr>
+                            <td data-sort="{{ location.client }}">{{ location.client }}</td>
+                            <td class="">
+                                <a href="{{ location.get_absolute_url }}">
+                                    {{ location.loc_id }}
+                                </a>
+                            </td>
+                            <td>{{ location.name|title }}</td>
+                            <td class="">{{ location.status |title }}</td>
+                            <td class="">{{ location.created_by.name }} - {{ location.created_on }}</td>
+                            <td class="">{{ location.updated_on }}</td>
+                            {#                        <td class="">{{ location.created_on| date:"m/d/y" }}:{{ location.created_on |time:"H:i T" }}</td>#}
+                            <td></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                {#            {% if user|is_group:"Team Admin" %}#}
+                <div class="control">
+                    <a class="button is-primary" href="{% url 'locations:new' %}">{% trans "Add New" %}</a>
+                </div>
+            </div>
+            {#            {% endif %}#}
+        </div>
+    </section>
+{% endblock content %}
+{% block javascript %}
+    {{ block.super }}
+    {#    {% include 'includes/datatables_js.html' %}#}
+    {
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type='text/javascript'>
+        let mylocation = {{ locations_json|safe }};
+    </script>
+    <script>
+        new Vue ({
+            delimiters: ['[[', ']]'],
+            el: '#app',
+            data: {
+                title: 'Welcome to My Journal'
+            }
+        })
+    </script>
+    {#    <script type="application/javascript">#}
+    {##}
+    {#        $(document).ready(function () {#}
+    {#            $('#location_table').DataTable({#}
+    {#                responsive: {#}
+    {#                    details: {#}
+    {#                        type: 'column',#}
+    {#                        target: -1#}
+    {#                    }#}
+    {#                },#}
+    {#                columnDefs: [{#}
+    {#                    className: 'control',#}
+    {#                    orderable: true,#}
+    {#                    targets: -1#}
+    {#                }],#}
+    {#                order: [],#}
+    {#            });#}
+    {#        });#}
+    {#    </script>#}
+{% endblock javascript %}

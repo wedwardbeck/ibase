@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n security_tags%}
+{% load static i18n security_tags core_tags %}
 {#{% load thumbnail %}#}
 {% load tz %}
 {% block css %}
@@ -35,23 +35,27 @@
                             </div>
                         </td>
                         <td class="">{{ vendor.item_count }}</td>
-                        <td class="">{{ vendor.item_count }}</td>
-                        <td class="">{{ vendor.status |title }}</td>
-                        <td class="">{{ vendor.parent }}</td>
+                        <td class="">
+{#                            {% for vendor in locations_used %}#}
+                            {{ vendor.location.count }}
+{#                        {% endfor %}#}
+                        </td>
+                        <td class="">{{ vendor.status | fa_valid |safe }}</td>
+                        <td class="">{{ vendor.parent |default_if_none:"--" }}</td>
                         <td class="">{{ vendor.created_by.name }} - {{ vendor.created_on }}</td>
                         <td class="">{{ vendor.updated_on }}</td>
-{#                        <td class="">{{ vendor.created_on| date:"m/d/y" }}:{{ vendor.created_on |time:"H:i T" }}</td>#}
+                        {#                        <td class="">{{ vendor.created_on| date:"m/d/y" }}:{{ vendor.created_on |time:"H:i T" }}</td>#}
                         <td></td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
 
-{#            {% if user|is_group:"Team Admin" %}#}
-                <div class="control">
-                    <a class="button is-primary" href="{% url 'vendors:vendor-new' %}">{% trans "Add New" %}</a>
-                </div>
-{#            {% endif %}#}
+            {#            {% if user|is_group:"Team Admin" %}#}
+            <div class="control">
+                <a class="button is-primary" href="{% url 'vendors:vendor-new' %}">{% trans "Add New" %}</a>
+            </div>
+            {#            {% endif %}#}
         </div>
     </section>
 {% endblock content %}

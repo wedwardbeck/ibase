@@ -294,5 +294,6 @@ ACCOUNT_ADAPTER = "itembase.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = "itembase.users.adapters.SocialAccountAdapter"
 
+
 # Your stuff...
 # ------------------------------------------------------------------------------

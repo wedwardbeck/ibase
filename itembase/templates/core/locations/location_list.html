@@ -4,7 +4,8 @@
 {% load tz %}
 {% block css %}
     {{ block.super }}
-    {% include 'includes/datatables_css.html' %}
+{#    {% include 'includes/datatables_css.html' %}#}
+{#    {% include 'includes/datatables_css.html' %}#}
 {% endblock %}
 
 {% block content %}
@@ -53,25 +54,26 @@
 {% endblock content %}
 {% block javascript %}
     {{ block.super }}
+{#    {% include 'includes/datatables_js.html' %}#}
     {% include 'includes/datatables_js.html' %}
 
-    <script type="application/javascript">
-
-        $(document).ready(function () {
-            $('#location_table').DataTable({
-                responsive: {
-                    details: {
-                        type: 'column',
-                        target: -1
-                    }
-                },
-                columnDefs: [{
-                    className: 'control',
-                    orderable: true,
-                    targets: -1
-                }],
-                order: [],
-            });
-        });
-    </script>
+{#    <script type="application/javascript">#}
+{##}
+{#        $(document).ready(function () {#}
+{#            $('#location_table').DataTable({#}
+{#                responsive: {#}
+{#                    details: {#}
+{#                        type: 'column',#}
+{#                        target: -1#}
+{#                    }#}
+{#                },#}
+{#                columnDefs: [{#}
+{#                    className: 'control',#}
+{#                    orderable: true,#}
+{#                    targets: -1#}
+{#                }],#}
+{#                order: [],#}
+{#            });#}
+{#        });#}
+{#    </script>#}
 {% endblock javascript %}

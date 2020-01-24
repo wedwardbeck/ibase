@@ -1,6 +1,6 @@
 from django.forms import ModelForm, ModelChoiceField
 
-from itembase.core.models import AddressType, Vendor, VendorAddress
+from itembase.core.models import AddressType, Vendor, VendorAddress, VendorClientMatrix, VendorLocMatrix
 
 
 class VendorForm(ModelForm):
@@ -26,4 +26,24 @@ class VendorAddressForm(ModelForm):
             'vendor',
             'address_type', 'address1', 'address2', 'city',
             'state', 'postal_code', 'country', 'phone_number', 'email', 'primary', 'status',
+        ]
+
+
+class VendorClientForm(ModelForm):
+
+    class Meta:
+        model = VendorClientMatrix
+        fields = [
+            'client',
+            'vendor', 'status',
+        ]
+
+
+class VendorLocationForm(ModelForm):
+
+    class Meta:
+        model = VendorLocMatrix
+        fields = [
+            'location',
+            'vendor', 'status',
         ]
