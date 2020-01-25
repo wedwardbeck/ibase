@@ -341,7 +341,7 @@ class Contact(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='contact_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -365,7 +365,7 @@ class AddressType(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='address_type_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -390,7 +390,7 @@ class LocationAddress(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='location_address_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -412,7 +412,7 @@ class LocationAddress(models.Model):
 
 class VendorAddress(models.Model):
     vendor = models.ForeignKey(Vendor, verbose_name=_('Vendor'), related_name='vendor_address',
-                               null=True, blank=True, on_delete=models.PROTECT)
+                               on_delete=models.PROTECT)
     address_type = models.ForeignKey(AddressType, verbose_name=_('Address Type'), on_delete=models.PROTECT)
     address1 = models.CharField(_('Address 1'), max_length=255, )
     address2 = models.CharField(_('Address 2'), max_length=255, null=True, blank=True)
@@ -426,7 +426,7 @@ class VendorAddress(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vendor_address_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -454,7 +454,7 @@ class VendorLocMatrix(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vlm_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -479,7 +479,7 @@ class VendorClientMatrix(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vcm_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -509,7 +509,7 @@ class StaffShift(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='staff_shift_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -527,7 +527,7 @@ class StaffTitle(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='staff_title_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -554,7 +554,7 @@ class StaffMember(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='staff_member_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -584,7 +584,7 @@ class TeamMember(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='team_member_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -607,7 +607,7 @@ class HolidayList(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='holiday_list_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -631,7 +631,7 @@ class FeeGroup(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='fee_group_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -649,7 +649,7 @@ class FeeItem(models.Model):
     description = models.CharField(_('Description'), max_length=255)
     fee_group = models.ForeignKey(FeeGroup, verbose_name=_('Fee Group'), on_delete=models.PROTECT)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()

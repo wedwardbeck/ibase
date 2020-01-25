@@ -16,13 +16,14 @@ urlpatterns = [
                   path("users/", include("itembase.users.urls", namespace="users")),
                   path("accounts/", include("allauth.urls")),
                   # Your stuff: custom urls includes go here
+                  path("api/v1/", include('core.urls.api_urls')),
                   path("client/", include('core.urls.client_urls')),
                   # path("clist/", include('core.urls.checklist_urls')),
                   # path("csys/", include('core.urls.client_system_urls')),
                   path("contact/", include('core.urls.contact_urls')),
                   path("loc/", include('core.urls.location_urls')),
                   path("vendors/", include('core.urls.vendor_urls')),
-                  path("items/", include('core.urls.item_urls')),
+                  path("items/", include('core.urls.vendor_item_urls')),
                   # path("proj/", include('core.urls.project_urls')),
                   path("staff/", include('core.urls.staffing_urls')),
 

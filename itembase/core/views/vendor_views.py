@@ -3,12 +3,16 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Count, Q
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
-from itembase.utils.mixins import CancelMixin
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import CreateView as gen_CreateView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
+
 from itembase.core.forms.vendor_forms import VendorForm, VendorAddressForm, VendorClientForm, VendorLocationForm
 from itembase.core.models import Contact, Vendor, VendorAddress, VendorClientMatrix, VendorLocMatrix
+from itembase.core.serializers.vendors_drf import VendorSerializer, VendorAddressSerializer, \
+    VendorClientSerializer
+from itembase.utils.mixins import CancelMixin
 
 
 class VendorCreateView(SuccessMessageMixin, views.LoginRequiredMixin, CreateView):
@@ -138,3 +142,38 @@ class VendorClientCreateView(SuccessMessageMixin, views.LoginRequiredMixin, view
 
     def get_success_url(self):
         return reverse_lazy('vendors:vendor-view', args=(self.object.vendor.id,))
+
+
+# API Region
+
+class VendorCreateListAPI(ListCreateAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+
+
+class VendorDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+
+
+class VendorAddressCreateListAPI(ListCreateAPIView):
+    queryset = VendorAddress.objects.all()
+    serializer_class = VendorAddressSerializer
+
+
+class VendorAddressDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = VendorAddress.objects.all()
+    serializer_class = VendorAddressSerializer
+
+
+class VendorClientCreateListAPI(ListCreateAPIView):
+    queryset = VendorClientMatrix.objects.all()
+    serializer_class = VendorClientSerializer
+
+
+class VendorClientDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = VendorClientMatrix.objects.all()
+    serializer_class = VendorClientSerializer
+
+
+# endregion

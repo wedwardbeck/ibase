@@ -6,12 +6,14 @@ from django.shortcuts import get_object_or_404, redirect  # ,  HttpResponseRedir
 from django.urls import reverse_lazy
 from django.views.generic import CreateView as gen_CreateView
 from django.views.generic.detail import SingleObjectMixin
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from vanilla import CreateView, DeleteView, DetailView, UpdateView
 from vanilla import ListView as ListView
 
 from itembase.core.forms.client_forms import ClientForm
 from itembase.core.forms.location_forms import LocationForm
 from itembase.core.models import Client, Contact, Location, TeamMember
+from itembase.core.serializers.clients_drf import ClientCodeSerializer, ClientSerializer
 
 
 class ClientCreateView(SuccessMessageMixin, LoginRequiredMixin,
@@ -104,3 +106,15 @@ class ClientLocationCreateView(SuccessMessageMixin, LoginRequiredMixin, gen_Crea
         # return super().form_valid(form)
 
 
+# API Region
+
+class ClientCreateListAPI(ListCreateAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+
+class ClientDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+
+# endregion

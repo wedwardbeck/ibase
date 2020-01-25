@@ -6,10 +6,12 @@ from django.shortcuts import get_object_or_404
 from itembase.utils.mixins import CancelMixin
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import CreateView as gen_CreateView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 # from django.views.generic import UpdateView
-from vanilla import CreateView, DeleteView, DetailView, ListView,  UpdateView
+from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
 from itembase.core.forms.location_forms import LocationForm, LocationAddressForm
 from itembase.core.models import Location, LocationAddress
+from itembase.core.serializers.locations_drf import LocationSerializer
 
 
 class LocationCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -100,3 +102,17 @@ def get_locations(request):
     locations = Location.objects.all().values()
     locations_json = list(locations)
     return JsonResponse(locations_json, safe=False)
+
+
+# API Region
+
+class LocationCreateListAPI(ListCreateAPIView):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+
+class LocationDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = Location.objects.all()
+    serializer_class = LocationSerializer
+
+# endregion

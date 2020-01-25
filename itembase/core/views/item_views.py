@@ -3,10 +3,13 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 # from itembase.utils.mixins import CancelMixin
 from django.views.generic.detail import SingleObjectMixin
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 # from django.views.generic import CreateView as gen_CreateView
 from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
+
 from itembase.core.forms.item_forms import UOMForm, VendorItemForm
 from itembase.core.models import VendorItem, UnitOfMeasure
+from itembase.core.serializers.vendors_drf import VendorItemSerializer
 
 
 class UOMCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -90,7 +93,22 @@ class VendorItemDeleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteVie
 
 class VendorItemListView(LoginRequiredMixin, ListView):
     # model = VendorItem
-    queryset = VendorItem.objects.select_related('created_by', 'vendor', 'uom').\
+    queryset = VendorItem.objects.select_related('created_by', 'vendor', 'uom'). \
         order_by('vendor__name1', 'item_number')
     template_name = 'core/items/vendor_item_list.html'
     context_object_name = 'vendor_items'
+
+
+# region API
+
+
+class VendorItemCreateListAPI(ListCreateAPIView):
+    queryset = VendorItem.objects.all()
+    serializer_class = VendorItemSerializer
+
+
+class VendorItemDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = VendorItem.objects.all()
+    serializer_class = VendorItemSerializer
+
+# endregion
