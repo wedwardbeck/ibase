@@ -6,12 +6,15 @@ from django.shortcuts import get_object_or_404
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import CreateView as gen_CreateView
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+# from rest_framework.views import APIView
+# from rest_framework.parsers import FormParser, MultiPartParser
 from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from itembase.core.forms.vendor_forms import VendorForm, VendorAddressForm, VendorClientForm, VendorLocationForm
-from itembase.core.models import Contact, Vendor, VendorAddress, VendorClientMatrix, VendorLocMatrix
+from itembase.core.models import Contact, Vendor, VendorAddress, VendorClientMatrix, VendorLocMatrix, \
+    VineVendorImport, VineVendorFile
 from itembase.core.serializers.vendors_drf import VendorSerializer, VendorAddressSerializer, \
-    VendorClientSerializer
+    VendorClientSerializer, VineVendorSerializer
 from itembase.utils.mixins import CancelMixin
 
 
@@ -147,12 +150,12 @@ class VendorClientCreateView(SuccessMessageMixin, views.LoginRequiredMixin, view
 # API Region
 
 class VendorCreateListAPI(ListCreateAPIView):
-    queryset = Vendor.objects.all()
+    queryset = Vendor.objects.all().select_related('created_by')
     serializer_class = VendorSerializer
 
 
 class VendorDetailAPI(RetrieveUpdateDestroyAPIView):
-    queryset = Vendor.objects.all()
+    queryset = Vendor.objects.all().select_related('created_by')
     serializer_class = VendorSerializer
 
 
@@ -174,6 +177,19 @@ class VendorClientCreateListAPI(ListCreateAPIView):
 class VendorClientDetailAPI(RetrieveUpdateDestroyAPIView):
     queryset = VendorClientMatrix.objects.all()
     serializer_class = VendorClientSerializer
+
+
+#
+# def vine_import_directory_path(instance, filename):
+#     # file will be uploaded to MEDIA_ROOT/clients/logos/slug_client_<id>/<filename>
+#     # return 'resources/res_None/{1}'.format(filename)
+#     return 'clients/logos/{0}/{1}'.format(instance.slug, filename)
+
+
+class VineVendorImportViewSet(ListCreateAPIView):
+    queryset = VineVendorFile.objects.all()
+    serializer_class = VineVendorSerializer
+
 
 
 # endregion

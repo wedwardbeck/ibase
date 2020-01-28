@@ -4,7 +4,8 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from itembase.core.views.client_views import ClientCreateListAPI, ClientDetailAPI
 from itembase.core.views.location_views import LocationCreateListAPI, LocationDetailAPI
 from itembase.core.views.vendor_views import VendorDetailAPI, VendorCreateListAPI, \
-    VendorAddressCreateListAPI, VendorAddressDetailAPI, VendorClientCreateListAPI, VendorClientDetailAPI
+    VendorAddressCreateListAPI, VendorAddressDetailAPI, VendorClientCreateListAPI, VendorClientDetailAPI, \
+    VineVendorImportViewSet
 from itembase.core.views.item_views import VendorItemCreateListAPI, VendorItemDetailAPI
 
 app_name = "api"
@@ -22,4 +23,5 @@ urlpatterns = [
     path("va/<int:pk>", VendorAddressDetailAPI.as_view()),
     path("vc/", VendorClientCreateListAPI.as_view()),
     path("vc/<int:pk>", VendorClientDetailAPI.as_view()),
+    path("vineup/", VineVendorImportViewSet.as_view()),
 ]

@@ -476,6 +476,8 @@ class VendorClientMatrix(models.Model):
                                on_delete=models.PROTECT)
     vendor = models.ForeignKey(Vendor, verbose_name=_('Vendor'), related_name='vn_2_client',
                                on_delete=models.PROTECT)
+    cv_id = models.CharField(_('Client Vendor ID'), max_length=30, null=True, blank=True)
+    cv_name = models.CharField(_('Client Vendor Name'), max_length=100, null=True, blank=True)
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vcm_created',
@@ -660,5 +662,43 @@ class FeeItem(models.Model):
 
     def __str__(self):
         return self.item
+
+
+# endregion
+
+# region Contract & Billing
+
+class VineVendorImport(models.Model):
+    vendor_code = models.CharField(_('Item'), max_length=50)
+    name = models.CharField(_('Item'), max_length=50)
+    addr1 = models.CharField(_('Item'), max_length=150)
+    addr2 = models.CharField(_('Item'), max_length=150)
+    addr3 = models.CharField(_('Item'), max_length=150)
+    city = models.CharField(_('Item'), max_length=50)
+    state = models.CharField(_('Item'), max_length=25)
+    zipcode = models.CharField(_('Item'), max_length=25)
+    phone = models.CharField(_('Item'), max_length=50)
+    extension = models.CharField(_('Item'), max_length=50)
+    salesperson_name = models.CharField(_('Item'), max_length=100)
+    salesperson_email = models.CharField(_('Item'), max_length=100)
+    salesperson_phone = models.CharField(_('Item'), max_length=50)
+    created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False, null=True)
+    source = models.CharField(_('Item'), max_length=150, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+def vine_upload_user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'vine_user_{0}/{1}'.format(instance.created_by.id, filename)
+
+
+class VineVendorFile(models.Model):
+    file = models.FileField(upload_to=vine_upload_user_directory_path)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
+    created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
+    # TODO - add processed bool to capture in pipeline files not yet processed
 
 # endregion
