@@ -360,7 +360,7 @@ class Contact(models.Model):
 
 class AddressType(models.Model):
     address_type = models.CharField(_('Address Type'), max_length=20)
-    usage = models.CharField(_('Gender'), max_length=1, choices=AddressUsage.choices)
+    usage = models.CharField(_('Use'), max_length=1, choices=AddressUsage.choices)
     fa_string = models.CharField(_('FA String'), max_length=50, blank=True, null=True)
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
