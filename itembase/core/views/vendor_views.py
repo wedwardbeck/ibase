@@ -11,7 +11,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from itembase.core.forms.vendor_forms import VendorForm, VendorAddressForm, VendorClientForm, VendorLocationForm
-from itembase.core.models import Contact, Vendor, VendorAddress, VendorClientMatrix, VendorLocMatrix, \
+from itembase.core.models import Contact, Vendor, Address, VendorClientMatrix, VendorLocMatrix, \
     VineVendorImport, VineVendorFile
 from itembase.core.serializers.vendors_drf import VendorSerializer, VendorAddressSerializer, \
     VendorClientSerializer, VineVendorSerializer
@@ -46,7 +46,7 @@ class VendorDetailView(SingleObjectMixin, views.LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(VendorDetailView, self).get_context_data(**kwargs)
-        context['address_list'] = VendorAddress.objects.select_related(). \
+        context['address_list'] = Address.objects.select_related(). \
             filter(vendor=self.object)
         context['contact_list'] = Contact.objects.select_related(). \
             filter(vendor=self.object).order_by('last_name').filter(Q(status='2') | Q(status='1'))
@@ -78,7 +78,7 @@ class VendorListView(views.LoginRequiredMixin, ListView):
 
 class VendorAddressCreateView(SuccessMessageMixin, views.LoginRequiredMixin, views.StaffuserRequiredMixin,
                               CancelMixin, gen_CreateView):
-    model = VendorAddress
+    model = Address
     template_name = 'core/vendors/address_new.html'
     form_class = VendorAddressForm
 
@@ -86,7 +86,12 @@ class VendorAddressCreateView(SuccessMessageMixin, views.LoginRequiredMixin, vie
 
     def get_initial(self):
         vendor = get_object_or_404(Vendor, id=self.kwargs.get('pk'))
-        return {'vendor': vendor}
+        used_on = 'V'
+        return {'vendor': vendor, 'used_on': used_on}
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('vendors:vendor-view', args=(self.object.vendor.id,))
@@ -94,7 +99,7 @@ class VendorAddressCreateView(SuccessMessageMixin, views.LoginRequiredMixin, vie
 
 class VendorAddressUpdateView(SuccessMessageMixin, SingleObjectMixin, views.LoginRequiredMixin, CancelMixin,
                               UpdateView):
-    model = VendorAddress
+    model = Address
     form_class = VendorAddressForm
     template_name = 'core/vendors/address_edit.html'
     success_message = "%(vendor)s %(address_type)s address was updated successfully"
@@ -104,14 +109,14 @@ class VendorAddressUpdateView(SuccessMessageMixin, SingleObjectMixin, views.Logi
 
 
 class VendorAddressDetailView(SingleObjectMixin, views.LoginRequiredMixin, DetailView):
-    model = VendorAddress
+    model = Address
     form_class = VendorAddressForm
     template_name = 'core/vendors/address_detail.html'
     context_object_name = 'address'
 
 
 class VendorAddressDeleteView(views.LoginRequiredMixin, views.StaffuserRequiredMixin, DeleteView):
-    model = VendorAddress
+    model = Address
     success_url = reverse_lazy('vendors:vendors-list')
 
 
@@ -160,12 +165,12 @@ class VendorDetailAPI(RetrieveUpdateDestroyAPIView):
 
 
 class VendorAddressCreateListAPI(ListCreateAPIView):
-    queryset = VendorAddress.objects.all()
+    queryset = Address.objects.all()
     serializer_class = VendorAddressSerializer
 
 
 class VendorAddressDetailAPI(RetrieveUpdateDestroyAPIView):
-    queryset = VendorAddress.objects.all()
+    queryset = Address.objects.all()
     serializer_class = VendorAddressSerializer
 
 

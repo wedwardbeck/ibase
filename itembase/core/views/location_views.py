@@ -10,7 +10,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 # from django.views.generic import UpdateView
 from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
 from itembase.core.forms.location_forms import LocationForm, LocationAddressForm
-from itembase.core.models import Location, LocationAddress
+from itembase.core.models import Address, Location  # , LocationAddress
 from itembase.core.serializers.locations_drf import LocationSerializer
 
 
@@ -43,7 +43,7 @@ class LocationDetailView(SingleObjectMixin, LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(LocationDetailView, self).get_context_data(**kwargs)
-        context['address_list'] = LocationAddress.objects.select_related(). \
+        context['address_list'] = Address.objects.select_related(). \
             filter(location=self.object)
         return context
 
@@ -61,7 +61,7 @@ class LocationListView(LoginRequiredMixin, ListView):
 
 class LocationAddressCreateView(SuccessMessageMixin, LoginRequiredMixin, StaffuserRequiredMixin,
                                 CancelMixin, gen_CreateView):
-    model = LocationAddress
+    model = Address
     template_name = 'core/locations/address_new.html'
     form_class = LocationAddressForm
 
@@ -69,7 +69,12 @@ class LocationAddressCreateView(SuccessMessageMixin, LoginRequiredMixin, Staffus
 
     def get_initial(self):
         location = get_object_or_404(Location, id=self.kwargs.get('pk'))
-        return {'location': location}
+        used_on = 'L'
+        return {'location': location, 'used_on': used_on}
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('locations:view', args=(self.object.location.id,))
@@ -77,7 +82,7 @@ class LocationAddressCreateView(SuccessMessageMixin, LoginRequiredMixin, Staffus
 
 class LocationAddressUpdateView(SuccessMessageMixin, SingleObjectMixin, LoginRequiredMixin, CancelMixin,
                                 UpdateView):
-    model = LocationAddress
+    model = Address
     form_class = LocationAddressForm
     template_name = 'core/locations/address_edit.html'
     success_message = "%(location)s %(address_type)s address was updated successfully"
@@ -87,14 +92,14 @@ class LocationAddressUpdateView(SuccessMessageMixin, SingleObjectMixin, LoginReq
 
 
 class LocationAddressDetailView(SingleObjectMixin, LoginRequiredMixin, DetailView):
-    model = LocationAddress
+    model = Address
     form_class = LocationAddressForm
     template_name = 'core/locations/address_detail.html'
     context_object_name = 'address'
 
 
 class LocationAddressDeleteView(LoginRequiredMixin, StaffuserRequiredMixin, DeleteView):
-    model = LocationAddress
+    model = Address
     success_url = reverse_lazy('locations-list')
 
 

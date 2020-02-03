@@ -319,9 +319,9 @@ class Location(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.loc_id, self.name)
-        #
-        # def get_absolute_url(self):
-        #     return reverse('locations:view', kwargs={'pk': self.pk})
+
+    def get_absolute_url(self):
+        return reverse('locations:view', kwargs={'pk': self.id})
 
 
 class Contact(models.Model):
@@ -374,11 +374,17 @@ class AddressType(models.Model):
         return self.address_type
 
 
-class LocationAddress(models.Model):
+class Address(models.Model):
+    client = models.ForeignKey(Client, verbose_name=_('Client'), related_name='client_address',
+                               on_delete=models.PROTECT, null=True)
     location = models.ForeignKey(Location, verbose_name=_('Location'), related_name='location_address',
-                                 on_delete=models.PROTECT)
+                                 on_delete=models.PROTECT, null=True)
+    vendor = models.ForeignKey(Vendor, verbose_name=_('Vendor'), related_name='vendor_address',
+                               on_delete=models.PROTECT, null=True)
     address_type = models.ForeignKey(AddressType, verbose_name=_('Address Type'), on_delete=models.PROTECT)
-    address1 = models.CharField(_('Address 1'), max_length=255, )
+    used_on = models.CharField(_('Used on'), max_length=1, choices=AddressUsage.choices,
+                               default=AddressUsage.vendor)
+    address1 = models.CharField(_('Address 1'), max_length=255)
     address2 = models.CharField(_('Address 2'), max_length=255, null=True, blank=True)
     city = models.CharField(_('City'), max_length=255)
     state = models.CharField(_('State'), max_length=2)
@@ -410,40 +416,77 @@ class LocationAddress(models.Model):
         return reverse('vendors:address-view', args=[str(self.id)])
 
 
-class VendorAddress(models.Model):
-    vendor = models.ForeignKey(Vendor, verbose_name=_('Vendor'), related_name='vendor_address',
-                               on_delete=models.PROTECT)
-    address_type = models.ForeignKey(AddressType, verbose_name=_('Address Type'), on_delete=models.PROTECT)
-    address1 = models.CharField(_('Address 1'), max_length=255, )
-    address2 = models.CharField(_('Address 2'), max_length=255, null=True, blank=True)
-    city = models.CharField(_('City'), max_length=255)
-    state = models.CharField(_('State'), max_length=2)
-    postal_code = models.CharField(_('Postal Code'), max_length=20, blank=True, null=True)
-    country = models.CharField(_('Country'), max_length=3, blank=True, null=True)
-    phone_number = PhoneNumberField(_('Phone Number'), blank=True)
-    email = models.EmailField(_('Email'), null=True, blank=True)
-    primary = models.BooleanField(default=False)
-    status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
-                                 default=BaseStatus.new)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vendor_address_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
-    created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
-    updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
-    history = HistoricalRecords()
-
-    class Meta:
-        verbose_name = 'Vendor Address'
-        verbose_name_plural = 'Vendor Addresses'
-
-    def __str__(self):
-        return ' '.join([
-            self.address1,
-            ',',
-            self.city,
-        ])
-
-    def get_absolute_url(self):
-        return reverse('vendors:address-view', args=[str(self.id)])
+#
+# class LocationAddress(models.Model):
+#     location = models.ForeignKey(Location, verbose_name=_('Location'), related_name='location_address',
+#                                  on_delete=models.PROTECT)
+#     address_type = models.ForeignKey(AddressType, verbose_name=_('Address Type'), on_delete=models.PROTECT)
+#     address1 = models.CharField(_('Address 1'), max_length=255, )
+#     address2 = models.CharField(_('Address 2'), max_length=255, null=True, blank=True)
+#     city = models.CharField(_('City'), max_length=255)
+#     state = models.CharField(_('State'), max_length=2)
+#     postal_code = models.CharField(_('Postal Code'), max_length=20, blank=True, null=True)
+#     country = models.CharField(_('Country'), max_length=3, blank=True, null=True)
+#     phone_number = PhoneNumberField(_('Phone Number'), blank=True)
+#     email = models.EmailField(_('Email'), null=True, blank=True)
+#     primary = models.BooleanField(default=False)
+#     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
+#                                  default=BaseStatus.new)
+#     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='location_address_created',
+#                                    verbose_name=_('Created By'), on_delete=models.PROTECT)
+#     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
+#     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
+#     history = HistoricalRecords()
+#
+#     class Meta:
+#         verbose_name = 'address'
+#         verbose_name_plural = 'addresses'
+#
+#     def __str__(self):
+#         return ' '.join([
+#             self.address1,
+#             ',',
+#             self.city,
+#         ])
+#
+#     def get_absolute_url(self):
+#         return reverse('vendors:address-view', args=[str(self.id)])
+#
+#
+# class VendorAddress(models.Model):
+#     vendor = models.ForeignKey(Vendor, verbose_name=_('Vendor'), related_name='vendor_address',
+#                                on_delete=models.PROTECT)
+#     address_type = models.ForeignKey(AddressType, verbose_name=_('Address Type'), on_delete=models.PROTECT)
+#     address1 = models.CharField(_('Address 1'), max_length=255, )
+#     address2 = models.CharField(_('Address 2'), max_length=255, null=True, blank=True)
+#     city = models.CharField(_('City'), max_length=255)
+#     state = models.CharField(_('State'), max_length=2)
+#     postal_code = models.CharField(_('Postal Code'), max_length=20, blank=True, null=True)
+#     country = models.CharField(_('Country'), max_length=3, blank=True, null=True)
+#     phone_number = PhoneNumberField(_('Phone Number'), blank=True)
+#     email = models.EmailField(_('Email'), null=True, blank=True)
+#     primary = models.BooleanField(default=False)
+#     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
+#                                  default=BaseStatus.new)
+#     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vendor_address_created',
+#                                    verbose_name=_('Created By'), on_delete=models.PROTECT)
+#     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
+#     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
+#     history = HistoricalRecords()
+#
+#     class Meta:
+#         verbose_name = 'Vendor Address'
+#         verbose_name_plural = 'Vendor Addresses'
+#
+#     def __str__(self):
+#         return ' '.join([
+#             self.address1,
+#             ',',
+#             self.city,
+#         ])
+#
+#     def get_absolute_url(self):
+#         return reverse('vendors:address-view', args=[str(self.id)])
 
 
 class VendorLocMatrix(models.Model):

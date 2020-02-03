@@ -1,13 +1,11 @@
-from django import forms
-# from django.forms.models import inlineformset_factory, BaseInlineFormSet
-from itembase.core.models import Client, EngagementType     # , Modules
-# from .widgets import RelatedFieldWidgetCanAdd
+from django.forms import ModelForm, ModelChoiceField
+from itembase.core.models import Address, AddressType, AddressUsage, Client, EngagementType     # , Modules
 
 
-class ClientForm(forms.ModelForm):
+class ClientForm(ModelForm):
     # service_start = forms.DateField(widget=forms.SelectDateWidget)
-    engagement = forms.ModelChoiceField(queryset=EngagementType.objects, empty_label="Select Engagement")
-    parent = forms.ModelChoiceField(queryset=Client.objects.filter(client_status__lt=5), required=False)
+    engagement = ModelChoiceField(queryset=EngagementType.objects, empty_label="Select Engagement")
+    parent = ModelChoiceField(queryset=Client.objects.filter(client_status__lt=5), required=False)
 
     class Meta:
         model = Client
@@ -24,4 +22,18 @@ class ClientForm(forms.ModelForm):
             'upload_address',
             'iq_support_address',
             'approved',
+        ]
+
+
+class ClientAddressForm(ModelForm):
+    address_type = ModelChoiceField(queryset=AddressType.objects.order_by('id'))
+    # used_on = ModelChoiceField(queryset=AddressUsage.objects.order_by('id'))
+    client = ModelChoiceField(queryset=Client.objects.order_by('client_name'))
+
+    class Meta:
+        model = Address
+        fields = [
+            'client',
+            'address_type', 'used_on', 'address1', 'address2', 'city',
+            'state', 'postal_code', 'country', 'phone_number', 'email', 'primary', 'status',
         ]

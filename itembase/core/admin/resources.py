@@ -1,12 +1,19 @@
 from import_export import fields, resources
 from import_export.widgets import ForeignKeyWidget
 
-from itembase.core.models import AddressType, Brand, Client, ClientSystem, Contact, EngagementType, FeeGroup, \
-    FeeItem, HolidayList, InstallBase, Location, LocationAddress, UnitOfMeasure, StaffMember, \
-    StaffRoles, StaffShift, StaffTitle, System, SystemType, TeamMember, Vendor, VendorAddress, VendorItem
+from itembase.core.models import Address, AddressType, Brand, Client, ClientSystem, Contact, EngagementType, FeeGroup, \
+    FeeItem, HolidayList, InstallBase, Location, UnitOfMeasure, StaffMember, \
+    StaffRoles, StaffShift, StaffTitle, System, SystemType, TeamMember, Vendor, VendorItem
 
 
 # region Core Data
+
+class AddressResource(resources.ModelResource):
+    class Meta:
+        model = Address
+        skip_unchanged = True
+
+
 class AddressTypeResource(resources.ModelResource):
     class Meta:
         model = AddressType
@@ -93,10 +100,10 @@ class LocationResource(resources.ModelResource):
         model = Location
 
 
-class LocationAddressResource(resources.ModelResource):
-    class Meta:
-        model = LocationAddress
-        skip_unchanged = True
+# class LocationAddressResource(resources.ModelResource):
+#     class Meta:
+#         model = LocationAddress
+#         skip_unchanged = True
 
 
 class StaffRolesResource(resources.ModelResource):
@@ -153,10 +160,12 @@ class VendorResource(resources.ModelResource):
         model = Vendor
 
 
-class VendorAddressResource(resources.ModelResource):
-    class Meta:
-        model = VendorAddress
-        skip_unchanged = True
+#
+# class VendorAddressResource(resources.ModelResource):
+#     class Meta:
+#         model = VendorAddress
+#         skip_unchanged = True
+#
 
 
 class VendorItemDataResource(resources.ModelResource):

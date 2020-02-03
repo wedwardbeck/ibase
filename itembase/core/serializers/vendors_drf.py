@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from itembase.core.models import Vendor, VendorAddress, VendorClientMatrix, VendorItem, \
+from itembase.core.models import Vendor, Address, VendorClientMatrix, VendorItem, \
     VendorLocMatrix, VineVendorImport, VineVendorFile
 
 
@@ -38,7 +38,7 @@ class VendorAddressSerializer(serializers.ModelSerializer):
     created_by_name = serializers.ReadOnlyField(source='created_by.name')
 
     class Meta:
-        model = VendorAddress
+        model = Address
         created_by = serializers.HiddenField(
             default=serializers.CurrentUserDefault())
 

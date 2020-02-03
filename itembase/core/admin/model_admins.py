@@ -3,18 +3,24 @@ from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from simple_history.admin import SimpleHistoryAdmin
 
-from itembase.core.models import AddressType, Brand, Client, ClientSystem, Contact, EngagementType, FeeGroup, \
-    FeeItem, HolidayList, InstallBase, Location, LocationAddress, StaffMember, StaffRoles, StaffShift, \
-    StaffTitle, System, SystemType, TeamMember, UnitOfMeasure, Vendor, VendorAddress, VendorItem
+from itembase.core.models import Address, AddressType, Brand, Client, ClientSystem, Contact, EngagementType, FeeGroup, \
+    FeeItem, HolidayList, InstallBase, Location, StaffMember, StaffRoles, StaffShift, \
+    StaffTitle, System, SystemType, TeamMember, UnitOfMeasure, Vendor, VendorItem
 
-from .resources import AddressTypeResource, BrandResource, ClientResource, ClientSystemResource, ContactResource, \
+from .resources import AddressResource, AddressTypeResource, BrandResource, ClientResource, ClientSystemResource, \
+    ContactResource, \
     EngagementTypeResource, FeeGroupResource, FeeItemResource, HolidayListResource, InstallBaseResource, \
-    LocationResource, LocationAddressResource, StaffMemberResource, StaffRolesResource, StaffShiftResource, \
+    LocationResource, StaffMemberResource, StaffRolesResource, StaffShiftResource, \
     StaffTitlesResource, SystemResource, SystemTypeResource, TeamMemberResource, UnitOfMeasureResource, \
-    VendorResource, VendorAddressResource, VendorItemDataResource
+    VendorResource, VendorItemDataResource
 
 
 # region Core Data
+
+class AddressAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
+    model = Address
+    resource_class = AddressResource
+
 
 class AddressTypeAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     model = AddressType
@@ -101,9 +107,10 @@ class LocationAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
     resource_class = LocationResource
 
 
-class LocationAddressAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    model = LocationAddress
-    resource_class = LocationAddressResource
+#
+# class LocationAddressAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
+#     model = LocationAddress
+#     resource_class = LocationAddressResource
 
 
 class StaffShiftAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
@@ -181,9 +188,9 @@ class VendorAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
             formset.save()
 
 
-class VendorAddressAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
-    model = VendorAddress
-    resource_class = VendorAddressResource
+# class VendorAddressAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
+#     model = VendorAddress
+#     resource_class = VendorAddressResource
 
 
 class VendorItemDataAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
@@ -193,7 +200,7 @@ class VendorItemDataAdmin(ImportExportModelAdmin, SimpleHistoryAdmin):
 
 # endregion
 
-
+admin.site.register(Address, AddressAdmin)
 admin.site.register(AddressType, AddressTypeAdmin)
 admin.site.register(Brand, BrandAdmin)
 admin.site.register(Client, ClientAdmin)
@@ -205,7 +212,7 @@ admin.site.register(FeeItem, FeeItemAdmin)
 admin.site.register(HolidayList, HolidayListAdmin)
 admin.site.register(InstallBase, InstallBaseAdmin)
 admin.site.register(Location, LocationAdmin)
-admin.site.register(LocationAddress, LocationAddressAdmin)
+# admin.site.register(LocationAddress, LocationAddressAdmin)
 admin.site.register(StaffMember, StaffMemberAdmin)
 admin.site.register(StaffRoles, StaffRoleAdmin)
 admin.site.register(StaffShift, StaffShiftAdmin)
@@ -215,5 +222,5 @@ admin.site.register(SystemType, SystemTypeAdmin)
 admin.site.register(TeamMember, TeamMemberAdmin)
 admin.site.register(UnitOfMeasure, UnitOfMeasureAdmin)
 admin.site.register(Vendor, VendorAdmin)
-admin.site.register(VendorAddress, VendorAddressAdmin)
+# admin.site.register(VendorAddress, VendorAddressAdmin)
 admin.site.register(VendorItem, VendorItemDataAdmin)

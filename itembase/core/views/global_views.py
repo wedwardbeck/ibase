@@ -7,7 +7,7 @@ from django.views.generic.detail import SingleObjectMixin
 from django.views import generic
 from vanilla import DetailView, GenericView, ListView
 
-from itembase.core.models import VendorAddress, Client, Vendor, VendorItem
+from itembase.core.models import Address, Client, Vendor, VendorItem
 from itembase.users.models import User
 
 #
