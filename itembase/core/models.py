@@ -712,21 +712,21 @@ class FeeItem(models.Model):
 # region Contract & Billing
 
 class VineVendorImport(models.Model):
-    vendor_code = models.CharField(_('Item'), max_length=50)
-    name = models.CharField(_('Item'), max_length=50)
-    addr1 = models.CharField(_('Item'), max_length=150)
-    addr2 = models.CharField(_('Item'), max_length=150)
-    addr3 = models.CharField(_('Item'), max_length=150)
-    city = models.CharField(_('Item'), max_length=50)
-    state = models.CharField(_('Item'), max_length=25)
-    zipcode = models.CharField(_('Item'), max_length=25)
-    phone = models.CharField(_('Item'), max_length=50)
-    extension = models.CharField(_('Item'), max_length=50)
-    salesperson_name = models.CharField(_('Item'), max_length=100)
-    salesperson_email = models.CharField(_('Item'), max_length=100)
-    salesperson_phone = models.CharField(_('Item'), max_length=50)
+    vendor_code = models.CharField(_('Vendor Code'), max_length=50)
+    name = models.CharField(_('Name'), max_length=50)
+    addr1 = models.CharField(_('Address 1'), max_length=150)
+    addr2 = models.CharField(_('Address 2'), max_length=150)
+    addr3 = models.CharField(_('Address 3'), max_length=150)
+    city = models.CharField(_('City'), max_length=50)
+    state = models.CharField(_('State'), max_length=25)
+    zipcode = models.CharField(_('Postal Code'), max_length=25)
+    phone = models.CharField(_('Phone'), max_length=50)
+    extension = models.CharField(_('Extension'), max_length=50)
+    salesperson_name = models.CharField(_('Salesperson Name'), max_length=100)
+    salesperson_email = models.CharField(_('Salesperson Email'), max_length=100)
+    salesperson_phone = models.CharField(_('Salesperson Phone'), max_length=50)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False, null=True)
-    source = models.CharField(_('Item'), max_length=150, null=True, blank=True)
+    source = models.CharField(_('Source'), max_length=150, null=True, blank=True)
 
     def __str__(self):
         return self.name
