@@ -312,7 +312,7 @@ class Location(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='location_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
