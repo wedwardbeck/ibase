@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from itembase.core.models import Client, ClientStatus
+from itembase.core.models import Address, Client, ClientStatus
 
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -43,4 +43,41 @@ class ClientCodeSerializer(serializers.HyperlinkedModelSerializer):
         model = Client
         fields = (
             'client_code',
+        )
+
+
+class ClientAddressSerializer(serializers.ModelSerializer):
+    created_by_name = serializers.ReadOnlyField(source='created_by.name')
+    client_name = serializers.CharField(source='client.client_name')
+    status_name = serializers.CharField(source='get_status_display')
+    address_type_name = serializers.CharField(source='address_type.address_type')
+    used_on = serializers.ChoiceField(choices='C')
+
+    class Meta:
+        model = Address
+        created_by = serializers.HiddenField(
+            default=serializers.CurrentUserDefault())
+
+        fields = (
+            'id',
+            'client',
+            'client_name',
+            'used_on',
+            'address_type',
+            'address_type_name',
+            'address1',
+            'address2',
+            'city',
+            'state',
+            'postal_code',
+            'country',
+            'phone_number',
+            'email',
+            'primary',
+            'status',
+            'status_name',
+            'created_on',
+            'updated_on',
+            'created_by',
+            'created_by_name',
         )

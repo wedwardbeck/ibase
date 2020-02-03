@@ -110,7 +110,7 @@ class StaffRoles(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='staff_roles_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -130,7 +130,7 @@ class SystemType(models.Model):
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='system_type_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -289,7 +289,7 @@ class VendorItem(models.Model):
     status = models.IntegerField(_('Status'), choices=ItemStatus.choices,
                                  default=ItemStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='item_created',
-                                   verbose_name=_('Created By'), on_delete=models.PROTECT, null=True)
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
     history = HistoricalRecords()
@@ -414,79 +414,6 @@ class Address(models.Model):
 
     def get_absolute_url(self):
         return reverse('vendors:address-view', args=[str(self.id)])
-
-
-#
-# class LocationAddress(models.Model):
-#     location = models.ForeignKey(Location, verbose_name=_('Location'), related_name='location_address',
-#                                  on_delete=models.PROTECT)
-#     address_type = models.ForeignKey(AddressType, verbose_name=_('Address Type'), on_delete=models.PROTECT)
-#     address1 = models.CharField(_('Address 1'), max_length=255, )
-#     address2 = models.CharField(_('Address 2'), max_length=255, null=True, blank=True)
-#     city = models.CharField(_('City'), max_length=255)
-#     state = models.CharField(_('State'), max_length=2)
-#     postal_code = models.CharField(_('Postal Code'), max_length=20, blank=True, null=True)
-#     country = models.CharField(_('Country'), max_length=3, blank=True, null=True)
-#     phone_number = PhoneNumberField(_('Phone Number'), blank=True)
-#     email = models.EmailField(_('Email'), null=True, blank=True)
-#     primary = models.BooleanField(default=False)
-#     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
-#                                  default=BaseStatus.new)
-#     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='location_address_created',
-#                                    verbose_name=_('Created By'), on_delete=models.PROTECT)
-#     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
-#     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
-#     history = HistoricalRecords()
-#
-#     class Meta:
-#         verbose_name = 'address'
-#         verbose_name_plural = 'addresses'
-#
-#     def __str__(self):
-#         return ' '.join([
-#             self.address1,
-#             ',',
-#             self.city,
-#         ])
-#
-#     def get_absolute_url(self):
-#         return reverse('vendors:address-view', args=[str(self.id)])
-#
-#
-# class VendorAddress(models.Model):
-#     vendor = models.ForeignKey(Vendor, verbose_name=_('Vendor'), related_name='vendor_address',
-#                                on_delete=models.PROTECT)
-#     address_type = models.ForeignKey(AddressType, verbose_name=_('Address Type'), on_delete=models.PROTECT)
-#     address1 = models.CharField(_('Address 1'), max_length=255, )
-#     address2 = models.CharField(_('Address 2'), max_length=255, null=True, blank=True)
-#     city = models.CharField(_('City'), max_length=255)
-#     state = models.CharField(_('State'), max_length=2)
-#     postal_code = models.CharField(_('Postal Code'), max_length=20, blank=True, null=True)
-#     country = models.CharField(_('Country'), max_length=3, blank=True, null=True)
-#     phone_number = PhoneNumberField(_('Phone Number'), blank=True)
-#     email = models.EmailField(_('Email'), null=True, blank=True)
-#     primary = models.BooleanField(default=False)
-#     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
-#                                  default=BaseStatus.new)
-#     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='vendor_address_created',
-#                                    verbose_name=_('Created By'), on_delete=models.PROTECT)
-#     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
-#     updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
-#     history = HistoricalRecords()
-#
-#     class Meta:
-#         verbose_name = 'Vendor Address'
-#         verbose_name_plural = 'Vendor Addresses'
-#
-#     def __str__(self):
-#         return ' '.join([
-#             self.address1,
-#             ',',
-#             self.city,
-#         ])
-#
-#     def get_absolute_url(self):
-#         return reverse('vendors:address-view', args=[str(self.id)])
 
 
 class VendorLocMatrix(models.Model):

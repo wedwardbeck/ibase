@@ -12,8 +12,8 @@ from vanilla import ListView as ListView
 
 from itembase.core.forms.client_forms import ClientForm
 from itembase.core.forms.location_forms import LocationForm
-from itembase.core.models import Client, Contact, Location, TeamMember
-from itembase.core.serializers.clients_drf import ClientCodeSerializer, ClientSerializer
+from itembase.core.models import Address, Client, Contact, Location, TeamMember
+from itembase.core.serializers.clients_drf import ClientAddressSerializer, ClientCodeSerializer, ClientSerializer
 
 
 class ClientCreateView(SuccessMessageMixin, LoginRequiredMixin,
@@ -116,5 +116,16 @@ class ClientCreateListAPI(ListCreateAPIView):
 class ClientDetailAPI(RetrieveUpdateDestroyAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+
+
+class ClientAddressCreateListAPI(ListCreateAPIView):
+    queryset = Address.objects.filter(used_on='C')
+    serializer_class = ClientAddressSerializer
+
+
+class ClientAddressDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = Address.objects.filter(used_on='C')
+    serializer_class = ClientAddressSerializer
+
 
 # endregion

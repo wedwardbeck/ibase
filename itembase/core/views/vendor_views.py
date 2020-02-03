@@ -165,17 +165,17 @@ class VendorDetailAPI(RetrieveUpdateDestroyAPIView):
 
 
 class VendorAddressCreateListAPI(ListCreateAPIView):
-    queryset = Address.objects.all()
+    queryset = Address.objects.filter(used_on='V')
     serializer_class = VendorAddressSerializer
 
 
 class VendorAddressDetailAPI(RetrieveUpdateDestroyAPIView):
-    queryset = Address.objects.all()
+    queryset = Address.objects.filter(used_on='V')
     serializer_class = VendorAddressSerializer
 
 
 class VendorClientCreateListAPI(ListCreateAPIView):
-    queryset = VendorClientMatrix.objects.all()
+    queryset = VendorClientMatrix.objects.all().prefetch_related('created_by')
     serializer_class = VendorClientSerializer
 
 

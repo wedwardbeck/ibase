@@ -10,8 +10,8 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 # from django.views.generic import UpdateView
 from vanilla import CreateView, DeleteView, DetailView, ListView, UpdateView
 from itembase.core.forms.location_forms import LocationForm, LocationAddressForm
-from itembase.core.models import Address, Location  # , LocationAddress
-from itembase.core.serializers.locations_drf import LocationSerializer
+from itembase.core.models import Address, Location
+from itembase.core.serializers.locations_drf import LocationSerializer, LocationAddressSerializer
 
 
 class LocationCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
@@ -119,5 +119,15 @@ class LocationCreateListAPI(ListCreateAPIView):
 class LocationDetailAPI(RetrieveUpdateDestroyAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+
+
+class LocationAddressCreateListAPI(ListCreateAPIView):
+    queryset = Address.objects.filter(used_on='L')
+    serializer_class = LocationAddressSerializer
+
+
+class LocationAddressDetailAPI(RetrieveUpdateDestroyAPIView):
+    queryset = Address.objects.filter(used_on='L')
+    serializer_class = LocationAddressSerializer
 
 # endregion
