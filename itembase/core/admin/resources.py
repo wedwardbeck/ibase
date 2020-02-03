@@ -10,11 +10,14 @@ from itembase.core.models import AddressType, Brand, Client, ClientSystem, Conta
 class AddressTypeResource(resources.ModelResource):
     class Meta:
         model = AddressType
+        fields = ('id', 'address_type', 'fa_string', 'status', 'created_by')
+        skip_unchanged = True
 
 
 class BrandResource(resources.ModelResource):
     class Meta:
         model = Brand
+        skip_unchanged = True
 
 
 class ClientResource(resources.ModelResource):

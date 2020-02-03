@@ -6,7 +6,7 @@ from itembase.core.models import Client, ClientStatus
 class ClientSerializer(serializers.ModelSerializer):
     created_by_name = serializers.ReadOnlyField(source='created_by.name')
     imp_fee_status = serializers.CharField(source='get_imp_fee_status_display')
-    client_status = serializers.CharField(source='get_client_status_display')
+    client_status_name = serializers.CharField(source='get_client_status_display')
     engagement = serializers.StringRelatedField()
 
     class Meta:
@@ -24,6 +24,7 @@ class ClientSerializer(serializers.ModelSerializer):
             'service_end',
             'imp_fee_status',
             'client_status',
+            'client_status_name',
             'production_support_number',
             'approved',
             'upload_address',
