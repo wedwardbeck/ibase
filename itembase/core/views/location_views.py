@@ -122,12 +122,12 @@ class LocationDetailAPI(RetrieveUpdateDestroyAPIView):
 
 
 class LocationAddressCreateListAPI(ListCreateAPIView):
-    queryset = Address.objects.filter(used_on='L')
+    queryset = Address.objects.filter(used_on='L').select_related('created_by', 'client', 'location', 'address_type')
     serializer_class = LocationAddressSerializer
 
 
 class LocationAddressDetailAPI(RetrieveUpdateDestroyAPIView):
-    queryset = Address.objects.filter(used_on='L')
+    queryset = Address.objects.filter(used_on='L').select_related('created_by', 'client', 'location', 'address_type')
     serializer_class = LocationAddressSerializer
 
 # endregion

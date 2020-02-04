@@ -620,6 +620,8 @@ class FeeItem(models.Model):
     item = models.CharField(_('Item'), max_length=50)
     description = models.CharField(_('Description'), max_length=255)
     fee_group = models.ForeignKey(FeeGroup, verbose_name=_('Fee Group'), on_delete=models.PROTECT)
+    status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
+                                 default=BaseStatus.new)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
                                    verbose_name=_('Created By'), on_delete=models.PROTECT)
     created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
@@ -632,6 +634,48 @@ class FeeItem(models.Model):
 
     def __str__(self):
         return self.item
+
+
+class ClientContract(models.Model):
+    client = models.ForeignKey(Client, verbose_name=_('Client'), on_delete=models.PROTECT)
+    description = models.CharField(_('Description'), max_length=255)
+    engagement = models.ForeignKey(EngagementType, verbose_name=_('Engagement Type'), on_delete=models.PROTECT)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
+    created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
+    updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
+    history = HistoricalRecords()
+
+    class Meta:
+        verbose_name = _('Client Contract')
+        verbose_name_plural = _('Client Contracts')
+
+    def __str__(self):
+        return '%s with Client %s' % (self.engagement, self.client)
+
+    # def get_absolute_url(self):
+    #     return reverse('contracts:list')
+
+
+class ClientContractItem(models.Model):
+    contract = models.ForeignKey(ClientContract, verbose_name=_('Contract'), on_delete=models.PROTECT)
+    item = models.ForeignKey(FeeItem, verbose_name=_('Item'), on_delete=models.PROTECT)
+    description = models.CharField(_('Description'), max_length=255)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                   verbose_name=_('Created By'), on_delete=models.PROTECT)
+    created_on = models.DateTimeField(_("Created On"), auto_now_add=True, editable=False)
+    updated_on = models.DateTimeField(_("Updated On"), auto_now=True)
+    history = HistoricalRecords()
+
+    class Meta:
+        verbose_name = _('Client Contract')
+        verbose_name_plural = _('Client Contracts')
+
+    def __str__(self):
+        return '%s - %s' % (self.contract, self.item)
+
+    # def get_absolute_url(self):
+    #     return reverse('contracts:list')
 
 
 # endregion
