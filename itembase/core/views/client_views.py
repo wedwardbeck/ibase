@@ -2,11 +2,15 @@ from braces.views import LoginRequiredMixin, SuperuserRequiredMixin, StaffuserRe
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
 from django.http import JsonResponse
+from django.http.response import Http404
 from django.shortcuts import get_object_or_404, redirect  # ,  HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView as gen_CreateView
 from django.views.generic.detail import SingleObjectMixin
+from rest_framework import status
+from rest_framework.response import Response
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.views import APIView
 from vanilla import CreateView, DeleteView, DetailView, UpdateView
 from vanilla import ListView as ListView
 
@@ -127,5 +131,21 @@ class ClientAddressDetailAPI(RetrieveUpdateDestroyAPIView):
     queryset = Address.objects.filter(used_on='C')
     serializer_class = ClientAddressSerializer
 
+
+class ClientExistsView(APIView):
+
+    # @list_route(methods=['get'])
+    def get(self, request, *args, **kwargs):
+        client_code = request.GET.get('client_code', None)
+        data = {
+            'True': Client.objects.filter(client_code__iexact=client_code).exists()
+        }
+        if data['True']:
+            return Response(status=status.HTTP_200_OK)
+            # data['message'] = 'Exists'
+        else:
+            raise Http404
+            # data['message'] = 'Does Not Exist'
+        # return JsonResponse(data)
 
 # endregion

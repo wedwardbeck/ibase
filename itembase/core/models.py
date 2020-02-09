@@ -522,6 +522,8 @@ class StaffMember(models.Model):
     departed_on = models.DateField(_('Left IQ On'), null=True, blank=True)
     arch_id = models.CharField(_('Archimedes ID'), max_length=50, blank=True, null=True)
     emp_id = models.IntegerField(_('Employee ID'), blank=True, null=True)
+    user_account = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='staff_user',
+                                     verbose_name=_('User Account'), on_delete=models.PROTECT, null=True)
     shift = models.ForeignKey(StaffShift, on_delete=models.PROTECT)
     status = models.IntegerField(_('Status'), choices=BaseStatus.choices,
                                  default=BaseStatus.new)

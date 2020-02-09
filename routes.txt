@@ -1,0 +1,440 @@
+/	django.views.generic.base.TemplateView	home
+/400/	django.views.defaults.bad_request
+/403/	django.views.defaults.permission_denied
+/404/	django.views.defaults.page_not_found
+/500/	django.views.defaults.server_error
+/__debug__/render_panel/	debug_toolbar.views.render_panel	djdt:render_panel
+/__debug__/sql_explain/	debug_toolbar.panels.sql.views.sql_explain	djdt:sql_explain
+/__debug__/sql_profile/	debug_toolbar.panels.sql.views.sql_profile	djdt:sql_profile
+/__debug__/sql_select/	debug_toolbar.panels.sql.views.sql_select	djdt:sql_select
+/__debug__/template_source/	debug_toolbar.panels.templates.views.template_source	djdt:template_source
+/about/	django.views.generic.base.TemplateView	about
+/accounts/confirm-email/	allauth.account.views.EmailVerificationSentView	account_email_verification_sent
+/accounts/confirm-email/<key>/	allauth.account.views.ConfirmEmailView	account_confirm_email
+/accounts/email/	allauth.account.views.EmailView	account_email
+/accounts/inactive/	allauth.account.views.AccountInactiveView	account_inactive
+/accounts/login/	allauth.account.views.LoginView	account_login
+/accounts/logout/	allauth.account.views.LogoutView	account_logout
+/accounts/password/change/	allauth.account.views.PasswordChangeView	account_change_password
+/accounts/password/reset/	allauth.account.views.PasswordResetView	account_reset_password
+/accounts/password/reset/done/	allauth.account.views.PasswordResetDoneView	account_reset_password_done
+/accounts/password/reset/key/<uidb36>-<key>/	allauth.account.views.PasswordResetFromKeyView	account_reset_password_from_key
+/accounts/password/reset/key/done/	allauth.account.views.PasswordResetFromKeyDoneView	account_reset_password_from_key_done
+/accounts/password/set/	allauth.account.views.PasswordSetView	account_set_password
+/accounts/signup/	allauth.account.views.SignupView	account_signup
+/accounts/social/connections/	allauth.socialaccount.views.ConnectionsView	socialaccount_connections
+/accounts/social/login/cancelled/	allauth.socialaccount.views.LoginCancelledView	socialaccount_login_cancelled
+/accounts/social/login/error/	allauth.socialaccount.views.LoginErrorView	socialaccount_login_error
+/accounts/social/signup/	allauth.socialaccount.views.SignupView	socialaccount_signup
+/api/v1/cas/	itembase.core.views.client_views.ClientAddressCreateListAPI
+/api/v1/cas/<int:pk>	itembase.core.views.client_views.ClientAddressDetailAPI
+/api/v1/ceq/	itembase.core.views.client_views.ClientExistsView
+/api/v1/clients/	itembase.core.views.client_views.ClientCreateListAPI
+/api/v1/clients/<int:pk>	itembase.core.views.client_views.ClientDetailAPI
+/api/v1/las/	itembase.core.views.location_views.LocationAddressCreateListAPI
+/api/v1/las/<int:pk>	itembase.core.views.location_views.LocationAddressDetailAPI
+/api/v1/locs/	itembase.core.views.location_views.LocationCreateListAPI
+/api/v1/locs/<int:pk>	itembase.core.views.location_views.LocationDetailAPI
+/api/v1/me/	itembase.core.views.users_drf.CurrentUserView	api:me
+/api/v1/so/engagements/	itembase.core.views.select_options_views.EngagementTypeListAPI
+/api/v1/token/	rest_framework_simplejwt.views.TokenObtainPairView	api:token_obtain_pair
+/api/v1/token/refresh/	rest_framework_simplejwt.views.TokenRefreshView	api:token_refresh
+/api/v1/vas/	itembase.core.views.vendor_views.VendorAddressCreateListAPI
+/api/v1/vas/<int:pk>	itembase.core.views.vendor_views.VendorAddressDetailAPI
+/api/v1/vcs/	itembase.core.views.vendor_views.VendorClientCreateListAPI
+/api/v1/vcs/<int:pk>	itembase.core.views.vendor_views.VendorClientDetailAPI
+/api/v1/vendors/	itembase.core.views.vendor_views.VendorCreateListAPI
+/api/v1/vendors/<int:pk>	itembase.core.views.vendor_views.VendorDetailAPI
+/api/v1/vineup/	itembase.core.views.vendor_views.VineVendorImportViewSet
+/api/v1/vis/	itembase.core.views.item_views.VendorItemCreateListAPI
+/api/v1/vis/<int:pk>	itembase.core.views.item_views.VendorItemDetailAPI
+/client/	itembase.core.views.client_views.ClientListView	clients:list
+/client/<slug:slug>/new-contact/	itembase.core.views.contact_views.ClientContactCreateView	clients:client-contact-new
+/client/<slug:slug>/new-location/	itembase.core.views.client_views.ClientLocationCreateView	clients:location-new
+/client/<slug>/	itembase.core.views.client_views.ClientDetailView	clients:view
+/client/ajax/validate_client_code	itembase.core.views.client_views.validate_client_code	clients:validate_client_code
+/client/delete/<int:pk>/	itembase.core.views.client_views.ClientDeleteView	clients:delete
+/client/edit/<slug:slug>/	itembase.core.views.client_views.ClientUpdateView	clients:edit
+/client/new/	itembase.core.views.client_views.ClientCreateView	clients:new
+/contact/	itembase.core.views.contact_views.ContactListView	contacts:list
+/contact/<int:pk>/	itembase.core.views.contact_views.ContactDetailView	contacts:view
+/contact/agg/	itembase.core.views.contact_views.ContactsAggregateListView	contacts:agg
+/contact/delete/<int:pk>/	itembase.core.views.contact_views.ContactDeleteView	contacts:delete
+/contact/edit/<int:pk>/	itembase.core.views.contact_views.ClientContactUpdateView	contacts:edit
+/contact/new/	itembase.core.views.contact_views.VendorContactCreateView	contacts:new
+/items/uom/	itembase.core.views.item_views.UOMListView	vendor-items:uom-list
+/items/uom/<int:pk>/	itembase.core.views.item_views.UOMDetailView	vendor-items:uom-view
+/items/uom/delete/<int:pk>/	itembase.core.views.item_views.UOMDeleteView	vendor-items:uom-delete
+/items/uom/edit/<int:pk>/	itembase.core.views.item_views.UOMUpdateView	vendor-items:uom-edit
+/items/uom/new/	itembase.core.views.item_views.UOMCreateView	vendor-items:uom-new
+/items/vi/	itembase.core.views.item_views.VendorItemListView	vendor-items:list
+/items/vi/<int:pk>/	itembase.core.views.item_views.VendorItemDetailView	vendor-items:view
+/items/vi/delete/<int:pk>/	itembase.core.views.item_views.VendorItemDeleteView	vendor-items:delete
+/items/vi/edit/<int:pk>/	itembase.core.views.item_views.VendorItemUpdateView	vendor-items:edit
+/items/vi/new/	itembase.core.views.item_views.VendorItemCreateView	vendor-items:new
+/loc/	itembase.core.views.location_views.LocationListView	locations:list
+/loc/<int:pk>/	itembase.core.views.location_views.LocationDetailView	locations:view
+/loc/<int:pk>/address-new/	itembase.core.views.location_views.LocationAddressCreateView	locations:address-new
+/loc/address/<int:pk>	itembase.core.views.location_views.LocationAddressDetailView	locations:address-view
+/loc/address/edit/<int:pk>	itembase.core.views.location_views.LocationAddressUpdateView	locations:address-edit
+/loc/delete/<int:pk>/	itembase.core.views.location_views.LocationDeleteView	locations:delete
+/loc/edit/<int:pk>/	itembase.core.views.location_views.LocationUpdateView	locations:edit
+/loc/new/	itembase.core.views.location_views.LocationCreateView	locations:new
+/media/<path>	django.views.static.serve
+/secadm/	django.contrib.admin.sites.index	admin:index
+/secadm/<app_label>/	django.contrib.admin.sites.app_index	admin:app_list
+/secadm/account/emailaddress/	django.contrib.admin.options.changelist_view	admin:account_emailaddress_changelist
+/secadm/account/emailaddress/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/account/emailaddress/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:account_emailaddress_change
+/secadm/account/emailaddress/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:account_emailaddress_delete
+/secadm/account/emailaddress/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:account_emailaddress_history
+/secadm/account/emailaddress/add/	django.contrib.admin.options.add_view	admin:account_emailaddress_add
+/secadm/account/emailaddress/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:account_emailaddress_autocomplete
+/secadm/auth/group/	django.contrib.admin.options.changelist_view	admin:auth_group_changelist
+/secadm/auth/group/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/auth/group/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:auth_group_change
+/secadm/auth/group/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:auth_group_delete
+/secadm/auth/group/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:auth_group_history
+/secadm/auth/group/add/	django.contrib.admin.options.add_view	admin:auth_group_add
+/secadm/auth/group/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:auth_group_autocomplete
+/secadm/core/address/	import_export.admin.changelist_view	admin:core_address_changelist
+/secadm/core/address/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/address/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_address_change
+/secadm/core/address/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_address_delete
+/secadm/core/address/<path:object_id>/history/	simple_history.admin.history_view	admin:core_address_history
+/secadm/core/address/<var>/history/secadm/core/address/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_address_simple_history
+/secadm/core/address/add/	django.contrib.admin.options.add_view	admin:core_address_add
+/secadm/core/address/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_address_autocomplete
+/secadm/core/address/export/	import_export.admin.export_action	admin:core_address_export
+/secadm/core/address/import/	import_export.admin.import_action	admin:core_address_import
+/secadm/core/address/process_import/	import_export.admin.process_import	admin:core_address_process_import
+/secadm/core/addresstype/	import_export.admin.changelist_view	admin:core_addresstype_changelist
+/secadm/core/addresstype/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/addresstype/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_addresstype_change
+/secadm/core/addresstype/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_addresstype_delete
+/secadm/core/addresstype/<path:object_id>/history/	simple_history.admin.history_view	admin:core_addresstype_history
+/secadm/core/addresstype/<var>/history/secadm/core/addresstype/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_addresstype_simple_history
+/secadm/core/addresstype/add/	django.contrib.admin.options.add_view	admin:core_addresstype_add
+/secadm/core/addresstype/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_addresstype_autocomplete
+/secadm/core/addresstype/export/	import_export.admin.export_action	admin:core_addresstype_export
+/secadm/core/addresstype/import/	import_export.admin.import_action	admin:core_addresstype_import
+/secadm/core/addresstype/process_import/	import_export.admin.process_import	admin:core_addresstype_process_import
+/secadm/core/brand/	import_export.admin.changelist_view	admin:core_brand_changelist
+/secadm/core/brand/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/brand/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_brand_change
+/secadm/core/brand/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_brand_delete
+/secadm/core/brand/<path:object_id>/history/	simple_history.admin.history_view	admin:core_brand_history
+/secadm/core/brand/<var>/history/secadm/core/brand/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_brand_simple_history
+/secadm/core/brand/add/	django.contrib.admin.options.add_view	admin:core_brand_add
+/secadm/core/brand/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_brand_autocomplete
+/secadm/core/brand/export/	import_export.admin.export_action	admin:core_brand_export
+/secadm/core/brand/import/	import_export.admin.import_action	admin:core_brand_import
+/secadm/core/brand/process_import/	import_export.admin.process_import	admin:core_brand_process_import
+/secadm/core/client/	import_export.admin.changelist_view	admin:core_client_changelist
+/secadm/core/client/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/client/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_client_change
+/secadm/core/client/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_client_delete
+/secadm/core/client/<path:object_id>/history/	simple_history.admin.history_view	admin:core_client_history
+/secadm/core/client/<var>/history/secadm/core/client/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_client_simple_history
+/secadm/core/client/add/	django.contrib.admin.options.add_view	admin:core_client_add
+/secadm/core/client/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_client_autocomplete
+/secadm/core/client/export/	import_export.admin.export_action	admin:core_client_export
+/secadm/core/client/import/	import_export.admin.import_action	admin:core_client_import
+/secadm/core/client/process_import/	import_export.admin.process_import	admin:core_client_process_import
+/secadm/core/clientsystem/	import_export.admin.changelist_view	admin:core_clientsystem_changelist
+/secadm/core/clientsystem/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/clientsystem/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_clientsystem_change
+/secadm/core/clientsystem/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_clientsystem_delete
+/secadm/core/clientsystem/<path:object_id>/history/	simple_history.admin.history_view	admin:core_clientsystem_history
+/secadm/core/clientsystem/<var>/history/secadm/core/clientsystem/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_clientsystem_simple_history
+/secadm/core/clientsystem/add/	django.contrib.admin.options.add_view	admin:core_clientsystem_add
+/secadm/core/clientsystem/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_clientsystem_autocomplete
+/secadm/core/clientsystem/export/	import_export.admin.export_action	admin:core_clientsystem_export
+/secadm/core/clientsystem/import/	import_export.admin.import_action	admin:core_clientsystem_import
+/secadm/core/clientsystem/process_import/	import_export.admin.process_import	admin:core_clientsystem_process_import
+/secadm/core/contact/	import_export.admin.changelist_view	admin:core_contact_changelist
+/secadm/core/contact/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/contact/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_contact_change
+/secadm/core/contact/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_contact_delete
+/secadm/core/contact/<path:object_id>/history/	simple_history.admin.history_view	admin:core_contact_history
+/secadm/core/contact/<var>/history/secadm/core/contact/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_contact_simple_history
+/secadm/core/contact/add/	django.contrib.admin.options.add_view	admin:core_contact_add
+/secadm/core/contact/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_contact_autocomplete
+/secadm/core/contact/export/	import_export.admin.export_action	admin:core_contact_export
+/secadm/core/contact/import/	import_export.admin.import_action	admin:core_contact_import
+/secadm/core/contact/process_import/	import_export.admin.process_import	admin:core_contact_process_import
+/secadm/core/engagementtype/	import_export.admin.changelist_view	admin:core_engagementtype_changelist
+/secadm/core/engagementtype/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/engagementtype/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_engagementtype_change
+/secadm/core/engagementtype/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_engagementtype_delete
+/secadm/core/engagementtype/<path:object_id>/history/	simple_history.admin.history_view	admin:core_engagementtype_history
+/secadm/core/engagementtype/<var>/history/secadm/core/engagementtype/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_engagementtype_simple_history
+/secadm/core/engagementtype/add/	django.contrib.admin.options.add_view	admin:core_engagementtype_add
+/secadm/core/engagementtype/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_engagementtype_autocomplete
+/secadm/core/engagementtype/export/	import_export.admin.export_action	admin:core_engagementtype_export
+/secadm/core/engagementtype/import/	import_export.admin.import_action	admin:core_engagementtype_import
+/secadm/core/engagementtype/process_import/	import_export.admin.process_import	admin:core_engagementtype_process_import
+/secadm/core/feegroup/	import_export.admin.changelist_view	admin:core_feegroup_changelist
+/secadm/core/feegroup/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/feegroup/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_feegroup_change
+/secadm/core/feegroup/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_feegroup_delete
+/secadm/core/feegroup/<path:object_id>/history/	simple_history.admin.history_view	admin:core_feegroup_history
+/secadm/core/feegroup/<var>/history/secadm/core/feegroup/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_feegroup_simple_history
+/secadm/core/feegroup/add/	django.contrib.admin.options.add_view	admin:core_feegroup_add
+/secadm/core/feegroup/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_feegroup_autocomplete
+/secadm/core/feegroup/export/	import_export.admin.export_action	admin:core_feegroup_export
+/secadm/core/feegroup/import/	import_export.admin.import_action	admin:core_feegroup_import
+/secadm/core/feegroup/process_import/	import_export.admin.process_import	admin:core_feegroup_process_import
+/secadm/core/feeitem/	import_export.admin.changelist_view	admin:core_feeitem_changelist
+/secadm/core/feeitem/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/feeitem/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_feeitem_change
+/secadm/core/feeitem/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_feeitem_delete
+/secadm/core/feeitem/<path:object_id>/history/	simple_history.admin.history_view	admin:core_feeitem_history
+/secadm/core/feeitem/<var>/history/secadm/core/feeitem/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_feeitem_simple_history
+/secadm/core/feeitem/add/	django.contrib.admin.options.add_view	admin:core_feeitem_add
+/secadm/core/feeitem/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_feeitem_autocomplete
+/secadm/core/feeitem/export/	import_export.admin.export_action	admin:core_feeitem_export
+/secadm/core/feeitem/import/	import_export.admin.import_action	admin:core_feeitem_import
+/secadm/core/feeitem/process_import/	import_export.admin.process_import	admin:core_feeitem_process_import
+/secadm/core/holidaylist/	import_export.admin.changelist_view	admin:core_holidaylist_changelist
+/secadm/core/holidaylist/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/holidaylist/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_holidaylist_change
+/secadm/core/holidaylist/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_holidaylist_delete
+/secadm/core/holidaylist/<path:object_id>/history/	simple_history.admin.history_view	admin:core_holidaylist_history
+/secadm/core/holidaylist/<var>/history/secadm/core/holidaylist/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_holidaylist_simple_history
+/secadm/core/holidaylist/add/	django.contrib.admin.options.add_view	admin:core_holidaylist_add
+/secadm/core/holidaylist/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_holidaylist_autocomplete
+/secadm/core/holidaylist/export/	import_export.admin.export_action	admin:core_holidaylist_export
+/secadm/core/holidaylist/import/	import_export.admin.import_action	admin:core_holidaylist_import
+/secadm/core/holidaylist/process_import/	import_export.admin.process_import	admin:core_holidaylist_process_import
+/secadm/core/installbase/	import_export.admin.changelist_view	admin:core_installbase_changelist
+/secadm/core/installbase/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/installbase/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_installbase_change
+/secadm/core/installbase/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_installbase_delete
+/secadm/core/installbase/<path:object_id>/history/	simple_history.admin.history_view	admin:core_installbase_history
+/secadm/core/installbase/<var>/history/secadm/core/installbase/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_installbase_simple_history
+/secadm/core/installbase/add/	django.contrib.admin.options.add_view	admin:core_installbase_add
+/secadm/core/installbase/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_installbase_autocomplete
+/secadm/core/installbase/export/	import_export.admin.export_action	admin:core_installbase_export
+/secadm/core/installbase/import/	import_export.admin.import_action	admin:core_installbase_import
+/secadm/core/installbase/process_import/	import_export.admin.process_import	admin:core_installbase_process_import
+/secadm/core/location/	import_export.admin.changelist_view	admin:core_location_changelist
+/secadm/core/location/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/location/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_location_change
+/secadm/core/location/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_location_delete
+/secadm/core/location/<path:object_id>/history/	simple_history.admin.history_view	admin:core_location_history
+/secadm/core/location/<var>/history/secadm/core/location/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_location_simple_history
+/secadm/core/location/add/	django.contrib.admin.options.add_view	admin:core_location_add
+/secadm/core/location/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_location_autocomplete
+/secadm/core/location/export/	import_export.admin.export_action	admin:core_location_export
+/secadm/core/location/import/	import_export.admin.import_action	admin:core_location_import
+/secadm/core/location/process_import/	import_export.admin.process_import	admin:core_location_process_import
+/secadm/core/staffmember/	import_export.admin.changelist_view	admin:core_staffmember_changelist
+/secadm/core/staffmember/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/staffmember/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_staffmember_change
+/secadm/core/staffmember/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_staffmember_delete
+/secadm/core/staffmember/<path:object_id>/history/	simple_history.admin.history_view	admin:core_staffmember_history
+/secadm/core/staffmember/<var>/history/secadm/core/staffmember/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_staffmember_simple_history
+/secadm/core/staffmember/add/	django.contrib.admin.options.add_view	admin:core_staffmember_add
+/secadm/core/staffmember/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_staffmember_autocomplete
+/secadm/core/staffmember/export/	import_export.admin.export_action	admin:core_staffmember_export
+/secadm/core/staffmember/import/	import_export.admin.import_action	admin:core_staffmember_import
+/secadm/core/staffmember/process_import/	import_export.admin.process_import	admin:core_staffmember_process_import
+/secadm/core/staffroles/	import_export.admin.changelist_view	admin:core_staffroles_changelist
+/secadm/core/staffroles/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/staffroles/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_staffroles_change
+/secadm/core/staffroles/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_staffroles_delete
+/secadm/core/staffroles/<path:object_id>/history/	simple_history.admin.history_view	admin:core_staffroles_history
+/secadm/core/staffroles/<var>/history/secadm/core/staffroles/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_staffroles_simple_history
+/secadm/core/staffroles/add/	django.contrib.admin.options.add_view	admin:core_staffroles_add
+/secadm/core/staffroles/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_staffroles_autocomplete
+/secadm/core/staffroles/export/	import_export.admin.export_action	admin:core_staffroles_export
+/secadm/core/staffroles/import/	import_export.admin.import_action	admin:core_staffroles_import
+/secadm/core/staffroles/process_import/	import_export.admin.process_import	admin:core_staffroles_process_import
+/secadm/core/staffshift/	import_export.admin.changelist_view	admin:core_staffshift_changelist
+/secadm/core/staffshift/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/staffshift/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_staffshift_change
+/secadm/core/staffshift/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_staffshift_delete
+/secadm/core/staffshift/<path:object_id>/history/	simple_history.admin.history_view	admin:core_staffshift_history
+/secadm/core/staffshift/<var>/history/secadm/core/staffshift/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_staffshift_simple_history
+/secadm/core/staffshift/add/	django.contrib.admin.options.add_view	admin:core_staffshift_add
+/secadm/core/staffshift/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_staffshift_autocomplete
+/secadm/core/staffshift/export/	import_export.admin.export_action	admin:core_staffshift_export
+/secadm/core/staffshift/import/	import_export.admin.import_action	admin:core_staffshift_import
+/secadm/core/staffshift/process_import/	import_export.admin.process_import	admin:core_staffshift_process_import
+/secadm/core/stafftitle/	import_export.admin.changelist_view	admin:core_stafftitle_changelist
+/secadm/core/stafftitle/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/stafftitle/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_stafftitle_change
+/secadm/core/stafftitle/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_stafftitle_delete
+/secadm/core/stafftitle/<path:object_id>/history/	simple_history.admin.history_view	admin:core_stafftitle_history
+/secadm/core/stafftitle/<var>/history/secadm/core/stafftitle/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_stafftitle_simple_history
+/secadm/core/stafftitle/add/	django.contrib.admin.options.add_view	admin:core_stafftitle_add
+/secadm/core/stafftitle/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_stafftitle_autocomplete
+/secadm/core/stafftitle/export/	import_export.admin.export_action	admin:core_stafftitle_export
+/secadm/core/stafftitle/import/	import_export.admin.import_action	admin:core_stafftitle_import
+/secadm/core/stafftitle/process_import/	import_export.admin.process_import	admin:core_stafftitle_process_import
+/secadm/core/system/	import_export.admin.changelist_view	admin:core_system_changelist
+/secadm/core/system/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/system/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_system_change
+/secadm/core/system/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_system_delete
+/secadm/core/system/<path:object_id>/history/	simple_history.admin.history_view	admin:core_system_history
+/secadm/core/system/<var>/history/secadm/core/system/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_system_simple_history
+/secadm/core/system/add/	django.contrib.admin.options.add_view	admin:core_system_add
+/secadm/core/system/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_system_autocomplete
+/secadm/core/system/export/	import_export.admin.export_action	admin:core_system_export
+/secadm/core/system/import/	import_export.admin.import_action	admin:core_system_import
+/secadm/core/system/process_import/	import_export.admin.process_import	admin:core_system_process_import
+/secadm/core/systemtype/	import_export.admin.changelist_view	admin:core_systemtype_changelist
+/secadm/core/systemtype/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/systemtype/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_systemtype_change
+/secadm/core/systemtype/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_systemtype_delete
+/secadm/core/systemtype/<path:object_id>/history/	simple_history.admin.history_view	admin:core_systemtype_history
+/secadm/core/systemtype/<var>/history/secadm/core/systemtype/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_systemtype_simple_history
+/secadm/core/systemtype/add/	django.contrib.admin.options.add_view	admin:core_systemtype_add
+/secadm/core/systemtype/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_systemtype_autocomplete
+/secadm/core/systemtype/export/	import_export.admin.export_action	admin:core_systemtype_export
+/secadm/core/systemtype/import/	import_export.admin.import_action	admin:core_systemtype_import
+/secadm/core/systemtype/process_import/	import_export.admin.process_import	admin:core_systemtype_process_import
+/secadm/core/teammember/	import_export.admin.changelist_view	admin:core_teammember_changelist
+/secadm/core/teammember/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/teammember/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_teammember_change
+/secadm/core/teammember/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_teammember_delete
+/secadm/core/teammember/<path:object_id>/history/	simple_history.admin.history_view	admin:core_teammember_history
+/secadm/core/teammember/<var>/history/secadm/core/teammember/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_teammember_simple_history
+/secadm/core/teammember/add/	django.contrib.admin.options.add_view	admin:core_teammember_add
+/secadm/core/teammember/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_teammember_autocomplete
+/secadm/core/teammember/export/	import_export.admin.export_action	admin:core_teammember_export
+/secadm/core/teammember/import/	import_export.admin.import_action	admin:core_teammember_import
+/secadm/core/teammember/process_import/	import_export.admin.process_import	admin:core_teammember_process_import
+/secadm/core/unitofmeasure/	import_export.admin.changelist_view	admin:core_unitofmeasure_changelist
+/secadm/core/unitofmeasure/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/unitofmeasure/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_unitofmeasure_change
+/secadm/core/unitofmeasure/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_unitofmeasure_delete
+/secadm/core/unitofmeasure/<path:object_id>/history/	simple_history.admin.history_view	admin:core_unitofmeasure_history
+/secadm/core/unitofmeasure/<var>/history/secadm/core/unitofmeasure/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_unitofmeasure_simple_history
+/secadm/core/unitofmeasure/add/	django.contrib.admin.options.add_view	admin:core_unitofmeasure_add
+/secadm/core/unitofmeasure/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_unitofmeasure_autocomplete
+/secadm/core/unitofmeasure/export/	import_export.admin.export_action	admin:core_unitofmeasure_export
+/secadm/core/unitofmeasure/import/	import_export.admin.import_action	admin:core_unitofmeasure_import
+/secadm/core/unitofmeasure/process_import/	import_export.admin.process_import	admin:core_unitofmeasure_process_import
+/secadm/core/vendor/	import_export.admin.changelist_view	admin:core_vendor_changelist
+/secadm/core/vendor/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/vendor/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_vendor_change
+/secadm/core/vendor/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_vendor_delete
+/secadm/core/vendor/<path:object_id>/history/	simple_history.admin.history_view	admin:core_vendor_history
+/secadm/core/vendor/<var>/history/secadm/core/vendor/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_vendor_simple_history
+/secadm/core/vendor/add/	django.contrib.admin.options.add_view	admin:core_vendor_add
+/secadm/core/vendor/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_vendor_autocomplete
+/secadm/core/vendor/export/	import_export.admin.export_action	admin:core_vendor_export
+/secadm/core/vendor/import/	import_export.admin.import_action	admin:core_vendor_import
+/secadm/core/vendor/process_import/	import_export.admin.process_import	admin:core_vendor_process_import
+/secadm/core/vendoritem/	import_export.admin.changelist_view	admin:core_vendoritem_changelist
+/secadm/core/vendoritem/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/core/vendoritem/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:core_vendoritem_change
+/secadm/core/vendoritem/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:core_vendoritem_delete
+/secadm/core/vendoritem/<path:object_id>/history/	simple_history.admin.history_view	admin:core_vendoritem_history
+/secadm/core/vendoritem/<var>/history/secadm/core/vendoritem/([/]+)/history/<var>/	simple_history.admin.history_form_view	admin:core_vendoritem_simple_history
+/secadm/core/vendoritem/add/	django.contrib.admin.options.add_view	admin:core_vendoritem_add
+/secadm/core/vendoritem/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:core_vendoritem_autocomplete
+/secadm/core/vendoritem/export/	import_export.admin.export_action	admin:core_vendoritem_export
+/secadm/core/vendoritem/import/	import_export.admin.import_action	admin:core_vendoritem_import
+/secadm/core/vendoritem/process_import/	import_export.admin.process_import	admin:core_vendoritem_process_import
+/secadm/django_celery_beat/clockedschedule/	django.contrib.admin.options.changelist_view	admin:django_celery_beat_clockedschedule_changelist
+/secadm/django_celery_beat/clockedschedule/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/django_celery_beat/clockedschedule/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:django_celery_beat_clockedschedule_change
+/secadm/django_celery_beat/clockedschedule/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:django_celery_beat_clockedschedule_delete
+/secadm/django_celery_beat/clockedschedule/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:django_celery_beat_clockedschedule_history
+/secadm/django_celery_beat/clockedschedule/add/	django.contrib.admin.options.add_view	admin:django_celery_beat_clockedschedule_add
+/secadm/django_celery_beat/clockedschedule/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:django_celery_beat_clockedschedule_autocomplete
+/secadm/django_celery_beat/crontabschedule/	django.contrib.admin.options.changelist_view	admin:django_celery_beat_crontabschedule_changelist
+/secadm/django_celery_beat/crontabschedule/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/django_celery_beat/crontabschedule/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:django_celery_beat_crontabschedule_change
+/secadm/django_celery_beat/crontabschedule/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:django_celery_beat_crontabschedule_delete
+/secadm/django_celery_beat/crontabschedule/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:django_celery_beat_crontabschedule_history
+/secadm/django_celery_beat/crontabschedule/add/	django.contrib.admin.options.add_view	admin:django_celery_beat_crontabschedule_add
+/secadm/django_celery_beat/crontabschedule/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:django_celery_beat_crontabschedule_autocomplete
+/secadm/django_celery_beat/intervalschedule/	django.contrib.admin.options.changelist_view	admin:django_celery_beat_intervalschedule_changelist
+/secadm/django_celery_beat/intervalschedule/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/django_celery_beat/intervalschedule/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:django_celery_beat_intervalschedule_change
+/secadm/django_celery_beat/intervalschedule/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:django_celery_beat_intervalschedule_delete
+/secadm/django_celery_beat/intervalschedule/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:django_celery_beat_intervalschedule_history
+/secadm/django_celery_beat/intervalschedule/add/	django.contrib.admin.options.add_view	admin:django_celery_beat_intervalschedule_add
+/secadm/django_celery_beat/intervalschedule/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:django_celery_beat_intervalschedule_autocomplete
+/secadm/django_celery_beat/periodictask/	django_celery_beat.admin.changelist_view	admin:django_celery_beat_periodictask_changelist
+/secadm/django_celery_beat/periodictask/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/django_celery_beat/periodictask/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:django_celery_beat_periodictask_change
+/secadm/django_celery_beat/periodictask/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:django_celery_beat_periodictask_delete
+/secadm/django_celery_beat/periodictask/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:django_celery_beat_periodictask_history
+/secadm/django_celery_beat/periodictask/add/	django.contrib.admin.options.add_view	admin:django_celery_beat_periodictask_add
+/secadm/django_celery_beat/periodictask/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:django_celery_beat_periodictask_autocomplete
+/secadm/django_celery_beat/solarschedule/	django.contrib.admin.options.changelist_view	admin:django_celery_beat_solarschedule_changelist
+/secadm/django_celery_beat/solarschedule/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/django_celery_beat/solarschedule/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:django_celery_beat_solarschedule_change
+/secadm/django_celery_beat/solarschedule/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:django_celery_beat_solarschedule_delete
+/secadm/django_celery_beat/solarschedule/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:django_celery_beat_solarschedule_history
+/secadm/django_celery_beat/solarschedule/add/	django.contrib.admin.options.add_view	admin:django_celery_beat_solarschedule_add
+/secadm/django_celery_beat/solarschedule/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:django_celery_beat_solarschedule_autocomplete
+/secadm/jsi18n/	django.contrib.admin.sites.i18n_javascript	admin:jsi18n
+/secadm/login/	django.contrib.admin.sites.login	admin:login
+/secadm/logout/	django.contrib.admin.sites.logout	admin:logout
+/secadm/password_change/	django.contrib.admin.sites.password_change	admin:password_change
+/secadm/password_change/done/	django.contrib.admin.sites.password_change_done	admin:password_change_done
+/secadm/r/<int:content_type_id>/<path:object_id>/	django.contrib.contenttypes.views.shortcut	admin:view_on_site
+/secadm/sites/site/	django.contrib.admin.options.changelist_view	admin:sites_site_changelist
+/secadm/sites/site/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/sites/site/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:sites_site_change
+/secadm/sites/site/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:sites_site_delete
+/secadm/sites/site/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:sites_site_history
+/secadm/sites/site/add/	django.contrib.admin.options.add_view	admin:sites_site_add
+/secadm/sites/site/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:sites_site_autocomplete
+/secadm/socialaccount/socialaccount/	django.contrib.admin.options.changelist_view	admin:socialaccount_socialaccount_changelist
+/secadm/socialaccount/socialaccount/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/socialaccount/socialaccount/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:socialaccount_socialaccount_change
+/secadm/socialaccount/socialaccount/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:socialaccount_socialaccount_delete
+/secadm/socialaccount/socialaccount/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:socialaccount_socialaccount_history
+/secadm/socialaccount/socialaccount/add/	django.contrib.admin.options.add_view	admin:socialaccount_socialaccount_add
+/secadm/socialaccount/socialaccount/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:socialaccount_socialaccount_autocomplete
+/secadm/socialaccount/socialapp/	django.contrib.admin.options.changelist_view	admin:socialaccount_socialapp_changelist
+/secadm/socialaccount/socialapp/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/socialaccount/socialapp/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:socialaccount_socialapp_change
+/secadm/socialaccount/socialapp/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:socialaccount_socialapp_delete
+/secadm/socialaccount/socialapp/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:socialaccount_socialapp_history
+/secadm/socialaccount/socialapp/add/	django.contrib.admin.options.add_view	admin:socialaccount_socialapp_add
+/secadm/socialaccount/socialapp/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:socialaccount_socialapp_autocomplete
+/secadm/socialaccount/socialtoken/	django.contrib.admin.options.changelist_view	admin:socialaccount_socialtoken_changelist
+/secadm/socialaccount/socialtoken/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/socialaccount/socialtoken/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:socialaccount_socialtoken_change
+/secadm/socialaccount/socialtoken/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:socialaccount_socialtoken_delete
+/secadm/socialaccount/socialtoken/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:socialaccount_socialtoken_history
+/secadm/socialaccount/socialtoken/add/	django.contrib.admin.options.add_view	admin:socialaccount_socialtoken_add
+/secadm/socialaccount/socialtoken/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:socialaccount_socialtoken_autocomplete
+/secadm/users/user/	django.contrib.admin.options.changelist_view	admin:users_user_changelist
+/secadm/users/user/<id>/password/	django.contrib.auth.admin.user_change_password	admin:auth_user_password_change
+/secadm/users/user/<path:object_id>/	django.views.generic.base.RedirectView
+/secadm/users/user/<path:object_id>/change/	django.contrib.admin.options.change_view	admin:users_user_change
+/secadm/users/user/<path:object_id>/delete/	django.contrib.admin.options.delete_view	admin:users_user_delete
+/secadm/users/user/<path:object_id>/history/	django.contrib.admin.options.history_view	admin:users_user_history
+/secadm/users/user/add/	django.contrib.auth.admin.add_view	admin:users_user_add
+/secadm/users/user/autocomplete/	django.contrib.admin.options.autocomplete_view	admin:users_user_autocomplete
+/staff/	itembase.core.views.staffing_views.TeamListView	staff:team-list
+/staff/<int:pk>/	itembase.core.views.staffing_views.TeamMemberDetailView	staff:team-view
+/staff/edittm/	itembase.core.views.staffing_views.TeamMemberUpdateView	staff:team-edit
+/staff/newtm/	itembase.core.views.staffing_views.TeamMemberCreateView	staff:team-new
+/staff/newtm/<slug:slug>/	itembase.core.views.staffing_views.TeamMemberClientCreateView	staff:client-team-new
+/staff/pm/	itembase.core.views.staffing_views.ProjectManagerListView	staff:pm-list
+/staff/tl/	itembase.core.views.staffing_views.TeamLeadListView	staff:teamlead-list
+/users/<int:pk>/	itembase.users.views.UserDetailView	users:detail
+/users/~redirect/	itembase.users.views.UserRedirectView	users:redirect
+/users/~update/	itembase.users.views.UserUpdateView	users:update
+/vendors/	itembase.core.views.vendor_views.VendorListView	vendors:vendor-list
+/vendors/<int:pk>/	itembase.core.views.vendor_views.VendorDetailView	vendors:vendor-view
+/vendors/<int:pk>/address-new/	itembase.core.views.vendor_views.VendorAddressCreateView	vendors:vendor-address-new
+/vendors/<int:pk>/contact-new/	itembase.core.views.contact_views.VendorContactCreateView	vendors:vendor-contact-new
+/vendors/<int:pk>/loc-new/	itembase.core.views.vendor_views.VendorLocCreateView	vendors:vendor-loc-new
+/vendors/address/<int:pk>	itembase.core.views.vendor_views.VendorAddressDetailView	vendors:vendor-address-view
+/vendors/address/edit/<int:pk>	itembase.core.views.vendor_views.VendorAddressUpdateView	vendors:vendor-address-edit
+/vendors/contact/edit/<int:pk>	itembase.core.views.contact_views.VendorContactUpdateView	vendors:vendor-contact-edit
+/vendors/delete/<int:pk>/	itembase.core.views.vendor_views.VendorDeleteView	vendors:vendor-delete
+/vendors/edit/<int:pk>/	itembase.core.views.vendor_views.VendorUpdateView	vendors:vendor-edit
+/vendors/new/	itembase.core.views.vendor_views.VendorCreateView	vendors:vendor-new
+/vendors/upload/	itembase.core.views.vendor_views.VendorCreateView	vendors:vendor-upload

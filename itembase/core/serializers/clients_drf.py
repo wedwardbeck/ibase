@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from itembase.core.models import Address, Client, ClientStatus
+from itembase.core.models import Address, Client
 
 
 class ClientSerializer(serializers.ModelSerializer):
     created_by_name = serializers.ReadOnlyField(source='created_by.name')
-    imp_fee_status = serializers.CharField(source='get_imp_fee_status_display')
-    client_status_name = serializers.CharField(source='get_client_status_display')
-    engagement = serializers.StringRelatedField()
+    imp_fee_status = serializers.ReadOnlyField(source='get_imp_fee_status_display')
+    client_status_name = serializers.ReadOnlyField(source='get_client_status_display')
+    engagement_name = serializers.ReadOnlyField(source='engagement.service_description')
 
     class Meta:
         model = Client
@@ -20,6 +20,7 @@ class ClientSerializer(serializers.ModelSerializer):
             'client_name',
             'slug',
             'engagement',
+            'engagement_name',
             'service_start',
             'service_end',
             'imp_fee_status',
@@ -49,8 +50,8 @@ class ClientCodeSerializer(serializers.HyperlinkedModelSerializer):
 class ClientAddressSerializer(serializers.ModelSerializer):
     created_by_name = serializers.ReadOnlyField(source='created_by.name')
     client_name = serializers.CharField(source='client.client_name')
-    status_name = serializers.CharField(source='get_status_display')
-    address_type_name = serializers.CharField(source='address_type.address_type')
+    status_name = serializers.ReadOnlyField(source='get_status_display')
+    address_type_name = serializers.ReadOnlyField(source='address_type.address_type')
     used_on = serializers.ChoiceField(choices='C')
 
     class Meta:
