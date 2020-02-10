@@ -3,6 +3,7 @@ Base settings to build other settings files upon.
 """
 
 import environ
+from datetime import timedelta
 
 ROOT_DIR = (
         environ.Path(__file__) - 3
@@ -72,11 +73,14 @@ THIRD_PARTY_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "rest_framework",
+    'rest_framework.authtoken',
+    'djoser',
     "django_celery_beat",
     'corsheaders',
     'import_export',
     'simple_history',
     'easy_thumbnails',
+    # 'rest_framework_simplejwt',
 ]
 
 LOCAL_APPS = [
@@ -214,9 +218,20 @@ SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = "DENY"
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.SessionAuthentication',),
+    # 'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.SessionAuthentication',),
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework.authentication.TokenAuthentication',),
     # 'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',)
+}
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SERIALIZERS': {},
+    'LOGIN_FIELD': 'email',
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
 }
 
 # EMAIL
@@ -300,7 +315,6 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_ADAPTER = "itembase.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = "itembase.users.adapters.SocialAccountAdapter"
-
 
 # Your stuff...
 # ------------------------------------------------------------------------------

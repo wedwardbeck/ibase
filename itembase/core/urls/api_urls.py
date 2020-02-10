@@ -16,7 +16,10 @@ from itembase.core.views.users_drf import CurrentUserView
 app_name = "api"
 urlpatterns = [
     # path("ajax/validate_client_code", validate_client_code, name="validate_client_code"),
-    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path("auth/", include('djoser.urls')),
+    path("auth/", include('djoser.urls.authtoken')),
+    # path("auth/", include('djoser.urls.jwt')),
+    # path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('me/', CurrentUserView.as_view(), name='me'),
