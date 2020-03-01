@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.response import Response
 
-from itembase.core.serializers import UserSerializer, GroupSerializer
+from itembase.core.serializers.users_drf import UserSerializer, GroupSerializer
 from itembase.users.models import User
 
 
