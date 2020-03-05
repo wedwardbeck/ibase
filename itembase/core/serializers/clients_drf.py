@@ -8,6 +8,7 @@ class ClientSerializer(serializers.ModelSerializer):
     imp_fee_status = serializers.ReadOnlyField(source='get_imp_fee_status_display')
     client_status_name = serializers.ReadOnlyField(source='get_client_status_display')
     engagement_name = serializers.ReadOnlyField(source='engagement.service_description')
+    parent_name = serializers.ReadOnlyField(source='parent.client_name')
 
     class Meta:
         model = Client
@@ -31,10 +32,12 @@ class ClientSerializer(serializers.ModelSerializer):
             'upload_address',
             'iq_support_address',
             'parent',
+            'parent_name',
             'created_on',
             'updated_on',
             'created_by',
             'created_by_name',
+            'logo',
 
         )
 

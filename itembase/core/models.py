@@ -167,7 +167,7 @@ class Client(models.Model):
     client_name = models.CharField(_('Client Name'), max_length=100)
     slug = AutoSlugField(populate_from='client_code', unique=True)
     engagement = models.ForeignKey(EngagementType, verbose_name=_('Engagement Type'), on_delete=models.PROTECT)
-    service_start = models.DateField(_('Service Start'), default=timezone.now)
+    service_start = models.DateField(_('Service Start'), null=True, blank=True)
     service_end = models.DateField(_('Service End'), null=True, blank=True)
     imp_fee_status = models.SmallIntegerField(_('Implementation Fee Status'), choices=FeeStatus.choices,
                                               default=FeeStatus.new)
