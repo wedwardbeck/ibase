@@ -228,8 +228,8 @@ class ClientSystem(models.Model):
 
 class Vendor(models.Model):
     id = models.BigAutoField(primary_key=True)
-    name1 = models.CharField(_('Primary Name'), max_length=150)
-    name2 = models.CharField(_('Additional Name '), max_length=100, blank=True)
+    name1 = models.CharField(_('Primary Name'), max_length=30)
+    name2 = models.CharField(_('Additional Name '), max_length=70, blank=True)
     taxid = models.CharField(_('Tax ID'), max_length=15, blank=True)
     status = models.SmallIntegerField(_('Status'), choices=VendorStatus.choices,
                                       default=VendorStatus.new)

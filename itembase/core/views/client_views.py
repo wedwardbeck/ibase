@@ -113,7 +113,7 @@ class ClientLocationCreateView(SuccessMessageMixin, LoginRequiredMixin, gen_Crea
 # API Region
 
 class ClientCreateListAPI(ListCreateAPIView):
-    queryset = Client.objects.all()
+    queryset = Client.objects.all().select_related('created_by').select_related('engagement')
     serializer_class = ClientSerializer
 
 
